@@ -30,7 +30,7 @@ using var sdk = SkillSdk.CreateBuilder()
     .Build();
 
 // Submit match results
-var matchResult = await sdk.PostMatchResultAsync("your-model-id", new MatchResultRequest(
+var ratingUpdates = await sdk.PostMatchResultAsync("your-model-id", new MatchResultRequest(
     teams: new Collection<TeamInfo>(),
     playerSessions: new Collection<PlayerSession>
     {
@@ -51,7 +51,7 @@ var matchResult = await sdk.PostMatchResultAsync("your-model-id", new MatchResul
 });
 
 // Access updated ratings
-foreach (var player in matchResult.Players)
+foreach (var player in ratingUpdates.Players)
 {
     Console.WriteLine($"{player.PlayerId}: {player.Prior.Mmr:F3} -> {player.Post.Mmr:F3}");
 }
@@ -228,7 +228,7 @@ services.AddSingleton<SkillSdk>(sp =>
 ### Prerequisites
 
 - .NET 6.0 SDK or later
-- Docker (for code generation)
+- Docker (for OpenAPI code generation)
 - Just (task runner)
 
 ### Common Tasks
@@ -253,9 +253,4 @@ just clean
 ## Support
 
 - Documentation: [https://docs.ivk.dev](https://docs.ivk.dev)
-- Email: support@invokation.games
 - Discord: [Community Discord](https://discord.gg/JfNGsunrjX)
-
-## License
-
-This SDK is licensed under the Apache 2.0 License. See [LICENSE](LICENSE) for details.

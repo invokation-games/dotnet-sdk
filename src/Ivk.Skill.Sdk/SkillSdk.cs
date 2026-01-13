@@ -1,3 +1,5 @@
+#nullable enable
+
 using System;
 using System.Net;
 using System.Net.Http;
@@ -11,6 +13,20 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Polly;
 
 namespace Ivk.Skill.Sdk;
+
+internal static class Log
+{
+    private static readonly Action<ILogger, int, int, double, string, Exception?> RetryAttemptAction =
+        LoggerMessage.Define<int, int, double, string>(
+            LogLevel.Warning,
+            new EventId(1, nameof(RetryAttempt)),
+            "Retry attempt {Attempt}/{Max} after {Delay}ms: {Message}");
+
+    public static void RetryAttempt(ILogger logger, int attempt, int maxRetries, double delayMs, string message)
+    {
+        RetryAttemptAction(logger, attempt, maxRetries, delayMs, message, null);
+    }
+}
 
 /// <summary>
 /// SDK wrapper for the IVK Skill API with built-in retry mechanism and API key authentication.
@@ -43,7 +59,7 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
         RetryConfig retryConfig,
         HttpClient httpClient,
         bool ownsHttpClient,
-        ILogger<SkillSdk> logger)
+        ILogger<SkillSdk>? logger)
     {
         _environment = environment ?? throw new ArgumentNullException(nameof(environment));
         _logger = logger ?? NullLogger<SkillSdk>.Instance;
@@ -80,9 +96,7 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
                 onRetry: (outcome, delay, attempt, _) =>
                 {
                     var message = outcome.Exception?.Message ?? $"HTTP {(int?)outcome.Result?.StatusCode}";
-                    _logger.LogWarning(
-                        "Retry attempt {Attempt}/{Max} after {Delay}ms: {Message}",
-                        attempt, config.MaxRetries - 1, delay.TotalMilliseconds, message);
+                    Log.RetryAttempt(_logger, attempt, config.MaxRetries - 1, delay.TotalMilliseconds, message);
                 });
 
         RetryConfiguration.RetryPolicy = Policy
@@ -99,9 +113,7 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
                 onRetry: (outcome, delay, attempt, _) =>
                 {
                     var message = outcome.Exception?.Message ?? $"HTTP {(int?)outcome.Result?.StatusCode}";
-                    _logger.LogWarning(
-                        "Retry attempt {Attempt}/{Max} after {Delay}ms: {Message}",
-                        attempt, config.MaxRetries - 1, delay.TotalMilliseconds, message);
+                    Log.RetryAttempt(_logger, attempt, config.MaxRetries - 1, delay.TotalMilliseconds, message);
                 });
     }
 
@@ -128,10 +140,15 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
         MatchResultRequest request,
         CancellationToken cancellationToken = default)
     {
+#if NET6_0_OR_GREATER
+        ArgumentException.ThrowIfNullOrWhiteSpace(modelId);
+        ArgumentNullException.ThrowIfNull(request);
+#else
         if (string.IsNullOrWhiteSpace(modelId))
             throw new ArgumentException("Model ID cannot be null or empty", nameof(modelId));
         if (request == null)
             throw new ArgumentNullException(nameof(request));
+#endif
 
         return await _skillApi.PostMatchResultAsync(modelId, _environment, request, cancellationToken)
             .ConfigureAwait(false);
@@ -151,10 +168,15 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
         PreMatchRequest request,
         CancellationToken cancellationToken = default)
     {
+#if NET6_0_OR_GREATER
+        ArgumentException.ThrowIfNullOrWhiteSpace(modelId);
+        ArgumentNullException.ThrowIfNull(request);
+#else
         if (string.IsNullOrWhiteSpace(modelId))
             throw new ArgumentException("Model ID cannot be null or empty", nameof(modelId));
         if (request == null)
             throw new ArgumentNullException(nameof(request));
+#endif
 
         return await _skillApi.PostPreMatchAsync(modelId, _environment, request, cancellationToken)
             .ConfigureAwait(false);
@@ -172,8 +194,12 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
         string modelId,
         CancellationToken cancellationToken = default)
     {
+#if NET6_0_OR_GREATER
+        ArgumentException.ThrowIfNullOrWhiteSpace(modelId);
+#else
         if (string.IsNullOrWhiteSpace(modelId))
             throw new ArgumentException("Model ID cannot be null or empty", nameof(modelId));
+#endif
 
         return await _skillApi.GetConfigurationAsync(modelId, cancellationToken)
             .ConfigureAwait(false);
@@ -191,10 +217,15 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
     /// <exception cref="HttpRequestException">Thrown when a network error occurs after all retries.</exception>
     public MatchResultResponse PostMatchResult(string modelId, MatchResultRequest request)
     {
+#if NET6_0_OR_GREATER
+        ArgumentException.ThrowIfNullOrWhiteSpace(modelId);
+        ArgumentNullException.ThrowIfNull(request);
+#else
         if (string.IsNullOrWhiteSpace(modelId))
             throw new ArgumentException("Model ID cannot be null or empty", nameof(modelId));
         if (request == null)
             throw new ArgumentNullException(nameof(request));
+#endif
 
         return _skillApi.PostMatchResult(modelId, _environment, request);
     }
@@ -209,10 +240,15 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
     /// <exception cref="HttpRequestException">Thrown when a network error occurs after all retries.</exception>
     public PreMatchResponse PostPreMatch(string modelId, PreMatchRequest request)
     {
+#if NET6_0_OR_GREATER
+        ArgumentException.ThrowIfNullOrWhiteSpace(modelId);
+        ArgumentNullException.ThrowIfNull(request);
+#else
         if (string.IsNullOrWhiteSpace(modelId))
             throw new ArgumentException("Model ID cannot be null or empty", nameof(modelId));
         if (request == null)
             throw new ArgumentNullException(nameof(request));
+#endif
 
         return _skillApi.PostPreMatch(modelId, _environment, request);
     }
@@ -226,8 +262,12 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
     /// <exception cref="HttpRequestException">Thrown when a network error occurs after all retries.</exception>
     public ConfigurationResponse GetConfiguration(string modelId)
     {
+#if NET6_0_OR_GREATER
+        ArgumentException.ThrowIfNullOrWhiteSpace(modelId);
+#else
         if (string.IsNullOrWhiteSpace(modelId))
             throw new ArgumentException("Model ID cannot be null or empty", nameof(modelId));
+#endif
 
         return _skillApi.GetConfiguration(modelId);
     }
@@ -245,12 +285,12 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
     /// </summary>
     public sealed class Builder
     {
-        private string _apiKey;
+        private string? _apiKey;
         private string _baseUrl = "https://skill.ivk.dev";
         private string _environment = "production";
         private RetryConfig _retryConfig = RetryConfig.Default;
-        private HttpClient _httpClient;
-        private ILogger<SkillSdk> _logger;
+        private HttpClient? _httpClient;
+        private ILogger<SkillSdk>? _logger;
 
         internal Builder() { }
 
