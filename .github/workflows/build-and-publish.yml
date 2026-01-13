@@ -1,18 +1,19 @@
-name: Build and Publish
+name: Publish
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
   release:
     types: [published]
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout sources
+        uses: actions/checkout@v4
 
       - name: Setup .NET SDKs
         uses: actions/setup-dotnet@v4
@@ -43,29 +44,17 @@ jobs:
       - name: Run main test suite (.NET 10)
         run: dotnet test tests/Ivk.Skill.Sdk.Tests --configuration Release --no-build --verbosity normal
 
-  publish:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    if: github.event_name == 'release'
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup .NET SDKs
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: |
-            6.0.x
-            8.0.x
-            10.0.x
-
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Build
-        run: dotnet build src/Ivk.Skill.Sdk/Ivk.Skill.Sdk.csproj --configuration Release --no-restore
-
       - name: Pack
         run: dotnet pack src/Ivk.Skill.Sdk/Ivk.Skill.Sdk.csproj --configuration Release --no-build -o ./nupkg
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./nupkg/*
+          tag: ${{ github.ref }}
+          overwrite: true
+          file_glob: true
 
       - name: Push to NuGet
         run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate

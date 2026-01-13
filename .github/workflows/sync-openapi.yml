@@ -1,4 +1,4 @@
-name: Sync OpenAPI
+name: Sync OpenAPI Spec
 
 on:
   repository_dispatch:
@@ -8,18 +8,42 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: "8.0.x"
 
-      - name: Download OpenAPI spec
+      - name: Generate token from GitHub App
+        id: token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.WIZARD_APP_ID }}
+          private-key: ${{ secrets.WIZARD_PRIVATE_KEY }}
+          owner: invokation-games
+          repositories: |
+            ivk-skill
+            csharp-sdk
+
+      - name: Download latest OpenAPI spec
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
         run: |
-          curl -L -o ivk-skill-openapi.json \
-            "https://github.com/invokation-games/ivk-skill/releases/latest/download/openapi.json"
+          # Get latest api-v* release tag
+          TAG=$(gh release list --repo invokation-games/ivk-skill --json tagName \
+            | jq -r '[.[] | select(.tagName | startswith("api-v"))][0].tagName')
+
+          echo "Latest API release: $TAG"
+
+          # Download the asset and rename to expected filename
+          gh release download "$TAG" --repo invokation-games/ivk-skill --pattern "openapi.json"
+          mv openapi.json ivk-skill-openapi.json
 
       - name: Check for changes
         id: diff
@@ -62,7 +86,10 @@ jobs:
         if: steps.diff.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
+          token: ${{ steps.token.outputs.token }}
           commit-message: "feat: sync openapi spec"
           title: "feat: sync openapi spec"
+          body: |
+            Automated sync of OpenAPI specification from latest api release.
           branch: chore/sync-openapi
-          body: "Automated sync of OpenAPI specification"
+          delete-branch: true
