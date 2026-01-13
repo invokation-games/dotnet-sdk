@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Invokation.Skill.Sdk.Example/Invokation.Skill.Sdk.Example.csproj" />
+    <Project Path="src/Invokation.Skill.Sdk/Invokation.Skill.Sdk.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Invokation.Skill.Sdk.Tests.Net10/Invokation.Skill.Sdk.Tests.Net10.csproj" />
+    <Project Path="tests/Invokation.Skill.Sdk.Tests.Net6/Invokation.Skill.Sdk.Tests.Net6.csproj" />
+    <Project Path="tests/Invokation.Skill.Sdk.Tests.Net8/Invokation.Skill.Sdk.Tests.Net8.csproj" />
+    <Project Path="tests/Invokation.Skill.Sdk.Tests/Invokation.Skill.Sdk.Tests.csproj" />
+  </Folder>
+</Solution>

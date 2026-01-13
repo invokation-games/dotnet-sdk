@@ -1,6 +1,6 @@
 generatorName: csharp
 additionalProperties:
-  packageName: Ivk.Skill.Sdk
+  packageName: Invokation.Skill.Sdk
   targetFramework: net8.0
   library: httpclient
   useCollection: true

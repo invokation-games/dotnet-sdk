@@ -58,7 +58,7 @@ jobs:
         if: steps.diff.outputs.changed == 'true'
         run: |
           # Remove old generated files
-          rm -rf src/Ivk.Skill.Sdk/Api src/Ivk.Skill.Sdk/Client src/Ivk.Skill.Sdk/Model
+          rm -rf src/Invokation.Skill.Sdk/Api src/Invokation.Skill.Sdk/Client src/Invokation.Skill.Sdk/Model
 
           # Generate new SDK
           docker run --rm \
@@ -69,9 +69,9 @@ jobs:
             -o /local/generated
 
           # Copy generated files
-          cp -r generated/src/Ivk.Skill.Sdk/Api src/Ivk.Skill.Sdk/
-          cp -r generated/src/Ivk.Skill.Sdk/Client src/Ivk.Skill.Sdk/
-          cp -r generated/src/Ivk.Skill.Sdk/Model src/Ivk.Skill.Sdk/
+          cp -r generated/src/Invokation.Skill.Sdk/Api src/Invokation.Skill.Sdk/
+          cp -r generated/src/Invokation.Skill.Sdk/Client src/Invokation.Skill.Sdk/
+          cp -r generated/src/Invokation.Skill.Sdk/Model src/Invokation.Skill.Sdk/
 
           # Cleanup
           rm -rf generated

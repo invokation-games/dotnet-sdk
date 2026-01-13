@@ -7,20 +7,20 @@ Official C# SDK for the [Invokation Skill API](https://docs.ivk.dev) - skill rat
 Install via NuGet:
 
 ```bash
-dotnet add package Ivk.Skill.Sdk
+dotnet add package Invokation.Skill.Sdk
 ```
 
 Or via the Package Manager Console:
 
 ```powershell
-Install-Package Ivk.Skill.Sdk
+Install-Package Invokation.Skill.Sdk
 ```
 
 ## Quick Start
 
 ```csharp
-using Ivk.Skill.Sdk;
-using Ivk.Skill.Sdk.Model;
+using Invokation.Skill.Sdk;
+using Invokation.Skill.Sdk.Model;
 using System.Collections.ObjectModel;
 
 // Create the SDK instance
@@ -217,7 +217,7 @@ services.AddSingleton<SkillSdk>(sp =>
 {
     var logger = sp.GetService<ILogger<SkillSdk>>();
     return SkillSdk.CreateBuilder()
-        .WithApiKey(Configuration["IvkApiKey"])
+        .WithApiKey(Configuration["InvokationApiKey"])
         .WithLogger(logger)
         .Build();
 });
