@@ -1,0 +1,1608 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Invokation API",
+    "description": "## Introduction\nWelcome to the Invokation REST API.\n\nSoon you too will wield the full power of our skill ratings and matchmaking systems.\n\n## Authentication\nThe Invokation API uses API keys to authenticate requests. You can view and manage your API keys in the Invokation dashboard.\n\nYour API keys carry many privileges, make sure to keep them secure!\nDo not share your secret API keys in publicly accessible areas such as Github, client-side code and so forth.\n\nAll API requests must be made over [HTTPS](http://en.wikipedia.org/wiki/HTTP_Secure). Calls made over plain HTTP will fail.\nAPI requests without authentication will also fail.\n\n## Compression\n\nYou can enable compression by including the `Accept-Encoding` header in your request.\n\nWe support the following compression algorithms: `zstd`, `br`, `gzip` or `deflate`.\n\n\n## Support\nIf you need help, don't hesitate to reach out to us at support@invokation.games or join our [Community Discord](https://discord.gg/JfNGsunrjX).\n",
+    "termsOfService": "https://invokation.games",
+    "contact": {
+      "name": "Invokation",
+      "url": "https://invokation.games",
+      "email": "support@invokation.games"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "version": "2.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://skill.ivk.dev",
+      "description": "Production API"
+    },
+    {
+      "url": "http://localhost:8080",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/api/v2/{model_id}/configuration": {
+      "get": {
+        "tags": [
+          "Skill"
+        ],
+        "description": " Get the current active model configuration",
+        "operationId": "get_configuration",
+        "parameters": [
+          {
+            "name": "model_id",
+            "in": "path",
+            "description": "ID of the skill rating model",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "abc123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfully retrieved model configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfigurationResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized to use this model. Missing API key."
+          },
+          "403": {
+            "description": "Forbidden. This API key has no access to the specified model."
+          },
+          "404": {
+            "description": "Skill rating model not found"
+          }
+        }
+      }
+    },
+    "/api/v2/{model_id}/match_result/{environment}": {
+      "post": {
+        "tags": [
+          "Skill"
+        ],
+        "description": "During or after the match, you can retrieve skill rating updates based on the provided player sessions.",
+        "operationId": "post_match_result",
+        "parameters": [
+          {
+            "name": "model_id",
+            "in": "path",
+            "description": "ID of the skill rating model",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "abc123"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "description": "Environment",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "prod"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchResultRequest"
+              },
+              "examples": {
+                "1v1-minimal": {
+                  "summary": "1v1",
+                  "value": {
+                    "match_id": "unique_id_1234",
+                    "player_sessions": [
+                      {
+                        "player_id": "player_1",
+                        "player_score": 200,
+                        "prior_games_played": 80,
+                        "prior_mmr": 0.5
+                      },
+                      {
+                        "player_id": "player_2",
+                        "player_score": 250,
+                        "prior_games_played": 70,
+                        "prior_mmr": 0.4
+                      }
+                    ],
+                    "teams": []
+                  }
+                },
+                "1v1-relative-timestamps": {
+                  "summary": "1v1 - relative timestamps",
+                  "value": {
+                    "match_id": "unique_id_1234",
+                    "player_sessions": [
+                      {
+                        "player_id": "player_1",
+                        "player_score": 200,
+                        "prior_games_played": 80,
+                        "prior_mmr": 0.5,
+                        "session_timestamps": {
+                          "end": 1000,
+                          "start": 0
+                        }
+                      },
+                      {
+                        "player_id": "player_2",
+                        "player_score": 250,
+                        "prior_games_played": 70,
+                        "prior_mmr": 0.4,
+                        "session_timestamps": {
+                          "end": 950,
+                          "start": 0
+                        }
+                      }
+                    ],
+                    "teams": []
+                  }
+                },
+                "1v1-unix-timestamps": {
+                  "summary": "1v1 - unix timestamps",
+                  "value": {
+                    "match_id": "unique_id_1234",
+                    "player_sessions": [
+                      {
+                        "player_id": "player_1",
+                        "player_score": 200,
+                        "prior_games_played": 80,
+                        "prior_mmr": 0.5,
+                        "session_timestamps": {
+                          "end": 1752570241,
+                          "start": 1752569241
+                        }
+                      },
+                      {
+                        "player_id": "player_2",
+                        "player_score": 250,
+                        "prior_games_played": 70,
+                        "prior_mmr": 0.4,
+                        "session_timestamps": {
+                          "end": 1752570241,
+                          "start": 1752569241
+                        }
+                      }
+                    ],
+                    "teams": []
+                  }
+                },
+                "3v3-minimal": {
+                  "summary": "3v3",
+                  "value": {
+                    "match_id": "unique_id_1234",
+                    "player_sessions": [
+                      {
+                        "player_id": "player_1",
+                        "player_score": 300,
+                        "prior_games_played": 100,
+                        "prior_mmr": 0.6,
+                        "team_id": "blue"
+                      },
+                      {
+                        "player_id": "player_2",
+                        "player_score": 200,
+                        "prior_games_played": 110,
+                        "prior_mmr": 0.8,
+                        "team_id": "blue"
+                      },
+                      {
+                        "player_id": "player_3",
+                        "player_score": 250,
+                        "prior_games_played": 180,
+                        "prior_mmr": 0.7,
+                        "team_id": "blue"
+                      },
+                      {
+                        "player_id": "player_4",
+                        "player_score": 400,
+                        "prior_games_played": 150,
+                        "prior_mmr": 0.7,
+                        "team_id": "red"
+                      },
+                      {
+                        "player_id": "player_5",
+                        "player_score": 260,
+                        "prior_games_played": 110,
+                        "prior_mmr": 0.6,
+                        "team_id": "red"
+                      },
+                      {
+                        "player_id": "player_6",
+                        "player_score": 310,
+                        "prior_games_played": 160,
+                        "prior_mmr": 0.9,
+                        "team_id": "red"
+                      }
+                    ],
+                    "teams": [
+                      {
+                        "team_id": "blue",
+                        "team_score": 50
+                      },
+                      {
+                        "team_id": "red",
+                        "team_score": 60
+                      }
+                    ]
+                  }
+                },
+                "3v3-multisession": {
+                  "summary": "3v3 - multiple sessions per player",
+                  "value": {
+                    "match_id": "unique_id_1234",
+                    "player_sessions": [
+                      {
+                        "player_id": "player_1",
+                        "player_score": 300,
+                        "prior_games_played": 100,
+                        "prior_mmr": 0.6,
+                        "session_timestamps": {
+                          "end": 950,
+                          "start": 0
+                        },
+                        "team_id": "blue"
+                      },
+                      {
+                        "player_id": "player_2",
+                        "player_score": 100,
+                        "prior_games_played": 110,
+                        "prior_mmr": 0.8,
+                        "session_timestamps": {
+                          "end": 500,
+                          "start": 0
+                        },
+                        "team_id": "blue"
+                      },
+                      {
+                        "player_id": "player_2",
+                        "player_score": 100,
+                        "prior_games_played": 110,
+                        "prior_mmr": 0.8,
+                        "session_timestamps": {
+                          "end": 950,
+                          "start": 600
+                        },
+                        "team_id": "blue"
+                      },
+                      {
+                        "player_id": "player_3",
+                        "player_score": 250,
+                        "prior_games_played": 180,
+                        "prior_mmr": 0.7,
+                        "session_timestamps": {
+                          "end": 950,
+                          "start": 0
+                        },
+                        "team_id": "blue"
+                      },
+                      {
+                        "player_id": "player_4",
+                        "player_score": 400,
+                        "prior_games_played": 150,
+                        "prior_mmr": 0.7,
+                        "session_timestamps": {
+                          "end": 950,
+                          "start": 0
+                        },
+                        "team_id": "red"
+                      },
+                      {
+                        "player_id": "player_5",
+                        "player_score": 260,
+                        "prior_games_played": 110,
+                        "prior_mmr": 0.6,
+                        "session_timestamps": {
+                          "end": 950,
+                          "start": 0
+                        },
+                        "team_id": "red"
+                      },
+                      {
+                        "player_id": "player_6",
+                        "player_score": 50,
+                        "prior_games_played": 160,
+                        "prior_mmr": 0.9,
+                        "session_timestamps": {
+                          "end": 200,
+                          "start": 0
+                        },
+                        "team_id": "red"
+                      },
+                      {
+                        "player_id": "player_6",
+                        "player_score": 60,
+                        "prior_games_played": 160,
+                        "prior_mmr": 0.9,
+                        "session_timestamps": {
+                          "end": 500,
+                          "start": 200
+                        },
+                        "team_id": "red"
+                      },
+                      {
+                        "player_id": "player_6",
+                        "player_score": 200,
+                        "prior_games_played": 160,
+                        "prior_mmr": 0.9,
+                        "session_timestamps": {
+                          "end": 950,
+                          "start": 510
+                        },
+                        "team_id": "red"
+                      }
+                    ],
+                    "teams": [
+                      {
+                        "team_id": "blue",
+                        "team_score": 50
+                      },
+                      {
+                        "team_id": "red",
+                        "team_score": 60
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Process skill rating updates successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchResultResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized to use this model. Missing API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. This API key has no access to the specified model.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Skill rating model not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/{model_id}/pre_match/{environment}": {
+      "post": {
+        "tags": [
+          "Skill"
+        ],
+        "description": "Useful to calculate the expected outcome.",
+        "operationId": "post_pre_match",
+        "parameters": [
+          {
+            "name": "model_id",
+            "in": "path",
+            "description": "ID of the skill rating model",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "abc123"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "description": "Environment",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "prod"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreMatchRequest"
+              },
+              "examples": {
+                "1v1-minimal": {
+                  "summary": "1v1",
+                  "value": {
+                    "match_id": "unique_id_1234",
+                    "player_sessions": [
+                      {
+                        "player_id": "player_1",
+                        "prior_games_played": 80,
+                        "prior_mmr": 0.5
+                      },
+                      {
+                        "player_id": "player_2",
+                        "prior_games_played": 70,
+                        "prior_mmr": 0.4
+                      }
+                    ],
+                    "teams": []
+                  }
+                },
+                "3v3-minimal": {
+                  "summary": "3v3",
+                  "value": {
+                    "match_id": "unique_id_1234",
+                    "player_sessions": [
+                      {
+                        "player_id": "player_1",
+                        "prior_games_played": 100,
+                        "prior_mmr": 0.6,
+                        "team_id": "blue"
+                      },
+                      {
+                        "player_id": "player_2",
+                        "prior_games_played": 110,
+                        "prior_mmr": 0.8,
+                        "team_id": "blue"
+                      },
+                      {
+                        "player_id": "player_3",
+                        "prior_games_played": 180,
+                        "prior_mmr": 0.7,
+                        "team_id": "blue"
+                      },
+                      {
+                        "player_id": "player_4",
+                        "prior_games_played": 150,
+                        "prior_mmr": 0.7,
+                        "team_id": "red"
+                      },
+                      {
+                        "player_id": "player_5",
+                        "prior_games_played": 110,
+                        "prior_mmr": 0.6,
+                        "team_id": "red"
+                      },
+                      {
+                        "player_id": "player_6",
+                        "prior_games_played": 160,
+                        "prior_mmr": 0.9,
+                        "team_id": "red"
+                      }
+                    ],
+                    "teams": [
+                      {
+                        "team_id": "blue"
+                      },
+                      {
+                        "team_id": "red"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Process skill rating updates successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreMatchResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized to use this model. Missing API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. This API key has no access to the specified model.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Skill rating model not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BetaDistribution": {
+        "type": "object",
+        "required": [
+          "a",
+          "b"
+        ],
+        "properties": {
+          "a": {
+            "type": "number",
+            "format": "double",
+            "description": "Alpha parameter of the Beta distribution"
+          },
+          "b": {
+            "type": "number",
+            "format": "double",
+            "description": "Beta parameter of the Beta distribution"
+          }
+        }
+      },
+      "ConfigurationResponse": {
+        "type": "object",
+        "required": [
+          "id",
+          "revision",
+          "model"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "model": {},
+          "revision": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "description": "A structured JSON error response",
+        "required": [
+          "error",
+          "message"
+        ],
+        "properties": {
+          "details": {
+            "description": "Optional additional details about the error"
+          },
+          "error": {
+            "type": "string",
+            "description": "A machine-readable error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "A human-readable error message"
+          }
+        }
+      },
+      "MatchInfo": {
+        "type": "object",
+        "required": [
+          "min_ts",
+          "max_ts",
+          "duration",
+          "player_count",
+          "team_count",
+          "party_count",
+          "mean_mmr",
+          "mmr_deviation"
+        ],
+        "properties": {
+          "duration": {
+            "type": "number",
+            "format": "double",
+            "description": "Total duration of the match"
+          },
+          "match_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Passthrough match_id if provided"
+          },
+          "max_ts": {
+            "type": "number",
+            "format": "double",
+            "description": "The maximum timestamp for the match"
+          },
+          "mean_mmr": {
+            "type": "number",
+            "format": "double",
+            "description": "The mean MMR of all players in the match"
+          },
+          "min_ts": {
+            "type": "number",
+            "format": "double",
+            "description": "The minimum timestamp for the match"
+          },
+          "mmr_deviation": {
+            "type": "number",
+            "format": "double",
+            "description": "MMR deviation for this match (useful to determine match quality)"
+          },
+          "party_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total parties that were part of this match",
+            "minimum": 0
+          },
+          "player_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total amount of unique players in this match",
+            "minimum": 0
+          },
+          "team_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total teams that were part of this match",
+            "minimum": 0
+          }
+        }
+      },
+      "MatchMetadata": {
+        "type": "object",
+        "properties": {
+          "game_mode": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The gamemode for this match."
+          },
+          "season": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32",
+            "description": "The season the match was played in",
+            "minimum": 0
+          }
+        }
+      },
+      "MatchResultRequest": {
+        "type": "object",
+        "required": [
+          "teams",
+          "player_sessions"
+        ],
+        "properties": {
+          "match_end_ts": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Time the match ended (ISO 8601 UTC timestamp). Apart from backfilling historical data or simulations, you probably don't need to pass this."
+          },
+          "match_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Unique match identifier"
+          },
+          "match_start_ts": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Time the match started (ISO 8601 UTC timestamp). Apart from backfilling historical data or simulations, you probably don't need to pass this."
+          },
+          "metadata": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MatchMetadata",
+                "description": "Several properties to provide more context about the match"
+              }
+            ]
+          },
+          "player_sessions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlayerSession"
+            },
+            "description": "A list of all player sessions for one single match. There can be multiple sessions for the same player."
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeamInfo"
+            },
+            "description": "A list of teams and their metadata"
+          }
+        }
+      },
+      "MatchResultResponse": {
+        "type": "object",
+        "required": [
+          "match_info",
+          "teams",
+          "players"
+        ],
+        "properties": {
+          "match_info": {
+            "$ref": "#/components/schemas/MatchInfo",
+            "description": "Match metadata"
+          },
+          "players": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlayerResult"
+            },
+            "description": "List of skill rating updates per player. One per player."
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeamResult"
+            },
+            "description": "List of team update result"
+          }
+        }
+      },
+      "PlayerResult": {
+        "type": "object",
+        "required": [
+          "player_idx",
+          "player_id",
+          "prior",
+          "post",
+          "extended"
+        ],
+        "properties": {
+          "extended": {
+            "$ref": "#/components/schemas/PlayerUpdateExtended",
+            "description": "Extended player update information"
+          },
+          "player_id": {
+            "type": "string",
+            "description": "The unique identifier of the player (passed through)"
+          },
+          "player_idx": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Zero-indexed player index",
+            "minimum": 0
+          },
+          "post": {
+            "$ref": "#/components/schemas/PriorPlayerStats",
+            "description": "Updated player stats after this match"
+          },
+          "prior": {
+            "$ref": "#/components/schemas/PriorPlayerStats",
+            "description": "Player stats from the start of this match"
+          }
+        }
+      },
+      "PlayerSession": {
+        "type": "object",
+        "required": [
+          "player_id",
+          "player_score"
+        ],
+        "properties": {
+          "adjusted_mmr": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "Adjusted MMR that was used for matchmaking / team-balancing.\nFor example; players who are in a party will often perform better than their individual MMR would suggest\nA matchmaker or teambalancer might take this into account by calculating a bonus to the MMR\nHowever, such a bonus could cause a party to gain more or lose less MMR than they would otherwise\nBy providing this value, we can compensate for this effect."
+          },
+          "bot_level": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "If this is a bot, an optional bot skill level for analytics purposes\nDefault: null"
+          },
+          "is_bot": {
+            "type": "boolean",
+            "description": "Used to flag this session as a Bot session"
+          },
+          "party_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Local identifier of the player's party.\nIf set, should be unique per party per match.\nDefault behavior is to treat each player as their own party, so party_id can be omitted for games that don't support parties."
+          },
+          "perf_beta": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "Override for rating uncertainty (advanced option)\nDefault behavior is to use values generated by model"
+          },
+          "player_id": {
+            "type": "string",
+            "description": "The unique identifier of the player"
+          },
+          "player_score": {
+            "type": "number",
+            "format": "double",
+            "description": "The player score in this match\nDefault: 0\nIt's up to the game to determine this value. The only requirement is that a higher score is better than a lower score.\nThis value only matters if player performance is configured to have non-zero weight."
+          },
+          "player_score_start": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "The player's score at the start of this session (advanced option)\nDefault behavior is to inherit player_score from the end of the previous session (recommended)\nUsed for score-per-minute normalization in cases where players can rejoin matches\ne.g. set this to 0 if player scores are reset on rejoin"
+          },
+          "prior_games_played": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The previous number of games the player has played (ever, or just this season).",
+            "minimum": 0
+          },
+          "prior_mmr": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "The MMR of the player at the start of the match.\nA number between 0 and 1\nDefault: default_mmr specified in the MMR configuration",
+            "maximum": 1,
+            "minimum": 0
+          },
+          "prior_momentum": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "Incoming momentum (**not used in most models**)\nFor models with experimental anti-smurfing features or rating acceleration\nEssentially rolling-average win rate"
+          },
+          "session_timestamps": {
+            "$ref": "#/components/schemas/PlayerSessionTimestamps"
+          },
+          "team_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Local identifier of the player's team.\nIf set must match one of the teams provided in the MatchResult.\nDefault behavior is to treat each player as their own team, so team_id can be omitted for 1v1 or free-for-all modes."
+          }
+        }
+      },
+      "PlayerSessionTimestamps": {
+        "type": "object",
+        "description": "Start & end timestamp",
+        "required": [
+          "start",
+          "end"
+        ],
+        "properties": {
+          "end": {
+            "type": "number",
+            "format": "double",
+            "description": "A timestamp of when this playersession ended."
+          },
+          "start": {
+            "type": "number",
+            "format": "double",
+            "description": "A timestamp of when this playersession started."
+          }
+        }
+      },
+      "PlayerUpdateExtended": {
+        "type": "object",
+        "required": [
+          "session_count",
+          "team_count",
+          "placement_frac",
+          "is_final_placement",
+          "alpha",
+          "team_weight",
+          "player_weight",
+          "player_score_rate",
+          "team_expected",
+          "team_outcome",
+          "player_expected",
+          "player_outcome",
+          "unified_expected_dist",
+          "unified_expected",
+          "unified_outcome",
+          "residual",
+          "mmr_delta",
+          "min_ts",
+          "max_ts",
+          "is_bot",
+          "bot_level"
+        ],
+        "properties": {
+          "alpha": {
+            "type": "number",
+            "format": "double",
+            "description": "Calculated scale factor for uncertainty and step sizes\ntypically = 1.0 outside of placement"
+          },
+          "bot_level": {
+            "type": "number",
+            "format": "double"
+          },
+          "is_bot": {
+            "type": "boolean",
+            "description": "Passthrough from request"
+          },
+          "is_final_placement": {
+            "type": "boolean",
+            "description": "Was this the last match of placement"
+          },
+          "max_ts": {
+            "type": "number",
+            "format": "double"
+          },
+          "min_ts": {
+            "type": "number",
+            "format": "double"
+          },
+          "mmr_delta": {
+            "type": "number",
+            "format": "double",
+            "description": "Change in MMR after this match"
+          },
+          "placement_frac": {
+            "type": "number",
+            "format": "double",
+            "description": "All the teams the player was a part of during this match\nFraction of placement completed (max of 1.0, but can be negative)"
+          },
+          "player_expected": {
+            "type": "number",
+            "format": "double",
+            "description": "Expected individual outcome for the player (0-1)\npotentially clamped to a maximum value (typically 0.8) to guarantee minimum payoffs"
+          },
+          "player_outcome": {
+            "type": "number",
+            "format": "double",
+            "description": "Actual individual outcome for the player (0-1)"
+          },
+          "player_score_rate": {
+            "type": "number",
+            "format": "double",
+            "description": "Player score per time unit"
+          },
+          "player_weight": {
+            "type": "number",
+            "format": "double",
+            "description": "How much weight individual outcome has to influence MMR"
+          },
+          "residual": {
+            "type": "number",
+            "format": "double",
+            "description": "Difference between actual and expected outcomes (prediction error)"
+          },
+          "session_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total number of sessions for this player during this match",
+            "minimum": 0
+          },
+          "team_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The amount of teams the player was a part of during this match",
+            "minimum": 0
+          },
+          "team_expected": {
+            "type": "number",
+            "format": "double",
+            "description": "Weighted average of expected outcomes of all teams this player was a member of"
+          },
+          "team_outcome": {
+            "type": "number",
+            "format": "double",
+            "description": "Weighted average of actual outcomes of all teams this player was a memeber of"
+          },
+          "team_weight": {
+            "type": "number",
+            "format": "double",
+            "description": "How much weight team outcome has to influences MMR"
+          },
+          "unified_expected": {
+            "type": "number",
+            "format": "double",
+            "description": "Combined team and individual expected outcomes"
+          },
+          "unified_expected_dist": {
+            "$ref": "#/components/schemas/BetaDistribution",
+            "description": "The Beta distribution of expected outcomes\nEncodes how much certainty we have about the unified expected outcome"
+          },
+          "unified_outcome": {
+            "type": "number",
+            "format": "double",
+            "description": "Combined team and individual actual outcomes"
+          }
+        }
+      },
+      "PreMatchInfo": {
+        "type": "object",
+        "required": [
+          "player_count",
+          "team_count",
+          "party_count",
+          "mean_mmr",
+          "mmr_deviation"
+        ],
+        "properties": {
+          "match_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Passthrough match_id if provided"
+          },
+          "mean_mmr": {
+            "type": "number",
+            "format": "double",
+            "description": "The mean MMR of all players in the match"
+          },
+          "mmr_deviation": {
+            "type": "number",
+            "format": "double",
+            "description": "MMR deviation for this match (useful to determine match quality)"
+          },
+          "party_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total parties that were part of this match",
+            "minimum": 0
+          },
+          "player_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total amount of unique players in this match",
+            "minimum": 0
+          },
+          "team_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total teams that were part of this match",
+            "minimum": 0
+          }
+        }
+      },
+      "PreMatchPlayerResult": {
+        "type": "object",
+        "required": [
+          "player_idx",
+          "player_id",
+          "prior",
+          "post",
+          "extended"
+        ],
+        "properties": {
+          "extended": {
+            "$ref": "#/components/schemas/PreMatchPlayerResultExtended",
+            "description": "Extended player update information"
+          },
+          "player_id": {
+            "type": "string",
+            "description": "The unique identifier of the player (passed through)"
+          },
+          "player_idx": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Internal player index",
+            "minimum": 0
+          },
+          "post": {
+            "$ref": "#/components/schemas/PriorPlayerStats",
+            "description": "Updated player stats after this match"
+          },
+          "prior": {
+            "$ref": "#/components/schemas/PriorPlayerStats",
+            "description": "Player stats from the start of this match"
+          }
+        }
+      },
+      "PreMatchPlayerResultExtended": {
+        "type": "object",
+        "required": [
+          "alpha",
+          "team_weight",
+          "player_weight",
+          "team_expected",
+          "player_expected",
+          "unified_expected",
+          "unified_expected_dist",
+          "mmr_delta",
+          "is_bot",
+          "bot_level",
+          "placement_frac",
+          "is_final_placement"
+        ],
+        "properties": {
+          "alpha": {
+            "type": "number",
+            "format": "double",
+            "description": "Calculated scale factor for uncertainty and step sizes\nTypically = 1.0 outside of placement"
+          },
+          "bot_level": {
+            "type": "number",
+            "format": "double"
+          },
+          "is_bot": {
+            "type": "boolean",
+            "description": "Passthrough from request"
+          },
+          "is_final_placement": {
+            "type": "boolean",
+            "description": "Was this the last match of placement"
+          },
+          "mmr_delta": {
+            "type": "number",
+            "format": "double",
+            "description": "Expected change in MMR if match ends as predicted"
+          },
+          "placement_frac": {
+            "type": "number",
+            "format": "double",
+            "description": "Fraction of placement completed (max of 1.0, but can be negative)"
+          },
+          "player_expected": {
+            "type": "number",
+            "format": "double",
+            "description": "Expected individual outcome for the player (0-1)\nPotentially clamped to a maximum value (typically 0.8) to guarantee minimum payoffs"
+          },
+          "player_weight": {
+            "type": "number",
+            "format": "double",
+            "description": "How much weight individual outcome is expected to influence MMR"
+          },
+          "team_expected": {
+            "type": "number",
+            "format": "double",
+            "description": "Expected weighted average of outcomes for all teams this player is a member of"
+          },
+          "team_weight": {
+            "type": "number",
+            "format": "double",
+            "description": "How much weight team outcome is expected to influence MMR"
+          },
+          "unified_expected": {
+            "type": "number",
+            "format": "double",
+            "description": "Combined team and individual expected outcomes"
+          },
+          "unified_expected_dist": {
+            "$ref": "#/components/schemas/BetaDistribution",
+            "description": "The Beta distribution of expected outcomes\nEncodes how much certainty we have about the unified expected outcome"
+          }
+        }
+      },
+      "PreMatchPlayerSession": {
+        "type": "object",
+        "required": [
+          "player_id"
+        ],
+        "properties": {
+          "adjusted_mmr": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "Adjusted MMR that was used for matchmaking / team-balancing.\nFor example; players who are in a party will often perform better than their individual MMR would suggest\nA matchmaker or teambalancer might take this into account by calculating a bonus to the MMR\nHowever, such a bonus could cause a party to gain more or lose less MMR than they would otherwise\nBy providing this value, we can compensate for this effect."
+          },
+          "bot_level": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "If this is a bot, an optional bot skill level for analytics purposes\nDefault: null"
+          },
+          "is_bot": {
+            "type": "boolean",
+            "description": "Used to flag this session as a Bot session"
+          },
+          "party_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Local identifier of the player's party\nIf set, should be unique per party per match\nDefault behavior is to treat each player as their own party, so party_id can be omitted for games that don't support parties."
+          },
+          "perf_beta": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "Override for rating uncertainty (advanced option)\nDefault behavior is to use values generated by model"
+          },
+          "player_id": {
+            "type": "string",
+            "description": "The unique identifier of the player"
+          },
+          "prior_games_played": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The previous number of games the player has played (ever, or just this season).",
+            "minimum": 0
+          },
+          "prior_mmr": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "The MMR of the player at the start of the match.\nA number between 0 and 1\nDefault: default_mmr specified in the MMR configuration"
+          },
+          "prior_momentum": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "Incoming momentum (**not used in most models**)\nFor models with experimental anti-smurfing features or rating acceleration\nEssentially rolling-average win rate"
+          },
+          "team_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Local identifier of the player's team\nIf set must match one of the teams provided in the MatchResult\nDefault behavior is to treat each player as their own team, so team_id can be omitted for 1v1 or free-for-all modes."
+          }
+        }
+      },
+      "PreMatchRequest": {
+        "type": "object",
+        "required": [
+          "player_sessions",
+          "teams"
+        ],
+        "properties": {
+          "match_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Unique match identifier"
+          },
+          "metadata": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MatchMetadata",
+                "description": "Several properties to provide more context about the match"
+              }
+            ]
+          },
+          "player_sessions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PreMatchPlayerSession"
+            },
+            "description": "A list of all player sessions for one single match. There can be multiple sessions for a single player."
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PreMatchTeamInfo"
+            },
+            "description": "A list of teams and their metadata"
+          }
+        }
+      },
+      "PreMatchResponse": {
+        "type": "object",
+        "required": [
+          "match_info",
+          "teams",
+          "players"
+        ],
+        "properties": {
+          "match_info": {
+            "$ref": "#/components/schemas/PreMatchInfo",
+            "description": "Match metadata"
+          },
+          "players": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PreMatchPlayerResult"
+            },
+            "description": "List of skill rating updates per player. One per player."
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PreMatchTeamResult"
+            },
+            "description": "List of team update result"
+          }
+        }
+      },
+      "PreMatchTeamInfo": {
+        "type": "object",
+        "required": [
+          "team_id"
+        ],
+        "properties": {
+          "team_id": {
+            "type": "string",
+            "description": "Unique identifier for the team (within the context of this match)"
+          }
+        }
+      },
+      "PreMatchTeamResult": {
+        "type": "object",
+        "required": [
+          "idx",
+          "id",
+          "mmr",
+          "beta",
+          "expected",
+          "party_count",
+          "size",
+          "density"
+        ],
+        "properties": {
+          "beta": {
+            "type": "number",
+            "format": "double",
+            "description": "Total uncertainty in team outcome"
+          },
+          "density": {
+            "type": "number",
+            "format": "double",
+            "description": "The weighted team size"
+          },
+          "expected": {
+            "type": "number",
+            "format": "double",
+            "description": "The expected team outcome based on party and team model (0-1)\nPotentially clamped to a maximum value (typically 0.8) to guarantee minimum payoffs"
+          },
+          "id": {
+            "type": "string",
+            "description": "The local identifier of the team (passthrough)"
+          },
+          "idx": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Zero-indexed team index",
+            "minimum": 0
+          },
+          "mmr": {
+            "type": "number",
+            "format": "double",
+            "description": "Total MMR of the team as determined by the party and team models (not necessarily the sum of MMRs)"
+          },
+          "party_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total parties in the team",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total player count the team has seen throughout the match",
+            "minimum": 0
+          }
+        }
+      },
+      "PriorPlayerStats": {
+        "type": "object",
+        "required": [
+          "games_played",
+          "mmr",
+          "momentum"
+        ],
+        "properties": {
+          "games_played": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Amount of games played",
+            "minimum": 0
+          },
+          "mmr": {
+            "type": "number",
+            "format": "double",
+            "description": "The player MMR"
+          },
+          "momentum": {
+            "type": "number",
+            "format": "double",
+            "description": "Rolling-average win rate (**if used by model**)"
+          }
+        }
+      },
+      "TeamInfo": {
+        "type": "object",
+        "required": [
+          "team_id",
+          "team_score"
+        ],
+        "properties": {
+          "team_id": {
+            "type": "string",
+            "description": "Unique identifier for the team (within the context of this match)"
+          },
+          "team_score": {
+            "type": "number",
+            "format": "double",
+            "description": "The team score"
+          }
+        }
+      },
+      "TeamResult": {
+        "type": "object",
+        "required": [
+          "idx",
+          "id",
+          "mmr",
+          "beta",
+          "expected",
+          "outcome",
+          "party_count",
+          "size",
+          "density"
+        ],
+        "properties": {
+          "beta": {
+            "type": "number",
+            "format": "double",
+            "description": "Total uncertainty in team outcome"
+          },
+          "density": {
+            "type": "number",
+            "format": "double",
+            "description": "The weighted team size"
+          },
+          "expected": {
+            "type": "number",
+            "format": "double",
+            "description": "the expected team outcome based on party and team model (0-1)\npotentially clamped to a maximum value (typically 0.8) to guarantee minimum payoffs"
+          },
+          "id": {
+            "type": "string",
+            "description": "The local identifier of the team (passthrough)"
+          },
+          "idx": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Zero-indexed team index",
+            "minimum": 0
+          },
+          "mmr": {
+            "type": "number",
+            "format": "double",
+            "description": "Total MMR of the team as determined by the party and team models (not necessarily the sum of MMRs)"
+          },
+          "outcome": {
+            "type": "number",
+            "format": "double",
+            "description": "the team outcome (0-1)\nregardless of individual performance"
+          },
+          "party_count": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total parties in the team",
+            "minimum": 0
+          },
+          "score": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double",
+            "description": "Score of the team (passthrough)"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total player count the team has seen throughout the match",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-ivk-apikey",
+        "description": "You can manage your API keys in the IVK portal."
+      }
+    }
+  },
+  "security": [
+    {
+      "api_key": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Skill",
+      "description": "IVK Skill provides skill rating algorithms and updates for multiplayer games."
+    }
+  ],
+  "externalDocs": {
+    "url": "https://docs.ivk.dev",
+    "description": "More about our APIs"
+  }
+}

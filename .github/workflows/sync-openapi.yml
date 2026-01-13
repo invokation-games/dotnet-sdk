@@ -1,0 +1,68 @@
+name: Sync OpenAPI
+
+on:
+  repository_dispatch:
+    types: [openapi-updated]
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Download OpenAPI spec
+        run: |
+          curl -L -o ivk-skill-openapi.json \
+            "https://github.com/invokation-games/ivk-skill/releases/latest/download/openapi.json"
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet ivk-skill-openapi.json; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate SDK
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          # Remove old generated files
+          rm -rf src/Ivk.Skill.Sdk/Api src/Ivk.Skill.Sdk/Client src/Ivk.Skill.Sdk/Model
+
+          # Generate new SDK
+          docker run --rm \
+            -v "${PWD}:/local" \
+            openapitools/openapi-generator-cli:v7.12.0 generate \
+            -i /local/ivk-skill-openapi.json \
+            -c /local/openapi-generator-config.yaml \
+            -o /local/generated
+
+          # Copy generated files
+          cp -r generated/src/Ivk.Skill.Sdk/Api src/Ivk.Skill.Sdk/
+          cp -r generated/src/Ivk.Skill.Sdk/Client src/Ivk.Skill.Sdk/
+          cp -r generated/src/Ivk.Skill.Sdk/Model src/Ivk.Skill.Sdk/
+
+          # Cleanup
+          rm -rf generated
+
+      - name: Build and Test
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          dotnet build --configuration Release
+          dotnet test --configuration Release
+
+      - name: Create Pull Request
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "feat: sync openapi spec"
+          title: "feat: sync openapi spec"
+          branch: chore/sync-openapi
+          body: "Automated sync of OpenAPI specification"

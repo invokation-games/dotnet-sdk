@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Ivk.Skill.Sdk.Example/Ivk.Skill.Sdk.Example.csproj" />
+    <Project Path="src/Ivk.Skill.Sdk/Ivk.Skill.Sdk.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Ivk.Skill.Sdk.Tests/Ivk.Skill.Sdk.Tests.csproj" />
+  </Folder>
+</Solution>

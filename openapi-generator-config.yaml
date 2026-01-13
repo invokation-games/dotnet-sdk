@@ -1,0 +1,12 @@
+generatorName: csharp
+additionalProperties:
+  packageName: Ivk.Skill.Sdk
+  targetFramework: net8.0
+  library: httpclient
+  useCollection: true
+  nullableReferenceTypes: true
+  useDateTimeOffset: true
+  optionalEmitDefaultValues: false
+  optionalMethodArgument: true
+  generateApiDocumentation: true
+  generateModelDocumentation: true
