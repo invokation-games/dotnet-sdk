@@ -13,7 +13,7 @@ public class SkillSdkTests
             teams: new Collection<TeamInfo>(),
             playerSessions: new Collection<PlayerSession>());
 
-        Assert.Throws<ArgumentException>(() => sdk.PostMatchResult(null!, request));
+        Assert.Throws<ArgumentNullException>(() => sdk.PostMatchResult(null!, request));
     }
 
     [Fact]
@@ -43,7 +43,7 @@ public class SkillSdkTests
             playerSessions: new Collection<PreMatchPlayerSession>(),
             teams: new Collection<PreMatchTeamInfo>());
 
-        Assert.Throws<ArgumentException>(() => sdk.PostPreMatch(null!, request));
+        Assert.Throws<ArgumentNullException>(() => sdk.PostPreMatch(null!, request));
     }
 
     [Fact]
@@ -59,7 +59,7 @@ public class SkillSdkTests
     {
         using var sdk = CreateSdk();
 
-        Assert.Throws<ArgumentException>(() => sdk.GetConfiguration(null!));
+        Assert.Throws<ArgumentNullException>(() => sdk.GetConfiguration(null!));
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public class SkillSdkTests
             teams: new Collection<TeamInfo>(),
             playerSessions: new Collection<PlayerSession>());
 
-        await Assert.ThrowsAsync<ArgumentException>(
+        await Assert.ThrowsAsync<ArgumentNullException>(
             () => sdk.PostMatchResultAsync(null!, request));
     }
 
@@ -91,7 +91,7 @@ public class SkillSdkTests
             playerSessions: new Collection<PreMatchPlayerSession>(),
             teams: new Collection<PreMatchTeamInfo>());
 
-        await Assert.ThrowsAsync<ArgumentException>(
+        await Assert.ThrowsAsync<ArgumentNullException>(
             () => sdk.PostPreMatchAsync(null!, request));
     }
 
@@ -109,7 +109,7 @@ public class SkillSdkTests
     {
         using var sdk = CreateSdk();
 
-        await Assert.ThrowsAsync<ArgumentException>(
+        await Assert.ThrowsAsync<ArgumentNullException>(
             () => sdk.GetConfigurationAsync(null!));
     }
 

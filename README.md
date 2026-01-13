@@ -62,7 +62,7 @@ foreach (var player in ratingUpdates.Players)
 - **Async/await and sync APIs** - Choose between `PostMatchResultAsync()` or `PostMatchResult()`
 - **Automatic retry with exponential backoff** - Configurable retry behavior for transient failures
 - **API key authentication** - Simple setup via the builder pattern
-- **Full .NET support** - Targets .NET 6, .NET 8, .NET 10, and .NET Standard 2.1
+- **Full .NET support** - Targets .NET 6, .NET 8, and .NET 10
 
 ## Configuration
 

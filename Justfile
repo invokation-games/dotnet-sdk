@@ -30,12 +30,15 @@ build-all:
 test:
     dotnet test --configuration Release
 
-# Run tests for a specific framework (for local development)
+# Run tests for a specific framework
+# Build with .NET 10 first (required for multi-targeting), then run tests with target runtime
 test-net6:
-    dotnet test tests/Ivk.Skill.Sdk.Tests.Net6 --configuration Release
+    dotnet build tests/Ivk.Skill.Sdk.Tests.Net6 --configuration Release
+    mise x dotnet@6 -- dotnet test tests/Ivk.Skill.Sdk.Tests.Net6 --configuration Release --no-build
 
 test-net8:
-    dotnet test tests/Ivk.Skill.Sdk.Tests.Net8 --configuration Release
+    dotnet build tests/Ivk.Skill.Sdk.Tests.Net8 --configuration Release
+    mise x dotnet@8 -- dotnet test tests/Ivk.Skill.Sdk.Tests.Net8 --configuration Release --no-build
 
 test-net10:
     dotnet test tests/Ivk.Skill.Sdk.Tests.Net10 --configuration Release

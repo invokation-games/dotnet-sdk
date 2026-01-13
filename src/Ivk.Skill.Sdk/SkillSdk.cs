@@ -14,6 +14,24 @@ using Polly;
 
 namespace Ivk.Skill.Sdk;
 
+#if !NET8_0_OR_GREATER
+internal static class ArgumentValidation
+{
+    public static void ThrowIfNullOrWhiteSpace(string? argument, string? paramName = null)
+    {
+        if (argument is null)
+        {
+            throw new ArgumentNullException(paramName);
+        }
+
+        if (string.IsNullOrWhiteSpace(argument))
+        {
+            throw new ArgumentException("Value cannot be null or whitespace.", paramName);
+        }
+    }
+}
+#endif
+
 internal static class Log
 {
     private static readonly Action<ILogger, int, int, double, string, Exception?> RetryAttemptAction =
@@ -140,15 +158,8 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
         MatchResultRequest request,
         CancellationToken cancellationToken = default)
     {
-#if NET6_0_OR_GREATER
-        ArgumentException.ThrowIfNullOrWhiteSpace(modelId);
+        ThrowIfNullOrWhiteSpace(modelId);
         ArgumentNullException.ThrowIfNull(request);
-#else
-        if (string.IsNullOrWhiteSpace(modelId))
-            throw new ArgumentException("Model ID cannot be null or empty", nameof(modelId));
-        if (request == null)
-            throw new ArgumentNullException(nameof(request));
-#endif
 
         return await _skillApi.PostMatchResultAsync(modelId, _environment, request, cancellationToken)
             .ConfigureAwait(false);
@@ -168,15 +179,8 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
         PreMatchRequest request,
         CancellationToken cancellationToken = default)
     {
-#if NET6_0_OR_GREATER
-        ArgumentException.ThrowIfNullOrWhiteSpace(modelId);
+        ThrowIfNullOrWhiteSpace(modelId);
         ArgumentNullException.ThrowIfNull(request);
-#else
-        if (string.IsNullOrWhiteSpace(modelId))
-            throw new ArgumentException("Model ID cannot be null or empty", nameof(modelId));
-        if (request == null)
-            throw new ArgumentNullException(nameof(request));
-#endif
 
         return await _skillApi.PostPreMatchAsync(modelId, _environment, request, cancellationToken)
             .ConfigureAwait(false);
@@ -194,12 +198,7 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
         string modelId,
         CancellationToken cancellationToken = default)
     {
-#if NET6_0_OR_GREATER
-        ArgumentException.ThrowIfNullOrWhiteSpace(modelId);
-#else
-        if (string.IsNullOrWhiteSpace(modelId))
-            throw new ArgumentException("Model ID cannot be null or empty", nameof(modelId));
-#endif
+        ThrowIfNullOrWhiteSpace(modelId);
 
         return await _skillApi.GetConfigurationAsync(modelId, cancellationToken)
             .ConfigureAwait(false);
@@ -217,15 +216,8 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
     /// <exception cref="HttpRequestException">Thrown when a network error occurs after all retries.</exception>
     public MatchResultResponse PostMatchResult(string modelId, MatchResultRequest request)
     {
-#if NET6_0_OR_GREATER
-        ArgumentException.ThrowIfNullOrWhiteSpace(modelId);
+        ThrowIfNullOrWhiteSpace(modelId);
         ArgumentNullException.ThrowIfNull(request);
-#else
-        if (string.IsNullOrWhiteSpace(modelId))
-            throw new ArgumentException("Model ID cannot be null or empty", nameof(modelId));
-        if (request == null)
-            throw new ArgumentNullException(nameof(request));
-#endif
 
         return _skillApi.PostMatchResult(modelId, _environment, request);
     }
@@ -240,15 +232,8 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
     /// <exception cref="HttpRequestException">Thrown when a network error occurs after all retries.</exception>
     public PreMatchResponse PostPreMatch(string modelId, PreMatchRequest request)
     {
-#if NET6_0_OR_GREATER
-        ArgumentException.ThrowIfNullOrWhiteSpace(modelId);
+        ThrowIfNullOrWhiteSpace(modelId);
         ArgumentNullException.ThrowIfNull(request);
-#else
-        if (string.IsNullOrWhiteSpace(modelId))
-            throw new ArgumentException("Model ID cannot be null or empty", nameof(modelId));
-        if (request == null)
-            throw new ArgumentNullException(nameof(request));
-#endif
 
         return _skillApi.PostPreMatch(modelId, _environment, request);
     }
@@ -262,14 +247,17 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
     /// <exception cref="HttpRequestException">Thrown when a network error occurs after all retries.</exception>
     public ConfigurationResponse GetConfiguration(string modelId)
     {
-#if NET6_0_OR_GREATER
-        ArgumentException.ThrowIfNullOrWhiteSpace(modelId);
-#else
-        if (string.IsNullOrWhiteSpace(modelId))
-            throw new ArgumentException("Model ID cannot be null or empty", nameof(modelId));
-#endif
-
+        ThrowIfNullOrWhiteSpace(modelId);
         return _skillApi.GetConfiguration(modelId);
+    }
+
+    private static void ThrowIfNullOrWhiteSpace(string? argument, [System.Runtime.CompilerServices.CallerArgumentExpression(nameof(argument))] string? paramName = null)
+    {
+#if NET8_0_OR_GREATER
+        ArgumentException.ThrowIfNullOrWhiteSpace(argument, paramName);
+#else
+        ArgumentValidation.ThrowIfNullOrWhiteSpace(argument, paramName);
+#endif
     }
 
     // ===== Builder =====
