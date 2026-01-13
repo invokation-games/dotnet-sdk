@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,7 +9,6 @@ using Ivk.Skill.Sdk.Model;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Polly;
-using Polly.Retry;
 
 namespace Ivk.Skill.Sdk;
 
@@ -31,10 +31,7 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
 {
     private readonly SkillApi _skillApi;
     private readonly string _environment;
-    private readonly RetryConfig _retryConfig;
     private readonly ILogger<SkillSdk> _logger;
-    private readonly AsyncRetryPolicy _asyncRetryPolicy;
-    private readonly RetryPolicy _syncRetryPolicy;
     private readonly bool _ownsHttpClient;
     private readonly HttpClient _httpClient;
     private bool _disposed;
@@ -49,7 +46,6 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
         ILogger<SkillSdk> logger)
     {
         _environment = environment ?? throw new ArgumentNullException(nameof(environment));
-        _retryConfig = retryConfig ?? throw new ArgumentNullException(nameof(retryConfig));
         _logger = logger ?? NullLogger<SkillSdk>.Instance;
         _ownsHttpClient = ownsHttpClient;
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
@@ -63,35 +59,56 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
 
         _skillApi = new SkillApi(httpClient, configuration);
 
-        // Build retry policies
-        _asyncRetryPolicy = Policy
-            .Handle<HttpRequestException>()
-            .Or<TaskCanceledException>(ex => !ex.CancellationToken.IsCancellationRequested)
-            .Or<ApiException>(ex => ex.ErrorCode >= 500)
-            .WaitAndRetryAsync(
-                retryCount: _retryConfig.MaxRetries - 1,
-                sleepDurationProvider: attempt => CalculateBackoffDelay(attempt),
-                onRetry: (exception, delay, attempt, _) =>
-                    _logger.LogWarning(exception,
-                        "Retry attempt {Attempt}/{Max} after {Delay}ms",
-                        attempt, _retryConfig.MaxRetries - 1, delay.TotalMilliseconds));
-
-        _syncRetryPolicy = Policy
-            .Handle<HttpRequestException>()
-            .Or<ApiException>(ex => ex.ErrorCode >= 500)
-            .WaitAndRetry(
-                retryCount: _retryConfig.MaxRetries - 1,
-                sleepDurationProvider: attempt => CalculateBackoffDelay(attempt),
-                onRetry: (exception, delay, attempt, _) =>
-                    _logger.LogWarning(exception,
-                        "Retry attempt {Attempt}/{Max} after {Delay}ms",
-                        attempt, _retryConfig.MaxRetries - 1, delay.TotalMilliseconds));
+        // Configure the global retry policy using the generated RetryConfiguration
+        ConfigureRetryPolicy(retryConfig ?? RetryConfig.Default);
     }
 
-    private TimeSpan CalculateBackoffDelay(int attempt)
+    private void ConfigureRetryPolicy(RetryConfig config)
     {
-        var exponentialDelay = _retryConfig.InitialDelayMs * Math.Pow(2, attempt - 1);
-        var clampedDelay = Math.Min(exponentialDelay, _retryConfig.MaxDelayMs);
+        RetryConfiguration.AsyncRetryPolicy = Policy
+            .HandleResult<HttpResponseMessage>(r =>
+                r.StatusCode == HttpStatusCode.TooManyRequests ||
+                r.StatusCode == HttpStatusCode.ServiceUnavailable ||
+                r.StatusCode == HttpStatusCode.GatewayTimeout ||
+                r.StatusCode == HttpStatusCode.BadGateway ||
+                (int)r.StatusCode >= 500)
+            .Or<HttpRequestException>()
+            .Or<TaskCanceledException>(ex => !ex.CancellationToken.IsCancellationRequested)
+            .WaitAndRetryAsync(
+                retryCount: config.MaxRetries - 1,
+                sleepDurationProvider: attempt => CalculateBackoffDelay(attempt, config),
+                onRetry: (outcome, delay, attempt, _) =>
+                {
+                    var message = outcome.Exception?.Message ?? $"HTTP {(int?)outcome.Result?.StatusCode}";
+                    _logger.LogWarning(
+                        "Retry attempt {Attempt}/{Max} after {Delay}ms: {Message}",
+                        attempt, config.MaxRetries - 1, delay.TotalMilliseconds, message);
+                });
+
+        RetryConfiguration.RetryPolicy = Policy
+            .HandleResult<HttpResponseMessage>(r =>
+                r.StatusCode == HttpStatusCode.TooManyRequests ||
+                r.StatusCode == HttpStatusCode.ServiceUnavailable ||
+                r.StatusCode == HttpStatusCode.GatewayTimeout ||
+                r.StatusCode == HttpStatusCode.BadGateway ||
+                (int)r.StatusCode >= 500)
+            .Or<HttpRequestException>()
+            .WaitAndRetry(
+                retryCount: config.MaxRetries - 1,
+                sleepDurationProvider: attempt => CalculateBackoffDelay(attempt, config),
+                onRetry: (outcome, delay, attempt, _) =>
+                {
+                    var message = outcome.Exception?.Message ?? $"HTTP {(int?)outcome.Result?.StatusCode}";
+                    _logger.LogWarning(
+                        "Retry attempt {Attempt}/{Max} after {Delay}ms: {Message}",
+                        attempt, config.MaxRetries - 1, delay.TotalMilliseconds, message);
+                });
+    }
+
+    private static TimeSpan CalculateBackoffDelay(int attempt, RetryConfig config)
+    {
+        var exponentialDelay = config.InitialDelayMs * Math.Pow(2, attempt - 1);
+        var clampedDelay = Math.Min(exponentialDelay, config.MaxDelayMs);
         return TimeSpan.FromMilliseconds(clampedDelay);
     }
 
@@ -116,9 +133,8 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
         if (request == null)
             throw new ArgumentNullException(nameof(request));
 
-        return await _asyncRetryPolicy.ExecuteAsync(async () =>
-            await _skillApi.PostMatchResultAsync(modelId, _environment, request, cancellationToken)
-                .ConfigureAwait(false)).ConfigureAwait(false);
+        return await _skillApi.PostMatchResultAsync(modelId, _environment, request, cancellationToken)
+            .ConfigureAwait(false);
     }
 
     /// <summary>
@@ -140,9 +156,8 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
         if (request == null)
             throw new ArgumentNullException(nameof(request));
 
-        return await _asyncRetryPolicy.ExecuteAsync(async () =>
-            await _skillApi.PostPreMatchAsync(modelId, _environment, request, cancellationToken)
-                .ConfigureAwait(false)).ConfigureAwait(false);
+        return await _skillApi.PostPreMatchAsync(modelId, _environment, request, cancellationToken)
+            .ConfigureAwait(false);
     }
 
     /// <summary>
@@ -160,9 +175,8 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
         if (string.IsNullOrWhiteSpace(modelId))
             throw new ArgumentException("Model ID cannot be null or empty", nameof(modelId));
 
-        return await _asyncRetryPolicy.ExecuteAsync(async () =>
-            await _skillApi.GetConfigurationAsync(modelId, cancellationToken)
-                .ConfigureAwait(false)).ConfigureAwait(false);
+        return await _skillApi.GetConfigurationAsync(modelId, cancellationToken)
+            .ConfigureAwait(false);
     }
 
     // ===== Sync API (Blocking) =====
@@ -182,8 +196,7 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
         if (request == null)
             throw new ArgumentNullException(nameof(request));
 
-        return _syncRetryPolicy.Execute(() =>
-            _skillApi.PostMatchResult(modelId, _environment, request));
+        return _skillApi.PostMatchResult(modelId, _environment, request);
     }
 
     /// <summary>
@@ -201,8 +214,7 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
         if (request == null)
             throw new ArgumentNullException(nameof(request));
 
-        return _syncRetryPolicy.Execute(() =>
-            _skillApi.PostPreMatch(modelId, _environment, request));
+        return _skillApi.PostPreMatch(modelId, _environment, request);
     }
 
     /// <summary>
@@ -217,8 +229,7 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
         if (string.IsNullOrWhiteSpace(modelId))
             throw new ArgumentException("Model ID cannot be null or empty", nameof(modelId));
 
-        return _syncRetryPolicy.Execute(() =>
-            _skillApi.GetConfiguration(modelId));
+        return _skillApi.GetConfiguration(modelId);
     }
 
     // ===== Builder =====

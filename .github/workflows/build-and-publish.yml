@@ -9,37 +9,68 @@ on:
     types: [published]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup .NET
+      - name: Setup .NET SDKs
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
             6.0.x
             8.0.x
+            10.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build SDK (all target frameworks)
+        run: dotnet build src/Ivk.Skill.Sdk/Ivk.Skill.Sdk.csproj --configuration Release --no-restore
+
+      - name: Build all projects
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Test on .NET 6
+        run: dotnet test tests/Ivk.Skill.Sdk.Tests.Net6 --configuration Release --no-build --verbosity normal
+
+      - name: Test on .NET 8
+        run: dotnet test tests/Ivk.Skill.Sdk.Tests.Net8 --configuration Release --no-build --verbosity normal
+
+      - name: Test on .NET 10
+        run: dotnet test tests/Ivk.Skill.Sdk.Tests.Net10 --configuration Release --no-build --verbosity normal
+
+      - name: Run main test suite (.NET 10)
+        run: dotnet test tests/Ivk.Skill.Sdk.Tests --configuration Release --no-build --verbosity normal
+
+  publish:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET SDKs
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            6.0.x
+            8.0.x
+            10.0.x
 
       - name: Restore dependencies
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --configuration Release --no-restore
-
-      - name: Test
-        run: dotnet test --configuration Release --no-build --verbosity normal
+        run: dotnet build src/Ivk.Skill.Sdk/Ivk.Skill.Sdk.csproj --configuration Release --no-restore
 
       - name: Pack
-        if: github.event_name == 'release'
         run: dotnet pack src/Ivk.Skill.Sdk/Ivk.Skill.Sdk.csproj --configuration Release --no-build -o ./nupkg
 
       - name: Push to NuGet
-        if: github.event_name == 'release'
         run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
 
       - name: Upload artifacts
-        if: github.event_name == 'release'
         uses: actions/upload-artifact@v4
         with:
           name: nuget-packages

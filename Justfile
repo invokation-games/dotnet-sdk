@@ -17,23 +17,31 @@ generate-sdk:
     cp -r generated/src/Ivk.Skill.Sdk/Model src/Ivk.Skill.Sdk/
     rm -rf generated
 
-# Build the SDK
+# Build the SDK (all target frameworks require .NET 6 and 8 SDKs installed)
 build:
+    dotnet build src/Ivk.Skill.Sdk/Ivk.Skill.Sdk.csproj --configuration Release
+
+# Build all projects (requires all target SDKs)
+build-all:
     dotnet build --configuration Release
 
-# Build in debug mode
-build-debug:
-    dotnet build --configuration Debug
-
-# Run tests
+# Run tests (requires .NET 6 and 8 runtimes for full test coverage)
+# Use test-local if you only have one .NET version installed
 test:
     dotnet test --configuration Release
 
-# Run tests with coverage
-test-coverage:
-    dotnet test --configuration Release --collect:"XPlat Code Coverage"
+# Run tests for a specific framework (for local development)
+test-net6:
+    dotnet test tests/Ivk.Skill.Sdk.Tests.Net6 --configuration Release
 
-# Pack for NuGet
+test-net8:
+    dotnet test tests/Ivk.Skill.Sdk.Tests.Net8 --configuration Release
+
+test-net10:
+    dotnet test tests/Ivk.Skill.Sdk.Tests.Net10 --configuration Release
+    dotnet test tests/Ivk.Skill.Sdk.Tests --configuration Release
+
+# Pack for NuGet (requires all target SDKs for multi-targeting)
 pack:
     dotnet pack src/Ivk.Skill.Sdk/Ivk.Skill.Sdk.csproj --configuration Release -o ./nupkg
 
@@ -55,8 +63,8 @@ restore:
 run-example:
     dotnet run --project src/Ivk.Skill.Sdk.Example
 
-# Full CI pipeline (restore, build, test)
-ci: restore build test
+# Full CI pipeline (restore, build, test) - requires all SDKs
+ci: restore build-all test
 
 # Publish to NuGet (requires NUGET_API_KEY env var)
 publish: pack
