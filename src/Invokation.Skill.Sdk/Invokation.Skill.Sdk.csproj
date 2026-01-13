@@ -7,13 +7,13 @@
     <NoWarn>$(NoWarn);CS0618;CS8600;CS8601;CS8602;CS8603;CS8604;CS8625</NoWarn>
     <PackageId>Invokation.Skill.Sdk</PackageId>
     <Version>1.0.0</Version>
-    <Authors>Invokation Games</Authors>
-    <Company>Invokation Games</Company>
+    <Authors>Invokation</Authors>
+    <Company>Invokation</Company>
     <Description>C# SDK for IVK Skill API - skill ratings and matchmaking</Description>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/invokation-games/csharp-sdk</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/invokation-games/csharp-sdk</RepositoryUrl>
-    <PackageTags>ivk;skill;matchmaking;gaming;sdk</PackageTags>
+    <PackageProjectUrl>https://github.com/invokation-games/dotnet-sdk</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/invokation-games/dotnet-sdk</RepositoryUrl>
+    <PackageTags>ivk;skill;matchmaking;gaming;sdk;mmr;multiplayer</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
