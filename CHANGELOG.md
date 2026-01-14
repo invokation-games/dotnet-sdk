@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.1...v1.1.2) (2026-01-14)
+
+
+### Bug Fixes
+
+* test with changes workflow permissions ([681f195](https://github.com/invokation-games/dotnet-sdk/commit/681f1955f312e0b42f2ee2177a2b1bd99a1401e0))
+
 ## [1.1.1](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.0...v1.1.1) (2026-01-14)
 
 
