@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.0...v1.1.1) (2026-01-14)
+
+
+### Bug Fixes
+
+* use correct NuGet login field ([6fff22d](https://github.com/invokation-games/dotnet-sdk/commit/6fff22d8eb642adf0d3f6eb9c561b59a0af998d0))
+
 ## [1.1.0](https://github.com/invokation-games/dotnet-sdk/compare/v1.0.0...v1.1.0) (2026-01-13)
 
 
