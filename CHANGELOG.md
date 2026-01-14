@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.6](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.5...v1.1.6) (2026-01-14)
+
+
+### Bug Fixes
+
+* reference README ([d484036](https://github.com/invokation-games/dotnet-sdk/commit/d484036b88b93b7d0527270452e822ed6b1afba6))
+* test dotnet-joshi ([8483659](https://github.com/invokation-games/dotnet-sdk/commit/8483659fb0969730f0d89b3dad62cfd450143f1c))
+* test with extrafiles ([803a217](https://github.com/invokation-games/dotnet-sdk/commit/803a217cf0e8f6dc08047f4e490f5228ef7d4fca))
+
 ## [1.1.5](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.4...v1.1.5) (2026-01-14)
 
 
