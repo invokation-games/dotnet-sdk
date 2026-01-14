@@ -5,8 +5,8 @@ on:
     types: [published]
 
 permissions:
-  contents: write
-  packages: write
+  contents: read
+  id-token: write
 
 jobs:
   build:
@@ -54,9 +54,3 @@ jobs:
 
       - name: Push to NuGet
         run: dotnet nuget push ./nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --skip-duplicate
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: nuget-packages
-          path: ./nupkg/*
