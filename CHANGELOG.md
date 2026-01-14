@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.3...v1.1.4) (2026-01-14)
+
+
+### Bug Fixes
+
+* test with dummy api key field ([a3fae77](https://github.com/invokation-games/dotnet-sdk/commit/a3fae7712c65efcbfca2f26e3f5c8912e3178bd0))
+
 ## [1.1.3](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.2...v1.1.3) (2026-01-14)
 
 
