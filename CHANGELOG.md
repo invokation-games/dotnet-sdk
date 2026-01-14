@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.2...v1.1.3) (2026-01-14)
+
+
+### Bug Fixes
+
+* move username to repo secret ([f905ebc](https://github.com/invokation-games/dotnet-sdk/commit/f905ebc7e7dc7ed7b42e8184a4392d40f07730b1))
+
 ## [1.1.2](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.1...v1.1.2) (2026-01-14)
 
 
