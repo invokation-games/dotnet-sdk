@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.5](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.4...v1.1.5) (2026-01-14)
+
+
+### Bug Fixes
+
+* use generated API key ([4b97ae3](https://github.com/invokation-games/dotnet-sdk/commit/4b97ae3496e8ec4b5831dab70995fe823e2fb080))
+
 ## [1.1.4](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.3...v1.1.4) (2026-01-14)
 
 
