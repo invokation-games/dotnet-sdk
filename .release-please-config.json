@@ -1,9 +1,15 @@
 {
   "packages": {
     ".": {
-      "release-type": "dotnet-yoshi",
+      "release-type": "simple",
       "changelog-path": "CHANGELOG.md",
-      "extra-files": ["src/Invokation.Skill.Sdk/Invokation.Skill.Sdk.csproj"]
+      "extra-files": [
+        {
+          "type": "xml",
+          "path": "src/Invokation.Skill.Sdk/Invokation.Skill.Sdk.csproj",
+          "xpath": "//Project/PropertyGroup/Version"
+        }
+      ]
     }
   }
 }
