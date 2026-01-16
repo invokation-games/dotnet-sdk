@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.7](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.6...v1.1.7) (2026-01-16)
+
+
+### Bug Fixes
+
+* match connection management to fly.io proxy ([42c9796](https://github.com/invokation-games/dotnet-sdk/commit/42c97962e6653301d895a2f2f22c88ab3586ba0b))
+
 ## [1.1.6](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.5...v1.1.6) (2026-01-14)
 
 
