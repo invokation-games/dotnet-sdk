@@ -330,6 +330,13 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
         /// Set a custom HttpClient (optional).
         /// When provided, the SDK will not dispose of this client.
         /// </summary>
+        /// <remarks>
+        /// For optimal performance, configure your HttpClient with:
+        /// <list type="bullet">
+        ///   <item><description>HTTP/2 support: Set <c>DefaultRequestVersion = HttpVersion.Version20</c> and <c>DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower</c></description></item>
+        ///   <item><description>Connection idle timeout: Use <see cref="SocketsHttpHandler"/> with <c>PooledConnectionIdleTimeout = TimeSpan.FromSeconds(50)</c> to prevent connection resets (the API server timeout is 60s)</description></item>
+        /// </list>
+        /// </remarks>
         /// <param name="httpClient">The HttpClient to use for API calls.</param>
         /// <returns>This builder instance for chaining.</returns>
         public Builder WithHttpClient(HttpClient httpClient)
@@ -366,7 +373,7 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
                 throw new InvalidOperationException("Environment cannot be empty.");
 
             var ownsHttpClient = _httpClient == null;
-            var httpClient = _httpClient ?? new HttpClient();
+            var httpClient = _httpClient ?? CreateDefaultHttpClient();
 
             return new SkillSdk(
                 _apiKey,
@@ -376,6 +383,20 @@ public sealed class SkillSdk : IDisposable, IAsyncDisposable
                 httpClient,
                 ownsHttpClient,
                 _logger);
+        }
+
+        private static HttpClient CreateDefaultHttpClient()
+        {
+            var handler = new SocketsHttpHandler
+            {
+                PooledConnectionIdleTimeout = TimeSpan.FromSeconds(50)
+            };
+
+            return new HttpClient(handler, disposeHandler: true)
+            {
+                DefaultRequestVersion = HttpVersion.Version20,
+                DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower
+            };
         }
     }
 
