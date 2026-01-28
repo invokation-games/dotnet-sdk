@@ -63,6 +63,7 @@ jobs:
           # Generate new SDK
           docker run --rm \
             -v "${PWD}:/local" \
+            --user "$(id -u):$(id -g)" \
             openapitools/openapi-generator-cli:v7.12.0 generate \
             -i /local/ivk-skill-openapi.json \
             -c /local/openapi-generator-config.yaml \
