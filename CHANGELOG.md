@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.7...v1.2.0) (2026-01-28)
+
+
+### Features
+
+* sync openapi spec ([#19](https://github.com/invokation-games/dotnet-sdk/issues/19)) ([98aef7a](https://github.com/invokation-games/dotnet-sdk/commit/98aef7a1c0b9bd257399807f92779d521671f268))
+
+
+### Bug Fixes
+
+* set conditionalSerialization to true ([5610d59](https://github.com/invokation-games/dotnet-sdk/commit/5610d5907a010363179aff7dad83b06533044b31))
+
 ## [1.1.7](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.6...v1.1.7) (2026-01-16)
 
 
