@@ -40,8 +40,16 @@ namespace Invokation.Skill.Sdk.Model
         /// <param name="season">The season the match was played in.</param>
         public MatchMetadata(string gameMode = default(string), int? season = default(int?))
         {
-            this.GameMode = gameMode;
-            this.Season = season;
+            this._GameMode = gameMode;
+            if (this.GameMode != null)
+            {
+                this._flagGameMode = true;
+            }
+            this._Season = season;
+            if (this.Season != null)
+            {
+                this._flagSeason = true;
+            }
         }
 
         /// <summary>
@@ -49,15 +57,51 @@ namespace Invokation.Skill.Sdk.Model
         /// </summary>
         /// <value>The gamemode for this match.</value>
         [DataMember(Name = "game_mode", EmitDefaultValue = true)]
-        public string GameMode { get; set; }
+        public string GameMode
+        {
+            get{ return _GameMode;}
+            set
+            {
+                _GameMode = value;
+                _flagGameMode = true;
+            }
+        }
+        private string _GameMode;
+        private bool _flagGameMode;
 
+        /// <summary>
+        /// Returns false as GameMode should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeGameMode()
+        {
+            return _flagGameMode;
+        }
         /// <summary>
         /// The season the match was played in
         /// </summary>
         /// <value>The season the match was played in</value>
         [DataMember(Name = "season", EmitDefaultValue = true)]
-        public int? Season { get; set; }
+        public int? Season
+        {
+            get{ return _Season;}
+            set
+            {
+                _Season = value;
+                _flagSeason = true;
+            }
+        }
+        private int? _Season;
+        private bool _flagSeason;
 
+        /// <summary>
+        /// Returns false as Season should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeSeason()
+        {
+            return _flagSeason;
+        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

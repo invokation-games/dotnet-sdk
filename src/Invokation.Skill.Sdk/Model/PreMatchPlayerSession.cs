@@ -51,23 +51,59 @@ namespace Invokation.Skill.Sdk.Model
         /// <param name="priorMmr">The MMR of the player at the start of the match. A number between 0 and 1 Default: default_mmr specified in the MMR configuration.</param>
         /// <param name="priorMomentum">Incoming momentum (**not used in most models**) For models with experimental anti-smurfing features or rating acceleration Essentially rolling-average win rate.</param>
         /// <param name="teamId">Local identifier of the player&#39;s team If set must match one of the teams provided in the MatchResult Default behavior is to treat each player as their own team, so team_id can be omitted for 1v1 or free-for-all modes..</param>
-        public PreMatchPlayerSession(double? adjustedMmr = default(double?), double? botLevel = default(double?), bool isBot = default(bool), string partyId = default(string), double? perfBeta = default(double?), string playerId = default(string), long priorGamesPlayed = default(long), double? priorMmr = default(double?), double? priorMomentum = default(double?), string teamId = default(string))
+        public PreMatchPlayerSession(double? adjustedMmr = default(double?), double? botLevel = default(double?), bool? isBot = default(bool?), string partyId = default(string), double? perfBeta = default(double?), string playerId = default(string), long priorGamesPlayed = default(long), double? priorMmr = default(double?), double? priorMomentum = default(double?), string teamId = default(string))
         {
             // to ensure "playerId" is required (not null)
             if (playerId == null)
             {
                 throw new ArgumentNullException("playerId is a required property for PreMatchPlayerSession and cannot be null");
             }
-            this.PlayerId = playerId;
-            this.AdjustedMmr = adjustedMmr;
-            this.BotLevel = botLevel;
-            this.IsBot = isBot;
-            this.PartyId = partyId;
-            this.PerfBeta = perfBeta;
-            this.PriorGamesPlayed = priorGamesPlayed;
-            this.PriorMmr = priorMmr;
-            this.PriorMomentum = priorMomentum;
-            this.TeamId = teamId;
+            this._PlayerId = playerId;
+            this._AdjustedMmr = adjustedMmr;
+            if (this.AdjustedMmr != null)
+            {
+                this._flagAdjustedMmr = true;
+            }
+            this._BotLevel = botLevel;
+            if (this.BotLevel != null)
+            {
+                this._flagBotLevel = true;
+            }
+            this._IsBot = isBot;
+            if (this.IsBot != null)
+            {
+                this._flagIsBot = true;
+            }
+            this._PartyId = partyId;
+            if (this.PartyId != null)
+            {
+                this._flagPartyId = true;
+            }
+            this._PerfBeta = perfBeta;
+            if (this.PerfBeta != null)
+            {
+                this._flagPerfBeta = true;
+            }
+            this._PriorGamesPlayed = priorGamesPlayed;
+            if (this.PriorGamesPlayed != null)
+            {
+                this._flagPriorGamesPlayed = true;
+            }
+            this._PriorMmr = priorMmr;
+            if (this.PriorMmr != null)
+            {
+                this._flagPriorMmr = true;
+            }
+            this._PriorMomentum = priorMomentum;
+            if (this.PriorMomentum != null)
+            {
+                this._flagPriorMomentum = true;
+            }
+            this._TeamId = teamId;
+            if (this.TeamId != null)
+            {
+                this._flagTeamId = true;
+            }
         }
 
         /// <summary>
@@ -75,71 +111,251 @@ namespace Invokation.Skill.Sdk.Model
         /// </summary>
         /// <value>Adjusted MMR that was used for matchmaking / team-balancing. For example; players who are in a party will often perform better than their individual MMR would suggest A matchmaker or teambalancer might take this into account by calculating a bonus to the MMR However, such a bonus could cause a party to gain more or lose less MMR than they would otherwise By providing this value, we can compensate for this effect.</value>
         [DataMember(Name = "adjusted_mmr", EmitDefaultValue = true)]
-        public double? AdjustedMmr { get; set; }
+        public double? AdjustedMmr
+        {
+            get{ return _AdjustedMmr;}
+            set
+            {
+                _AdjustedMmr = value;
+                _flagAdjustedMmr = true;
+            }
+        }
+        private double? _AdjustedMmr;
+        private bool _flagAdjustedMmr;
 
+        /// <summary>
+        /// Returns false as AdjustedMmr should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeAdjustedMmr()
+        {
+            return _flagAdjustedMmr;
+        }
         /// <summary>
         /// If this is a bot, an optional bot skill level for analytics purposes Default: null
         /// </summary>
         /// <value>If this is a bot, an optional bot skill level for analytics purposes Default: null</value>
         [DataMember(Name = "bot_level", EmitDefaultValue = true)]
-        public double? BotLevel { get; set; }
+        public double? BotLevel
+        {
+            get{ return _BotLevel;}
+            set
+            {
+                _BotLevel = value;
+                _flagBotLevel = true;
+            }
+        }
+        private double? _BotLevel;
+        private bool _flagBotLevel;
 
+        /// <summary>
+        /// Returns false as BotLevel should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeBotLevel()
+        {
+            return _flagBotLevel;
+        }
         /// <summary>
         /// Used to flag this session as a Bot session
         /// </summary>
         /// <value>Used to flag this session as a Bot session</value>
         [DataMember(Name = "is_bot", EmitDefaultValue = true)]
-        public bool IsBot { get; set; }
+        public bool? IsBot
+        {
+            get{ return _IsBot;}
+            set
+            {
+                _IsBot = value;
+                _flagIsBot = true;
+            }
+        }
+        private bool? _IsBot;
+        private bool _flagIsBot;
 
+        /// <summary>
+        /// Returns false as IsBot should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeIsBot()
+        {
+            return _flagIsBot;
+        }
         /// <summary>
         /// Local identifier of the player&#39;s party If set, should be unique per party per match Default behavior is to treat each player as their own party, so party_id can be omitted for games that don&#39;t support parties.
         /// </summary>
         /// <value>Local identifier of the player&#39;s party If set, should be unique per party per match Default behavior is to treat each player as their own party, so party_id can be omitted for games that don&#39;t support parties.</value>
         [DataMember(Name = "party_id", EmitDefaultValue = true)]
-        public string PartyId { get; set; }
+        public string PartyId
+        {
+            get{ return _PartyId;}
+            set
+            {
+                _PartyId = value;
+                _flagPartyId = true;
+            }
+        }
+        private string _PartyId;
+        private bool _flagPartyId;
 
+        /// <summary>
+        /// Returns false as PartyId should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializePartyId()
+        {
+            return _flagPartyId;
+        }
         /// <summary>
         /// Override for rating uncertainty (advanced option) Default behavior is to use values generated by model
         /// </summary>
         /// <value>Override for rating uncertainty (advanced option) Default behavior is to use values generated by model</value>
         [DataMember(Name = "perf_beta", EmitDefaultValue = true)]
-        public double? PerfBeta { get; set; }
+        public double? PerfBeta
+        {
+            get{ return _PerfBeta;}
+            set
+            {
+                _PerfBeta = value;
+                _flagPerfBeta = true;
+            }
+        }
+        private double? _PerfBeta;
+        private bool _flagPerfBeta;
 
+        /// <summary>
+        /// Returns false as PerfBeta should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializePerfBeta()
+        {
+            return _flagPerfBeta;
+        }
         /// <summary>
         /// The unique identifier of the player
         /// </summary>
         /// <value>The unique identifier of the player</value>
         [DataMember(Name = "player_id", IsRequired = true, EmitDefaultValue = true)]
-        public string PlayerId { get; set; }
+        public string PlayerId
+        {
+            get{ return _PlayerId;}
+            set
+            {
+                _PlayerId = value;
+                _flagPlayerId = true;
+            }
+        }
+        private string _PlayerId;
+        private bool _flagPlayerId;
 
+        /// <summary>
+        /// Returns false as PlayerId should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializePlayerId()
+        {
+            return _flagPlayerId;
+        }
         /// <summary>
         /// The previous number of games the player has played (ever, or just this season).
         /// </summary>
         /// <value>The previous number of games the player has played (ever, or just this season).</value>
         [DataMember(Name = "prior_games_played", EmitDefaultValue = false)]
-        public long PriorGamesPlayed { get; set; }
+        public long PriorGamesPlayed
+        {
+            get{ return _PriorGamesPlayed;}
+            set
+            {
+                _PriorGamesPlayed = value;
+                _flagPriorGamesPlayed = true;
+            }
+        }
+        private long _PriorGamesPlayed;
+        private bool _flagPriorGamesPlayed;
 
+        /// <summary>
+        /// Returns false as PriorGamesPlayed should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializePriorGamesPlayed()
+        {
+            return _flagPriorGamesPlayed;
+        }
         /// <summary>
         /// The MMR of the player at the start of the match. A number between 0 and 1 Default: default_mmr specified in the MMR configuration
         /// </summary>
         /// <value>The MMR of the player at the start of the match. A number between 0 and 1 Default: default_mmr specified in the MMR configuration</value>
         [DataMember(Name = "prior_mmr", EmitDefaultValue = true)]
-        public double? PriorMmr { get; set; }
+        public double? PriorMmr
+        {
+            get{ return _PriorMmr;}
+            set
+            {
+                _PriorMmr = value;
+                _flagPriorMmr = true;
+            }
+        }
+        private double? _PriorMmr;
+        private bool _flagPriorMmr;
 
+        /// <summary>
+        /// Returns false as PriorMmr should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializePriorMmr()
+        {
+            return _flagPriorMmr;
+        }
         /// <summary>
         /// Incoming momentum (**not used in most models**) For models with experimental anti-smurfing features or rating acceleration Essentially rolling-average win rate
         /// </summary>
         /// <value>Incoming momentum (**not used in most models**) For models with experimental anti-smurfing features or rating acceleration Essentially rolling-average win rate</value>
         [DataMember(Name = "prior_momentum", EmitDefaultValue = true)]
-        public double? PriorMomentum { get; set; }
+        public double? PriorMomentum
+        {
+            get{ return _PriorMomentum;}
+            set
+            {
+                _PriorMomentum = value;
+                _flagPriorMomentum = true;
+            }
+        }
+        private double? _PriorMomentum;
+        private bool _flagPriorMomentum;
 
+        /// <summary>
+        /// Returns false as PriorMomentum should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializePriorMomentum()
+        {
+            return _flagPriorMomentum;
+        }
         /// <summary>
         /// Local identifier of the player&#39;s team If set must match one of the teams provided in the MatchResult Default behavior is to treat each player as their own team, so team_id can be omitted for 1v1 or free-for-all modes.
         /// </summary>
         /// <value>Local identifier of the player&#39;s team If set must match one of the teams provided in the MatchResult Default behavior is to treat each player as their own team, so team_id can be omitted for 1v1 or free-for-all modes.</value>
         [DataMember(Name = "team_id", EmitDefaultValue = true)]
-        public string TeamId { get; set; }
+        public string TeamId
+        {
+            get{ return _TeamId;}
+            set
+            {
+                _TeamId = value;
+                _flagTeamId = true;
+            }
+        }
+        private string _TeamId;
+        private bool _flagTeamId;
 
+        /// <summary>
+        /// Returns false as TeamId should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeTeamId()
+        {
+            return _flagTeamId;
+        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

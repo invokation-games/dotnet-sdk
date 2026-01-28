@@ -54,17 +54,33 @@ namespace Invokation.Skill.Sdk.Model
             {
                 throw new ArgumentNullException("playerSessions is a required property for MatchResultRequest and cannot be null");
             }
-            this.PlayerSessions = playerSessions;
+            this._PlayerSessions = playerSessions;
             // to ensure "teams" is required (not null)
             if (teams == null)
             {
                 throw new ArgumentNullException("teams is a required property for MatchResultRequest and cannot be null");
             }
-            this.Teams = teams;
-            this.MatchEndTs = matchEndTs;
-            this.MatchId = matchId;
-            this.MatchStartTs = matchStartTs;
-            this.Metadata = metadata;
+            this._Teams = teams;
+            this._MatchEndTs = matchEndTs;
+            if (this.MatchEndTs != null)
+            {
+                this._flagMatchEndTs = true;
+            }
+            this._MatchId = matchId;
+            if (this.MatchId != null)
+            {
+                this._flagMatchId = true;
+            }
+            this._MatchStartTs = matchStartTs;
+            if (this.MatchStartTs != null)
+            {
+                this._flagMatchStartTs = true;
+            }
+            this._Metadata = metadata;
+            if (this.Metadata != null)
+            {
+                this._flagMetadata = true;
+            }
         }
 
         /// <summary>
@@ -72,43 +88,151 @@ namespace Invokation.Skill.Sdk.Model
         /// </summary>
         /// <value>Time the match ended (ISO 8601 UTC timestamp). Apart from backfilling historical data or simulations, you probably don&#39;t need to pass this.</value>
         [DataMember(Name = "match_end_ts", EmitDefaultValue = true)]
-        public DateTimeOffset? MatchEndTs { get; set; }
+        public DateTimeOffset? MatchEndTs
+        {
+            get{ return _MatchEndTs;}
+            set
+            {
+                _MatchEndTs = value;
+                _flagMatchEndTs = true;
+            }
+        }
+        private DateTimeOffset? _MatchEndTs;
+        private bool _flagMatchEndTs;
 
+        /// <summary>
+        /// Returns false as MatchEndTs should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeMatchEndTs()
+        {
+            return _flagMatchEndTs;
+        }
         /// <summary>
         /// Unique match identifier
         /// </summary>
         /// <value>Unique match identifier</value>
         [DataMember(Name = "match_id", EmitDefaultValue = true)]
-        public string MatchId { get; set; }
+        public string MatchId
+        {
+            get{ return _MatchId;}
+            set
+            {
+                _MatchId = value;
+                _flagMatchId = true;
+            }
+        }
+        private string _MatchId;
+        private bool _flagMatchId;
 
+        /// <summary>
+        /// Returns false as MatchId should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeMatchId()
+        {
+            return _flagMatchId;
+        }
         /// <summary>
         /// Time the match started (ISO 8601 UTC timestamp). Apart from backfilling historical data or simulations, you probably don&#39;t need to pass this.
         /// </summary>
         /// <value>Time the match started (ISO 8601 UTC timestamp). Apart from backfilling historical data or simulations, you probably don&#39;t need to pass this.</value>
         [DataMember(Name = "match_start_ts", EmitDefaultValue = true)]
-        public DateTimeOffset? MatchStartTs { get; set; }
+        public DateTimeOffset? MatchStartTs
+        {
+            get{ return _MatchStartTs;}
+            set
+            {
+                _MatchStartTs = value;
+                _flagMatchStartTs = true;
+            }
+        }
+        private DateTimeOffset? _MatchStartTs;
+        private bool _flagMatchStartTs;
 
+        /// <summary>
+        /// Returns false as MatchStartTs should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeMatchStartTs()
+        {
+            return _flagMatchStartTs;
+        }
         /// <summary>
         /// Several properties to provide more context about the match
         /// </summary>
         /// <value>Several properties to provide more context about the match</value>
         [DataMember(Name = "metadata", EmitDefaultValue = true)]
-        public MatchMetadata Metadata { get; set; }
+        public MatchMetadata Metadata
+        {
+            get{ return _Metadata;}
+            set
+            {
+                _Metadata = value;
+                _flagMetadata = true;
+            }
+        }
+        private MatchMetadata _Metadata;
+        private bool _flagMetadata;
 
+        /// <summary>
+        /// Returns false as Metadata should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeMetadata()
+        {
+            return _flagMetadata;
+        }
         /// <summary>
         /// A list of all player sessions for one single match. There can be multiple sessions for the same player.
         /// </summary>
         /// <value>A list of all player sessions for one single match. There can be multiple sessions for the same player.</value>
         [DataMember(Name = "player_sessions", IsRequired = true, EmitDefaultValue = true)]
-        public Collection<PlayerSession> PlayerSessions { get; set; }
+        public Collection<PlayerSession> PlayerSessions
+        {
+            get{ return _PlayerSessions;}
+            set
+            {
+                _PlayerSessions = value;
+                _flagPlayerSessions = true;
+            }
+        }
+        private Collection<PlayerSession> _PlayerSessions;
+        private bool _flagPlayerSessions;
 
+        /// <summary>
+        /// Returns false as PlayerSessions should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializePlayerSessions()
+        {
+            return _flagPlayerSessions;
+        }
         /// <summary>
         /// A list of teams and their metadata
         /// </summary>
         /// <value>A list of teams and their metadata</value>
         [DataMember(Name = "teams", IsRequired = true, EmitDefaultValue = true)]
-        public Collection<TeamInfo> Teams { get; set; }
+        public Collection<TeamInfo> Teams
+        {
+            get{ return _Teams;}
+            set
+            {
+                _Teams = value;
+                _flagTeams = true;
+            }
+        }
+        private Collection<TeamInfo> _Teams;
+        private bool _flagTeams;
 
+        /// <summary>
+        /// Returns false as Teams should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeTeams()
+        {
+            return _flagTeams;
+        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

@@ -51,19 +51,19 @@ namespace Invokation.Skill.Sdk.Model
         /// <param name="size">Total player count the team has seen throughout the match (required).</param>
         public PreMatchTeamResult(double beta = default(double), double density = default(double), double expected = default(double), string id = default(string), int idx = default(int), double mmr = default(double), int partyCount = default(int), int size = default(int))
         {
-            this.Beta = beta;
-            this.Density = density;
-            this.Expected = expected;
+            this._Beta = beta;
+            this._Density = density;
+            this._Expected = expected;
             // to ensure "id" is required (not null)
             if (id == null)
             {
                 throw new ArgumentNullException("id is a required property for PreMatchTeamResult and cannot be null");
             }
-            this.Id = id;
-            this.Idx = idx;
-            this.Mmr = mmr;
-            this.PartyCount = partyCount;
-            this.Size = size;
+            this._Id = id;
+            this._Idx = idx;
+            this._Mmr = mmr;
+            this._PartyCount = partyCount;
+            this._Size = size;
         }
 
         /// <summary>
@@ -71,57 +71,201 @@ namespace Invokation.Skill.Sdk.Model
         /// </summary>
         /// <value>Total uncertainty in team outcome</value>
         [DataMember(Name = "beta", IsRequired = true, EmitDefaultValue = true)]
-        public double Beta { get; set; }
+        public double Beta
+        {
+            get{ return _Beta;}
+            set
+            {
+                _Beta = value;
+                _flagBeta = true;
+            }
+        }
+        private double _Beta;
+        private bool _flagBeta;
 
+        /// <summary>
+        /// Returns false as Beta should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeBeta()
+        {
+            return _flagBeta;
+        }
         /// <summary>
         /// The weighted team size
         /// </summary>
         /// <value>The weighted team size</value>
         [DataMember(Name = "density", IsRequired = true, EmitDefaultValue = true)]
-        public double Density { get; set; }
+        public double Density
+        {
+            get{ return _Density;}
+            set
+            {
+                _Density = value;
+                _flagDensity = true;
+            }
+        }
+        private double _Density;
+        private bool _flagDensity;
 
+        /// <summary>
+        /// Returns false as Density should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeDensity()
+        {
+            return _flagDensity;
+        }
         /// <summary>
         /// The expected team outcome based on party and team model (0-1) Potentially clamped to a maximum value (typically 0.8) to guarantee minimum payoffs
         /// </summary>
         /// <value>The expected team outcome based on party and team model (0-1) Potentially clamped to a maximum value (typically 0.8) to guarantee minimum payoffs</value>
         [DataMember(Name = "expected", IsRequired = true, EmitDefaultValue = true)]
-        public double Expected { get; set; }
+        public double Expected
+        {
+            get{ return _Expected;}
+            set
+            {
+                _Expected = value;
+                _flagExpected = true;
+            }
+        }
+        private double _Expected;
+        private bool _flagExpected;
 
+        /// <summary>
+        /// Returns false as Expected should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeExpected()
+        {
+            return _flagExpected;
+        }
         /// <summary>
         /// The local identifier of the team (passthrough)
         /// </summary>
         /// <value>The local identifier of the team (passthrough)</value>
         [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = true)]
-        public string Id { get; set; }
+        public string Id
+        {
+            get{ return _Id;}
+            set
+            {
+                _Id = value;
+                _flagId = true;
+            }
+        }
+        private string _Id;
+        private bool _flagId;
 
+        /// <summary>
+        /// Returns false as Id should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeId()
+        {
+            return _flagId;
+        }
         /// <summary>
         /// Zero-indexed team index
         /// </summary>
         /// <value>Zero-indexed team index</value>
         [DataMember(Name = "idx", IsRequired = true, EmitDefaultValue = true)]
-        public int Idx { get; set; }
+        public int Idx
+        {
+            get{ return _Idx;}
+            set
+            {
+                _Idx = value;
+                _flagIdx = true;
+            }
+        }
+        private int _Idx;
+        private bool _flagIdx;
 
+        /// <summary>
+        /// Returns false as Idx should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeIdx()
+        {
+            return _flagIdx;
+        }
         /// <summary>
         /// Total MMR of the team as determined by the party and team models (not necessarily the sum of MMRs)
         /// </summary>
         /// <value>Total MMR of the team as determined by the party and team models (not necessarily the sum of MMRs)</value>
         [DataMember(Name = "mmr", IsRequired = true, EmitDefaultValue = true)]
-        public double Mmr { get; set; }
+        public double Mmr
+        {
+            get{ return _Mmr;}
+            set
+            {
+                _Mmr = value;
+                _flagMmr = true;
+            }
+        }
+        private double _Mmr;
+        private bool _flagMmr;
 
+        /// <summary>
+        /// Returns false as Mmr should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeMmr()
+        {
+            return _flagMmr;
+        }
         /// <summary>
         /// Total parties in the team
         /// </summary>
         /// <value>Total parties in the team</value>
         [DataMember(Name = "party_count", IsRequired = true, EmitDefaultValue = true)]
-        public int PartyCount { get; set; }
+        public int PartyCount
+        {
+            get{ return _PartyCount;}
+            set
+            {
+                _PartyCount = value;
+                _flagPartyCount = true;
+            }
+        }
+        private int _PartyCount;
+        private bool _flagPartyCount;
 
+        /// <summary>
+        /// Returns false as PartyCount should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializePartyCount()
+        {
+            return _flagPartyCount;
+        }
         /// <summary>
         /// Total player count the team has seen throughout the match
         /// </summary>
         /// <value>Total player count the team has seen throughout the match</value>
         [DataMember(Name = "size", IsRequired = true, EmitDefaultValue = true)]
-        public int Size { get; set; }
+        public int Size
+        {
+            get{ return _Size;}
+            set
+            {
+                _Size = value;
+                _flagSize = true;
+            }
+        }
+        private int _Size;
+        private bool _flagSize;
 
+        /// <summary>
+        /// Returns false as Size should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeSize()
+        {
+            return _flagSize;
+        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

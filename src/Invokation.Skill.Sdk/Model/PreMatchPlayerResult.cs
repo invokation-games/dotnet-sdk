@@ -53,26 +53,26 @@ namespace Invokation.Skill.Sdk.Model
             {
                 throw new ArgumentNullException("extended is a required property for PreMatchPlayerResult and cannot be null");
             }
-            this.Extended = extended;
+            this._Extended = extended;
             // to ensure "playerId" is required (not null)
             if (playerId == null)
             {
                 throw new ArgumentNullException("playerId is a required property for PreMatchPlayerResult and cannot be null");
             }
-            this.PlayerId = playerId;
-            this.PlayerIdx = playerIdx;
+            this._PlayerId = playerId;
+            this._PlayerIdx = playerIdx;
             // to ensure "post" is required (not null)
             if (post == null)
             {
                 throw new ArgumentNullException("post is a required property for PreMatchPlayerResult and cannot be null");
             }
-            this.Post = post;
+            this._Post = post;
             // to ensure "prior" is required (not null)
             if (prior == null)
             {
                 throw new ArgumentNullException("prior is a required property for PreMatchPlayerResult and cannot be null");
             }
-            this.Prior = prior;
+            this._Prior = prior;
         }
 
         /// <summary>
@@ -80,36 +80,126 @@ namespace Invokation.Skill.Sdk.Model
         /// </summary>
         /// <value>Extended player update information</value>
         [DataMember(Name = "extended", IsRequired = true, EmitDefaultValue = true)]
-        public PreMatchPlayerResultExtended Extended { get; set; }
+        public PreMatchPlayerResultExtended Extended
+        {
+            get{ return _Extended;}
+            set
+            {
+                _Extended = value;
+                _flagExtended = true;
+            }
+        }
+        private PreMatchPlayerResultExtended _Extended;
+        private bool _flagExtended;
 
+        /// <summary>
+        /// Returns false as Extended should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeExtended()
+        {
+            return _flagExtended;
+        }
         /// <summary>
         /// The unique identifier of the player (passed through)
         /// </summary>
         /// <value>The unique identifier of the player (passed through)</value>
         [DataMember(Name = "player_id", IsRequired = true, EmitDefaultValue = true)]
-        public string PlayerId { get; set; }
+        public string PlayerId
+        {
+            get{ return _PlayerId;}
+            set
+            {
+                _PlayerId = value;
+                _flagPlayerId = true;
+            }
+        }
+        private string _PlayerId;
+        private bool _flagPlayerId;
 
+        /// <summary>
+        /// Returns false as PlayerId should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializePlayerId()
+        {
+            return _flagPlayerId;
+        }
         /// <summary>
         /// Internal player index
         /// </summary>
         /// <value>Internal player index</value>
         [DataMember(Name = "player_idx", IsRequired = true, EmitDefaultValue = true)]
-        public int PlayerIdx { get; set; }
+        public int PlayerIdx
+        {
+            get{ return _PlayerIdx;}
+            set
+            {
+                _PlayerIdx = value;
+                _flagPlayerIdx = true;
+            }
+        }
+        private int _PlayerIdx;
+        private bool _flagPlayerIdx;
 
+        /// <summary>
+        /// Returns false as PlayerIdx should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializePlayerIdx()
+        {
+            return _flagPlayerIdx;
+        }
         /// <summary>
         /// Updated player stats after this match
         /// </summary>
         /// <value>Updated player stats after this match</value>
         [DataMember(Name = "post", IsRequired = true, EmitDefaultValue = true)]
-        public PriorPlayerStats Post { get; set; }
+        public PriorPlayerStats Post
+        {
+            get{ return _Post;}
+            set
+            {
+                _Post = value;
+                _flagPost = true;
+            }
+        }
+        private PriorPlayerStats _Post;
+        private bool _flagPost;
 
+        /// <summary>
+        /// Returns false as Post should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializePost()
+        {
+            return _flagPost;
+        }
         /// <summary>
         /// Player stats from the start of this match
         /// </summary>
         /// <value>Player stats from the start of this match</value>
         [DataMember(Name = "prior", IsRequired = true, EmitDefaultValue = true)]
-        public PriorPlayerStats Prior { get; set; }
+        public PriorPlayerStats Prior
+        {
+            get{ return _Prior;}
+            set
+            {
+                _Prior = value;
+                _flagPrior = true;
+            }
+        }
+        private PriorPlayerStats _Prior;
+        private bool _flagPrior;
 
+        /// <summary>
+        /// Returns false as Prior should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializePrior()
+        {
+            return _flagPrior;
+        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

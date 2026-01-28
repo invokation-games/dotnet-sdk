@@ -46,9 +46,9 @@ namespace Invokation.Skill.Sdk.Model
         /// <param name="momentum">Rolling-average win rate (**if used by model**) (required).</param>
         public PriorPlayerStats(long gamesPlayed = default(long), double mmr = default(double), double momentum = default(double))
         {
-            this.GamesPlayed = gamesPlayed;
-            this.Mmr = mmr;
-            this.Momentum = momentum;
+            this._GamesPlayed = gamesPlayed;
+            this._Mmr = mmr;
+            this._Momentum = momentum;
         }
 
         /// <summary>
@@ -56,22 +56,76 @@ namespace Invokation.Skill.Sdk.Model
         /// </summary>
         /// <value>Amount of games played</value>
         [DataMember(Name = "games_played", IsRequired = true, EmitDefaultValue = true)]
-        public long GamesPlayed { get; set; }
+        public long GamesPlayed
+        {
+            get{ return _GamesPlayed;}
+            set
+            {
+                _GamesPlayed = value;
+                _flagGamesPlayed = true;
+            }
+        }
+        private long _GamesPlayed;
+        private bool _flagGamesPlayed;
 
+        /// <summary>
+        /// Returns false as GamesPlayed should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeGamesPlayed()
+        {
+            return _flagGamesPlayed;
+        }
         /// <summary>
         /// The player MMR
         /// </summary>
         /// <value>The player MMR</value>
         [DataMember(Name = "mmr", IsRequired = true, EmitDefaultValue = true)]
-        public double Mmr { get; set; }
+        public double Mmr
+        {
+            get{ return _Mmr;}
+            set
+            {
+                _Mmr = value;
+                _flagMmr = true;
+            }
+        }
+        private double _Mmr;
+        private bool _flagMmr;
 
+        /// <summary>
+        /// Returns false as Mmr should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeMmr()
+        {
+            return _flagMmr;
+        }
         /// <summary>
         /// Rolling-average win rate (**if used by model**)
         /// </summary>
         /// <value>Rolling-average win rate (**if used by model**)</value>
         [DataMember(Name = "momentum", IsRequired = true, EmitDefaultValue = true)]
-        public double Momentum { get; set; }
+        public double Momentum
+        {
+            get{ return _Momentum;}
+            set
+            {
+                _Momentum = value;
+                _flagMomentum = true;
+            }
+        }
+        private double _Momentum;
+        private bool _flagMomentum;
 
+        /// <summary>
+        /// Returns false as Momentum should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeMomentum()
+        {
+            return _flagMomentum;
+        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

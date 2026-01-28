@@ -45,8 +45,8 @@ namespace Invokation.Skill.Sdk.Model
         /// <param name="start">A timestamp of when this playersession started. (required).</param>
         public PlayerSessionTimestamps(double end = default(double), double start = default(double))
         {
-            this.End = end;
-            this.Start = start;
+            this._End = end;
+            this._Start = start;
         }
 
         /// <summary>
@@ -54,15 +54,51 @@ namespace Invokation.Skill.Sdk.Model
         /// </summary>
         /// <value>A timestamp of when this playersession ended.</value>
         [DataMember(Name = "end", IsRequired = true, EmitDefaultValue = true)]
-        public double End { get; set; }
+        public double End
+        {
+            get{ return _End;}
+            set
+            {
+                _End = value;
+                _flagEnd = true;
+            }
+        }
+        private double _End;
+        private bool _flagEnd;
 
+        /// <summary>
+        /// Returns false as End should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeEnd()
+        {
+            return _flagEnd;
+        }
         /// <summary>
         /// A timestamp of when this playersession started.
         /// </summary>
         /// <value>A timestamp of when this playersession started.</value>
         [DataMember(Name = "start", IsRequired = true, EmitDefaultValue = true)]
-        public double Start { get; set; }
+        public double Start
+        {
+            get{ return _Start;}
+            set
+            {
+                _Start = value;
+                _flagStart = true;
+            }
+        }
+        private double _Start;
+        private bool _flagStart;
 
+        /// <summary>
+        /// Returns false as Start should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeStart()
+        {
+            return _flagStart;
+        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

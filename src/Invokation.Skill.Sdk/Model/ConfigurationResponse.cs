@@ -51,34 +51,88 @@ namespace Invokation.Skill.Sdk.Model
             {
                 throw new ArgumentNullException("id is a required property for ConfigurationResponse and cannot be null");
             }
-            this.Id = id;
+            this._Id = id;
             // to ensure "model" is required (not null)
             if (model == null)
             {
                 throw new ArgumentNullException("model is a required property for ConfigurationResponse and cannot be null");
             }
-            this.Model = model;
-            this.Revision = revision;
+            this._Model = model;
+            this._Revision = revision;
         }
 
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
         [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = true)]
-        public string Id { get; set; }
+        public string Id
+        {
+            get{ return _Id;}
+            set
+            {
+                _Id = value;
+                _flagId = true;
+            }
+        }
+        private string _Id;
+        private bool _flagId;
 
+        /// <summary>
+        /// Returns false as Id should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeId()
+        {
+            return _flagId;
+        }
         /// <summary>
         /// Gets or Sets Model
         /// </summary>
         [DataMember(Name = "model", IsRequired = true, EmitDefaultValue = true)]
-        public Object Model { get; set; }
+        public Object Model
+        {
+            get{ return _Model;}
+            set
+            {
+                _Model = value;
+                _flagModel = true;
+            }
+        }
+        private Object _Model;
+        private bool _flagModel;
 
+        /// <summary>
+        /// Returns false as Model should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeModel()
+        {
+            return _flagModel;
+        }
         /// <summary>
         /// Gets or Sets Revision
         /// </summary>
         [DataMember(Name = "revision", IsRequired = true, EmitDefaultValue = true)]
-        public int Revision { get; set; }
+        public int Revision
+        {
+            get{ return _Revision;}
+            set
+            {
+                _Revision = value;
+                _flagRevision = true;
+            }
+        }
+        private int _Revision;
+        private bool _flagRevision;
 
+        /// <summary>
+        /// Returns false as Revision should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeRevision()
+        {
+            return _flagRevision;
+        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
