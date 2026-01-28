@@ -29,7 +29,7 @@ jobs:
           owner: invokation-games
           repositories: |
             ivk-skill
-            csharp-sdk
+            dotnet-sdk
 
       - name: Download latest OpenAPI spec
         env:
