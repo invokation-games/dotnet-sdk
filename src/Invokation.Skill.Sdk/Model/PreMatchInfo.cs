@@ -61,42 +61,42 @@ namespace Invokation.Skill.Sdk.Model
         /// Passthrough match_id if provided
         /// </summary>
         /// <value>Passthrough match_id if provided</value>
-        [DataMember(Name = "match_id", EmitDefaultValue = true)]
+        [DataMember(Name = "match_id", EmitDefaultValue = false)]
         public string MatchId { get; set; }
 
         /// <summary>
         /// The mean MMR of all players in the match
         /// </summary>
         /// <value>The mean MMR of all players in the match</value>
-        [DataMember(Name = "mean_mmr", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "mean_mmr", IsRequired = true, EmitDefaultValue = false)]
         public double MeanMmr { get; set; }
 
         /// <summary>
         /// MMR deviation for this match (useful to determine match quality)
         /// </summary>
         /// <value>MMR deviation for this match (useful to determine match quality)</value>
-        [DataMember(Name = "mmr_deviation", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "mmr_deviation", IsRequired = true, EmitDefaultValue = false)]
         public double MmrDeviation { get; set; }
 
         /// <summary>
         /// Total parties that were part of this match
         /// </summary>
         /// <value>Total parties that were part of this match</value>
-        [DataMember(Name = "party_count", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "party_count", IsRequired = true, EmitDefaultValue = false)]
         public int PartyCount { get; set; }
 
         /// <summary>
         /// Total amount of unique players in this match
         /// </summary>
         /// <value>Total amount of unique players in this match</value>
-        [DataMember(Name = "player_count", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "player_count", IsRequired = true, EmitDefaultValue = false)]
         public int PlayerCount { get; set; }
 
         /// <summary>
         /// Total teams that were part of this match
         /// </summary>
         /// <value>Total teams that were part of this match</value>
-        [DataMember(Name = "team_count", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "team_count", IsRequired = true, EmitDefaultValue = false)]
         public int TeamCount { get; set; }
 
         /// <summary>

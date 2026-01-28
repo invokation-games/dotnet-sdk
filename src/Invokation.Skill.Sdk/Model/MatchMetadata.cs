@@ -48,14 +48,14 @@ namespace Invokation.Skill.Sdk.Model
         /// The gamemode for this match.
         /// </summary>
         /// <value>The gamemode for this match.</value>
-        [DataMember(Name = "game_mode", EmitDefaultValue = true)]
+        [DataMember(Name = "game_mode", EmitDefaultValue = false)]
         public string GameMode { get; set; }
 
         /// <summary>
         /// The season the match was played in
         /// </summary>
         /// <value>The season the match was played in</value>
-        [DataMember(Name = "season", EmitDefaultValue = true)]
+        [DataMember(Name = "season", EmitDefaultValue = false)]
         public int? Season { get; set; }
 
         /// <summary>

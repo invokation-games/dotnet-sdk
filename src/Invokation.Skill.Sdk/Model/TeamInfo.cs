@@ -58,14 +58,14 @@ namespace Invokation.Skill.Sdk.Model
         /// Unique identifier for the team (within the context of this match)
         /// </summary>
         /// <value>Unique identifier for the team (within the context of this match)</value>
-        [DataMember(Name = "team_id", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "team_id", IsRequired = true, EmitDefaultValue = false)]
         public string TeamId { get; set; }
 
         /// <summary>
         /// The team score
         /// </summary>
         /// <value>The team score</value>
-        [DataMember(Name = "team_score", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "team_score", IsRequired = true, EmitDefaultValue = false)]
         public double TeamScore { get; set; }
 
         /// <summary>

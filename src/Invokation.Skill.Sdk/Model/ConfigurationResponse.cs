@@ -64,19 +64,19 @@ namespace Invokation.Skill.Sdk.Model
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
-        [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = false)]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Model
         /// </summary>
-        [DataMember(Name = "model", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "model", IsRequired = true, EmitDefaultValue = false)]
         public Object Model { get; set; }
 
         /// <summary>
         /// Gets or Sets Revision
         /// </summary>
-        [DataMember(Name = "revision", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "revision", IsRequired = true, EmitDefaultValue = false)]
         public int Revision { get; set; }
 
         /// <summary>

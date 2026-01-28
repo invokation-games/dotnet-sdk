@@ -71,42 +71,42 @@ namespace Invokation.Skill.Sdk.Model
         /// Time the match ended (ISO 8601 UTC timestamp). Apart from backfilling historical data or simulations, you probably don&#39;t need to pass this.
         /// </summary>
         /// <value>Time the match ended (ISO 8601 UTC timestamp). Apart from backfilling historical data or simulations, you probably don&#39;t need to pass this.</value>
-        [DataMember(Name = "match_end_ts", EmitDefaultValue = true)]
+        [DataMember(Name = "match_end_ts", EmitDefaultValue = false)]
         public DateTimeOffset? MatchEndTs { get; set; }
 
         /// <summary>
         /// Unique match identifier
         /// </summary>
         /// <value>Unique match identifier</value>
-        [DataMember(Name = "match_id", EmitDefaultValue = true)]
+        [DataMember(Name = "match_id", EmitDefaultValue = false)]
         public string MatchId { get; set; }
 
         /// <summary>
         /// Time the match started (ISO 8601 UTC timestamp). Apart from backfilling historical data or simulations, you probably don&#39;t need to pass this.
         /// </summary>
         /// <value>Time the match started (ISO 8601 UTC timestamp). Apart from backfilling historical data or simulations, you probably don&#39;t need to pass this.</value>
-        [DataMember(Name = "match_start_ts", EmitDefaultValue = true)]
+        [DataMember(Name = "match_start_ts", EmitDefaultValue = false)]
         public DateTimeOffset? MatchStartTs { get; set; }
 
         /// <summary>
         /// Several properties to provide more context about the match
         /// </summary>
         /// <value>Several properties to provide more context about the match</value>
-        [DataMember(Name = "metadata", EmitDefaultValue = true)]
+        [DataMember(Name = "metadata", EmitDefaultValue = false)]
         public MatchMetadata Metadata { get; set; }
 
         /// <summary>
         /// A list of all player sessions for one single match. There can be multiple sessions for the same player.
         /// </summary>
         /// <value>A list of all player sessions for one single match. There can be multiple sessions for the same player.</value>
-        [DataMember(Name = "player_sessions", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "player_sessions", IsRequired = true, EmitDefaultValue = false)]
         public Collection<PlayerSession> PlayerSessions { get; set; }
 
         /// <summary>
         /// A list of teams and their metadata
         /// </summary>
         /// <value>A list of teams and their metadata</value>
-        [DataMember(Name = "teams", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "teams", IsRequired = true, EmitDefaultValue = false)]
         public Collection<TeamInfo> Teams { get; set; }
 
         /// <summary>

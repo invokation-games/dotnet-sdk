@@ -79,35 +79,35 @@ namespace Invokation.Skill.Sdk.Model
         /// Extended player update information
         /// </summary>
         /// <value>Extended player update information</value>
-        [DataMember(Name = "extended", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "extended", IsRequired = true, EmitDefaultValue = false)]
         public PreMatchPlayerResultExtended Extended { get; set; }
 
         /// <summary>
         /// The unique identifier of the player (passed through)
         /// </summary>
         /// <value>The unique identifier of the player (passed through)</value>
-        [DataMember(Name = "player_id", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "player_id", IsRequired = true, EmitDefaultValue = false)]
         public string PlayerId { get; set; }
 
         /// <summary>
         /// Internal player index
         /// </summary>
         /// <value>Internal player index</value>
-        [DataMember(Name = "player_idx", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "player_idx", IsRequired = true, EmitDefaultValue = false)]
         public int PlayerIdx { get; set; }
 
         /// <summary>
         /// Updated player stats after this match
         /// </summary>
         /// <value>Updated player stats after this match</value>
-        [DataMember(Name = "post", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "post", IsRequired = true, EmitDefaultValue = false)]
         public PriorPlayerStats Post { get; set; }
 
         /// <summary>
         /// Player stats from the start of this match
         /// </summary>
         /// <value>Player stats from the start of this match</value>
-        [DataMember(Name = "prior", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "prior", IsRequired = true, EmitDefaultValue = false)]
         public PriorPlayerStats Prior { get; set; }
 
         /// <summary>

@@ -55,21 +55,21 @@ namespace Invokation.Skill.Sdk.Model
         /// Amount of games played
         /// </summary>
         /// <value>Amount of games played</value>
-        [DataMember(Name = "games_played", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "games_played", IsRequired = true, EmitDefaultValue = false)]
         public long GamesPlayed { get; set; }
 
         /// <summary>
         /// The player MMR
         /// </summary>
         /// <value>The player MMR</value>
-        [DataMember(Name = "mmr", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "mmr", IsRequired = true, EmitDefaultValue = false)]
         public double Mmr { get; set; }
 
         /// <summary>
         /// Rolling-average win rate (**if used by model**)
         /// </summary>
         /// <value>Rolling-average win rate (**if used by model**)</value>
-        [DataMember(Name = "momentum", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "momentum", IsRequired = true, EmitDefaultValue = false)]
         public double Momentum { get; set; }
 
         /// <summary>

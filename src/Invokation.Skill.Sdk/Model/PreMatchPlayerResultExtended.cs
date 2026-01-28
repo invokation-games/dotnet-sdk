@@ -78,83 +78,83 @@ namespace Invokation.Skill.Sdk.Model
         /// Calculated scale factor for uncertainty and step sizes Typically &#x3D; 1.0 outside of placement
         /// </summary>
         /// <value>Calculated scale factor for uncertainty and step sizes Typically &#x3D; 1.0 outside of placement</value>
-        [DataMember(Name = "alpha", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "alpha", IsRequired = true, EmitDefaultValue = false)]
         public double Alpha { get; set; }
 
         /// <summary>
         /// Gets or Sets BotLevel
         /// </summary>
-        [DataMember(Name = "bot_level", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "bot_level", IsRequired = true, EmitDefaultValue = false)]
         public double BotLevel { get; set; }
 
         /// <summary>
         /// Passthrough from request
         /// </summary>
         /// <value>Passthrough from request</value>
-        [DataMember(Name = "is_bot", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "is_bot", IsRequired = true, EmitDefaultValue = false)]
         public bool IsBot { get; set; }
 
         /// <summary>
         /// Was this the last match of placement
         /// </summary>
         /// <value>Was this the last match of placement</value>
-        [DataMember(Name = "is_final_placement", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "is_final_placement", IsRequired = true, EmitDefaultValue = false)]
         public bool IsFinalPlacement { get; set; }
 
         /// <summary>
         /// Expected change in MMR if match ends as predicted
         /// </summary>
         /// <value>Expected change in MMR if match ends as predicted</value>
-        [DataMember(Name = "mmr_delta", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "mmr_delta", IsRequired = true, EmitDefaultValue = false)]
         public double MmrDelta { get; set; }
 
         /// <summary>
         /// Fraction of placement completed (max of 1.0, but can be negative)
         /// </summary>
         /// <value>Fraction of placement completed (max of 1.0, but can be negative)</value>
-        [DataMember(Name = "placement_frac", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "placement_frac", IsRequired = true, EmitDefaultValue = false)]
         public double PlacementFrac { get; set; }
 
         /// <summary>
         /// Expected individual outcome for the player (0-1) Potentially clamped to a maximum value (typically 0.8) to guarantee minimum payoffs
         /// </summary>
         /// <value>Expected individual outcome for the player (0-1) Potentially clamped to a maximum value (typically 0.8) to guarantee minimum payoffs</value>
-        [DataMember(Name = "player_expected", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "player_expected", IsRequired = true, EmitDefaultValue = false)]
         public double PlayerExpected { get; set; }
 
         /// <summary>
         /// How much weight individual outcome is expected to influence MMR
         /// </summary>
         /// <value>How much weight individual outcome is expected to influence MMR</value>
-        [DataMember(Name = "player_weight", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "player_weight", IsRequired = true, EmitDefaultValue = false)]
         public double PlayerWeight { get; set; }
 
         /// <summary>
         /// Expected weighted average of outcomes for all teams this player is a member of
         /// </summary>
         /// <value>Expected weighted average of outcomes for all teams this player is a member of</value>
-        [DataMember(Name = "team_expected", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "team_expected", IsRequired = true, EmitDefaultValue = false)]
         public double TeamExpected { get; set; }
 
         /// <summary>
         /// How much weight team outcome is expected to influence MMR
         /// </summary>
         /// <value>How much weight team outcome is expected to influence MMR</value>
-        [DataMember(Name = "team_weight", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "team_weight", IsRequired = true, EmitDefaultValue = false)]
         public double TeamWeight { get; set; }
 
         /// <summary>
         /// Combined team and individual expected outcomes
         /// </summary>
         /// <value>Combined team and individual expected outcomes</value>
-        [DataMember(Name = "unified_expected", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "unified_expected", IsRequired = true, EmitDefaultValue = false)]
         public double UnifiedExpected { get; set; }
 
         /// <summary>
         /// The Beta distribution of expected outcomes Encodes how much certainty we have about the unified expected outcome
         /// </summary>
         /// <value>The Beta distribution of expected outcomes Encodes how much certainty we have about the unified expected outcome</value>
-        [DataMember(Name = "unified_expected_dist", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "unified_expected_dist", IsRequired = true, EmitDefaultValue = false)]
         public BetaDistribution UnifiedExpectedDist { get; set; }
 
         /// <summary>

@@ -53,14 +53,14 @@ namespace Invokation.Skill.Sdk.Model
         /// A timestamp of when this playersession ended.
         /// </summary>
         /// <value>A timestamp of when this playersession ended.</value>
-        [DataMember(Name = "end", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "end", IsRequired = true, EmitDefaultValue = false)]
         public double End { get; set; }
 
         /// <summary>
         /// A timestamp of when this playersession started.
         /// </summary>
         /// <value>A timestamp of when this playersession started.</value>
-        [DataMember(Name = "start", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "start", IsRequired = true, EmitDefaultValue = false)]
         public double Start { get; set; }
 
         /// <summary>

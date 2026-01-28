@@ -70,21 +70,21 @@ namespace Invokation.Skill.Sdk.Model
         /// Match metadata
         /// </summary>
         /// <value>Match metadata</value>
-        [DataMember(Name = "match_info", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "match_info", IsRequired = true, EmitDefaultValue = false)]
         public MatchInfo MatchInfo { get; set; }
 
         /// <summary>
         /// List of skill rating updates per player. One per player.
         /// </summary>
         /// <value>List of skill rating updates per player. One per player.</value>
-        [DataMember(Name = "players", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "players", IsRequired = true, EmitDefaultValue = false)]
         public Collection<PlayerResult> Players { get; set; }
 
         /// <summary>
         /// List of team update result
         /// </summary>
         /// <value>List of team update result</value>
-        [DataMember(Name = "teams", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "teams", IsRequired = true, EmitDefaultValue = false)]
         public Collection<TeamResult> Teams { get; set; }
 
         /// <summary>

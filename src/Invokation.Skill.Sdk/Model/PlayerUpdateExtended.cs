@@ -96,144 +96,144 @@ namespace Invokation.Skill.Sdk.Model
         /// Calculated scale factor for uncertainty and step sizes typically &#x3D; 1.0 outside of placement
         /// </summary>
         /// <value>Calculated scale factor for uncertainty and step sizes typically &#x3D; 1.0 outside of placement</value>
-        [DataMember(Name = "alpha", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "alpha", IsRequired = true, EmitDefaultValue = false)]
         public double Alpha { get; set; }
 
         /// <summary>
         /// Gets or Sets BotLevel
         /// </summary>
-        [DataMember(Name = "bot_level", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "bot_level", IsRequired = true, EmitDefaultValue = false)]
         public double BotLevel { get; set; }
 
         /// <summary>
         /// Passthrough from request
         /// </summary>
         /// <value>Passthrough from request</value>
-        [DataMember(Name = "is_bot", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "is_bot", IsRequired = true, EmitDefaultValue = false)]
         public bool IsBot { get; set; }
 
         /// <summary>
         /// Was this the last match of placement
         /// </summary>
         /// <value>Was this the last match of placement</value>
-        [DataMember(Name = "is_final_placement", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "is_final_placement", IsRequired = true, EmitDefaultValue = false)]
         public bool IsFinalPlacement { get; set; }
 
         /// <summary>
         /// Gets or Sets MaxTs
         /// </summary>
-        [DataMember(Name = "max_ts", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "max_ts", IsRequired = true, EmitDefaultValue = false)]
         public double MaxTs { get; set; }
 
         /// <summary>
         /// Gets or Sets MinTs
         /// </summary>
-        [DataMember(Name = "min_ts", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "min_ts", IsRequired = true, EmitDefaultValue = false)]
         public double MinTs { get; set; }
 
         /// <summary>
         /// Change in MMR after this match
         /// </summary>
         /// <value>Change in MMR after this match</value>
-        [DataMember(Name = "mmr_delta", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "mmr_delta", IsRequired = true, EmitDefaultValue = false)]
         public double MmrDelta { get; set; }
 
         /// <summary>
         /// All the teams the player was a part of during this match Fraction of placement completed (max of 1.0, but can be negative)
         /// </summary>
         /// <value>All the teams the player was a part of during this match Fraction of placement completed (max of 1.0, but can be negative)</value>
-        [DataMember(Name = "placement_frac", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "placement_frac", IsRequired = true, EmitDefaultValue = false)]
         public double PlacementFrac { get; set; }
 
         /// <summary>
         /// Expected individual outcome for the player (0-1) potentially clamped to a maximum value (typically 0.8) to guarantee minimum payoffs
         /// </summary>
         /// <value>Expected individual outcome for the player (0-1) potentially clamped to a maximum value (typically 0.8) to guarantee minimum payoffs</value>
-        [DataMember(Name = "player_expected", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "player_expected", IsRequired = true, EmitDefaultValue = false)]
         public double PlayerExpected { get; set; }
 
         /// <summary>
         /// Actual individual outcome for the player (0-1)
         /// </summary>
         /// <value>Actual individual outcome for the player (0-1)</value>
-        [DataMember(Name = "player_outcome", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "player_outcome", IsRequired = true, EmitDefaultValue = false)]
         public double PlayerOutcome { get; set; }
 
         /// <summary>
         /// Player score per time unit
         /// </summary>
         /// <value>Player score per time unit</value>
-        [DataMember(Name = "player_score_rate", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "player_score_rate", IsRequired = true, EmitDefaultValue = false)]
         public double PlayerScoreRate { get; set; }
 
         /// <summary>
         /// How much weight individual outcome has to influence MMR
         /// </summary>
         /// <value>How much weight individual outcome has to influence MMR</value>
-        [DataMember(Name = "player_weight", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "player_weight", IsRequired = true, EmitDefaultValue = false)]
         public double PlayerWeight { get; set; }
 
         /// <summary>
         /// Difference between actual and expected outcomes (prediction error)
         /// </summary>
         /// <value>Difference between actual and expected outcomes (prediction error)</value>
-        [DataMember(Name = "residual", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "residual", IsRequired = true, EmitDefaultValue = false)]
         public double Residual { get; set; }
 
         /// <summary>
         /// Total number of sessions for this player during this match
         /// </summary>
         /// <value>Total number of sessions for this player during this match</value>
-        [DataMember(Name = "session_count", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "session_count", IsRequired = true, EmitDefaultValue = false)]
         public int SessionCount { get; set; }
 
         /// <summary>
         /// The amount of teams the player was a part of during this match
         /// </summary>
         /// <value>The amount of teams the player was a part of during this match</value>
-        [DataMember(Name = "team_count", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "team_count", IsRequired = true, EmitDefaultValue = false)]
         public int TeamCount { get; set; }
 
         /// <summary>
         /// Weighted average of expected outcomes of all teams this player was a member of
         /// </summary>
         /// <value>Weighted average of expected outcomes of all teams this player was a member of</value>
-        [DataMember(Name = "team_expected", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "team_expected", IsRequired = true, EmitDefaultValue = false)]
         public double TeamExpected { get; set; }
 
         /// <summary>
         /// Weighted average of actual outcomes of all teams this player was a memeber of
         /// </summary>
         /// <value>Weighted average of actual outcomes of all teams this player was a memeber of</value>
-        [DataMember(Name = "team_outcome", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "team_outcome", IsRequired = true, EmitDefaultValue = false)]
         public double TeamOutcome { get; set; }
 
         /// <summary>
         /// How much weight team outcome has to influences MMR
         /// </summary>
         /// <value>How much weight team outcome has to influences MMR</value>
-        [DataMember(Name = "team_weight", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "team_weight", IsRequired = true, EmitDefaultValue = false)]
         public double TeamWeight { get; set; }
 
         /// <summary>
         /// Combined team and individual expected outcomes
         /// </summary>
         /// <value>Combined team and individual expected outcomes</value>
-        [DataMember(Name = "unified_expected", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "unified_expected", IsRequired = true, EmitDefaultValue = false)]
         public double UnifiedExpected { get; set; }
 
         /// <summary>
         /// The Beta distribution of expected outcomes Encodes how much certainty we have about the unified expected outcome
         /// </summary>
         /// <value>The Beta distribution of expected outcomes Encodes how much certainty we have about the unified expected outcome</value>
-        [DataMember(Name = "unified_expected_dist", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "unified_expected_dist", IsRequired = true, EmitDefaultValue = false)]
         public BetaDistribution UnifiedExpectedDist { get; set; }
 
         /// <summary>
         /// Combined team and individual actual outcomes
         /// </summary>
         /// <value>Combined team and individual actual outcomes</value>
-        [DataMember(Name = "unified_outcome", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "unified_outcome", IsRequired = true, EmitDefaultValue = false)]
         public double UnifiedOutcome { get; set; }
 
         /// <summary>

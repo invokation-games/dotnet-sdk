@@ -64,21 +64,21 @@ namespace Invokation.Skill.Sdk.Model
         /// <summary>
         /// Gets or Sets Details
         /// </summary>
-        [DataMember(Name = "details", EmitDefaultValue = true)]
+        [DataMember(Name = "details", EmitDefaultValue = false)]
         public Object Details { get; set; }
 
         /// <summary>
         /// A machine-readable error code
         /// </summary>
         /// <value>A machine-readable error code</value>
-        [DataMember(Name = "error", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "error", IsRequired = true, EmitDefaultValue = false)]
         public string Error { get; set; }
 
         /// <summary>
         /// A human-readable error message
         /// </summary>
         /// <value>A human-readable error message</value>
-        [DataMember(Name = "message", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "message", IsRequired = true, EmitDefaultValue = false)]
         public string Message { get; set; }
 
         /// <summary>

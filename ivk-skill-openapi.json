@@ -875,7 +875,10 @@
             "description": "If this is a bot, an optional bot skill level for analytics purposes\nDefault: null"
           },
           "is_bot": {
-            "type": "boolean",
+            "type": [
+              "boolean",
+              "null"
+            ],
             "description": "Used to flag this session as a Bot session"
           },
           "party_id": {
@@ -1274,7 +1277,10 @@
             "description": "If this is a bot, an optional bot skill level for analytics purposes\nDefault: null"
           },
           "is_bot": {
-            "type": "boolean",
+            "type": [
+              "boolean",
+              "null"
+            ],
             "description": "Used to flag this session as a Bot session"
           },
           "party_id": {

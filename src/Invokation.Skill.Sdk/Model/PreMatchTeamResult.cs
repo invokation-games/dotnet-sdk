@@ -70,56 +70,56 @@ namespace Invokation.Skill.Sdk.Model
         /// Total uncertainty in team outcome
         /// </summary>
         /// <value>Total uncertainty in team outcome</value>
-        [DataMember(Name = "beta", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "beta", IsRequired = true, EmitDefaultValue = false)]
         public double Beta { get; set; }
 
         /// <summary>
         /// The weighted team size
         /// </summary>
         /// <value>The weighted team size</value>
-        [DataMember(Name = "density", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "density", IsRequired = true, EmitDefaultValue = false)]
         public double Density { get; set; }
 
         /// <summary>
         /// The expected team outcome based on party and team model (0-1) Potentially clamped to a maximum value (typically 0.8) to guarantee minimum payoffs
         /// </summary>
         /// <value>The expected team outcome based on party and team model (0-1) Potentially clamped to a maximum value (typically 0.8) to guarantee minimum payoffs</value>
-        [DataMember(Name = "expected", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "expected", IsRequired = true, EmitDefaultValue = false)]
         public double Expected { get; set; }
 
         /// <summary>
         /// The local identifier of the team (passthrough)
         /// </summary>
         /// <value>The local identifier of the team (passthrough)</value>
-        [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = false)]
         public string Id { get; set; }
 
         /// <summary>
         /// Zero-indexed team index
         /// </summary>
         /// <value>Zero-indexed team index</value>
-        [DataMember(Name = "idx", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "idx", IsRequired = true, EmitDefaultValue = false)]
         public int Idx { get; set; }
 
         /// <summary>
         /// Total MMR of the team as determined by the party and team models (not necessarily the sum of MMRs)
         /// </summary>
         /// <value>Total MMR of the team as determined by the party and team models (not necessarily the sum of MMRs)</value>
-        [DataMember(Name = "mmr", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "mmr", IsRequired = true, EmitDefaultValue = false)]
         public double Mmr { get; set; }
 
         /// <summary>
         /// Total parties in the team
         /// </summary>
         /// <value>Total parties in the team</value>
-        [DataMember(Name = "party_count", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "party_count", IsRequired = true, EmitDefaultValue = false)]
         public int PartyCount { get; set; }
 
         /// <summary>
         /// Total player count the team has seen throughout the match
         /// </summary>
         /// <value>Total player count the team has seen throughout the match</value>
-        [DataMember(Name = "size", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "size", IsRequired = true, EmitDefaultValue = false)]
         public int Size { get; set; }
 
         /// <summary>
