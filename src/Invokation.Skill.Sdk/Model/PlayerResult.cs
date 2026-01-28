@@ -53,153 +53,63 @@ namespace Invokation.Skill.Sdk.Model
             {
                 throw new ArgumentNullException("extended is a required property for PlayerResult and cannot be null");
             }
-            this._Extended = extended;
+            this.Extended = extended;
             // to ensure "playerId" is required (not null)
             if (playerId == null)
             {
                 throw new ArgumentNullException("playerId is a required property for PlayerResult and cannot be null");
             }
-            this._PlayerId = playerId;
-            this._PlayerIdx = playerIdx;
+            this.PlayerId = playerId;
+            this.PlayerIdx = playerIdx;
             // to ensure "post" is required (not null)
             if (post == null)
             {
                 throw new ArgumentNullException("post is a required property for PlayerResult and cannot be null");
             }
-            this._Post = post;
+            this.Post = post;
             // to ensure "prior" is required (not null)
             if (prior == null)
             {
                 throw new ArgumentNullException("prior is a required property for PlayerResult and cannot be null");
             }
-            this._Prior = prior;
+            this.Prior = prior;
         }
 
         /// <summary>
         /// Extended player update information
         /// </summary>
         /// <value>Extended player update information</value>
-        [DataMember(Name = "extended", IsRequired = true, EmitDefaultValue = true)]
-        public PlayerUpdateExtended Extended
-        {
-            get{ return _Extended;}
-            set
-            {
-                _Extended = value;
-                _flagExtended = true;
-            }
-        }
-        private PlayerUpdateExtended _Extended;
-        private bool _flagExtended;
+        [DataMember(Name = "extended", IsRequired = true, EmitDefaultValue = false)]
+        public PlayerUpdateExtended Extended { get; set; }
 
-        /// <summary>
-        /// Returns false as Extended should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeExtended()
-        {
-            return _flagExtended;
-        }
         /// <summary>
         /// The unique identifier of the player (passed through)
         /// </summary>
         /// <value>The unique identifier of the player (passed through)</value>
-        [DataMember(Name = "player_id", IsRequired = true, EmitDefaultValue = true)]
-        public string PlayerId
-        {
-            get{ return _PlayerId;}
-            set
-            {
-                _PlayerId = value;
-                _flagPlayerId = true;
-            }
-        }
-        private string _PlayerId;
-        private bool _flagPlayerId;
+        [DataMember(Name = "player_id", IsRequired = true, EmitDefaultValue = false)]
+        public string PlayerId { get; set; }
 
-        /// <summary>
-        /// Returns false as PlayerId should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePlayerId()
-        {
-            return _flagPlayerId;
-        }
         /// <summary>
         /// Zero-indexed player index
         /// </summary>
         /// <value>Zero-indexed player index</value>
-        [DataMember(Name = "player_idx", IsRequired = true, EmitDefaultValue = true)]
-        public int PlayerIdx
-        {
-            get{ return _PlayerIdx;}
-            set
-            {
-                _PlayerIdx = value;
-                _flagPlayerIdx = true;
-            }
-        }
-        private int _PlayerIdx;
-        private bool _flagPlayerIdx;
+        [DataMember(Name = "player_idx", IsRequired = true, EmitDefaultValue = false)]
+        public int PlayerIdx { get; set; }
 
-        /// <summary>
-        /// Returns false as PlayerIdx should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePlayerIdx()
-        {
-            return _flagPlayerIdx;
-        }
         /// <summary>
         /// Updated player stats after this match
         /// </summary>
         /// <value>Updated player stats after this match</value>
-        [DataMember(Name = "post", IsRequired = true, EmitDefaultValue = true)]
-        public PriorPlayerStats Post
-        {
-            get{ return _Post;}
-            set
-            {
-                _Post = value;
-                _flagPost = true;
-            }
-        }
-        private PriorPlayerStats _Post;
-        private bool _flagPost;
+        [DataMember(Name = "post", IsRequired = true, EmitDefaultValue = false)]
+        public PriorPlayerStats Post { get; set; }
 
-        /// <summary>
-        /// Returns false as Post should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePost()
-        {
-            return _flagPost;
-        }
         /// <summary>
         /// Player stats from the start of this match
         /// </summary>
         /// <value>Player stats from the start of this match</value>
-        [DataMember(Name = "prior", IsRequired = true, EmitDefaultValue = true)]
-        public PriorPlayerStats Prior
-        {
-            get{ return _Prior;}
-            set
-            {
-                _Prior = value;
-                _flagPrior = true;
-            }
-        }
-        private PriorPlayerStats _Prior;
-        private bool _flagPrior;
+        [DataMember(Name = "prior", IsRequired = true, EmitDefaultValue = false)]
+        public PriorPlayerStats Prior { get; set; }
 
-        /// <summary>
-        /// Returns false as Prior should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePrior()
-        {
-            return _flagPrior;
-        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

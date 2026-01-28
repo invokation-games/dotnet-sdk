@@ -51,96 +51,42 @@ namespace Invokation.Skill.Sdk.Model
             {
                 throw new ArgumentNullException("matchInfo is a required property for MatchResultResponse and cannot be null");
             }
-            this._MatchInfo = matchInfo;
+            this.MatchInfo = matchInfo;
             // to ensure "players" is required (not null)
             if (players == null)
             {
                 throw new ArgumentNullException("players is a required property for MatchResultResponse and cannot be null");
             }
-            this._Players = players;
+            this.Players = players;
             // to ensure "teams" is required (not null)
             if (teams == null)
             {
                 throw new ArgumentNullException("teams is a required property for MatchResultResponse and cannot be null");
             }
-            this._Teams = teams;
+            this.Teams = teams;
         }
 
         /// <summary>
         /// Match metadata
         /// </summary>
         /// <value>Match metadata</value>
-        [DataMember(Name = "match_info", IsRequired = true, EmitDefaultValue = true)]
-        public MatchInfo MatchInfo
-        {
-            get{ return _MatchInfo;}
-            set
-            {
-                _MatchInfo = value;
-                _flagMatchInfo = true;
-            }
-        }
-        private MatchInfo _MatchInfo;
-        private bool _flagMatchInfo;
+        [DataMember(Name = "match_info", IsRequired = true, EmitDefaultValue = false)]
+        public MatchInfo MatchInfo { get; set; }
 
-        /// <summary>
-        /// Returns false as MatchInfo should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeMatchInfo()
-        {
-            return _flagMatchInfo;
-        }
         /// <summary>
         /// List of skill rating updates per player. One per player.
         /// </summary>
         /// <value>List of skill rating updates per player. One per player.</value>
-        [DataMember(Name = "players", IsRequired = true, EmitDefaultValue = true)]
-        public Collection<PlayerResult> Players
-        {
-            get{ return _Players;}
-            set
-            {
-                _Players = value;
-                _flagPlayers = true;
-            }
-        }
-        private Collection<PlayerResult> _Players;
-        private bool _flagPlayers;
+        [DataMember(Name = "players", IsRequired = true, EmitDefaultValue = false)]
+        public Collection<PlayerResult> Players { get; set; }
 
-        /// <summary>
-        /// Returns false as Players should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePlayers()
-        {
-            return _flagPlayers;
-        }
         /// <summary>
         /// List of team update result
         /// </summary>
         /// <value>List of team update result</value>
-        [DataMember(Name = "teams", IsRequired = true, EmitDefaultValue = true)]
-        public Collection<TeamResult> Teams
-        {
-            get{ return _Teams;}
-            set
-            {
-                _Teams = value;
-                _flagTeams = true;
-            }
-        }
-        private Collection<TeamResult> _Teams;
-        private bool _flagTeams;
+        [DataMember(Name = "teams", IsRequired = true, EmitDefaultValue = false)]
+        public Collection<TeamResult> Teams { get; set; }
 
-        /// <summary>
-        /// Returns false as Teams should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeTeams()
-        {
-            return _flagTeams;
-        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

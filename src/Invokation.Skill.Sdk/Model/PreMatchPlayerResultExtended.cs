@@ -55,324 +55,108 @@ namespace Invokation.Skill.Sdk.Model
         /// <param name="unifiedExpectedDist">The Beta distribution of expected outcomes Encodes how much certainty we have about the unified expected outcome (required).</param>
         public PreMatchPlayerResultExtended(double alpha = default(double), double botLevel = default(double), bool isBot = default(bool), bool isFinalPlacement = default(bool), double mmrDelta = default(double), double placementFrac = default(double), double playerExpected = default(double), double playerWeight = default(double), double teamExpected = default(double), double teamWeight = default(double), double unifiedExpected = default(double), BetaDistribution unifiedExpectedDist = default(BetaDistribution))
         {
-            this._Alpha = alpha;
-            this._BotLevel = botLevel;
-            this._IsBot = isBot;
-            this._IsFinalPlacement = isFinalPlacement;
-            this._MmrDelta = mmrDelta;
-            this._PlacementFrac = placementFrac;
-            this._PlayerExpected = playerExpected;
-            this._PlayerWeight = playerWeight;
-            this._TeamExpected = teamExpected;
-            this._TeamWeight = teamWeight;
-            this._UnifiedExpected = unifiedExpected;
+            this.Alpha = alpha;
+            this.BotLevel = botLevel;
+            this.IsBot = isBot;
+            this.IsFinalPlacement = isFinalPlacement;
+            this.MmrDelta = mmrDelta;
+            this.PlacementFrac = placementFrac;
+            this.PlayerExpected = playerExpected;
+            this.PlayerWeight = playerWeight;
+            this.TeamExpected = teamExpected;
+            this.TeamWeight = teamWeight;
+            this.UnifiedExpected = unifiedExpected;
             // to ensure "unifiedExpectedDist" is required (not null)
             if (unifiedExpectedDist == null)
             {
                 throw new ArgumentNullException("unifiedExpectedDist is a required property for PreMatchPlayerResultExtended and cannot be null");
             }
-            this._UnifiedExpectedDist = unifiedExpectedDist;
+            this.UnifiedExpectedDist = unifiedExpectedDist;
         }
 
         /// <summary>
         /// Calculated scale factor for uncertainty and step sizes Typically &#x3D; 1.0 outside of placement
         /// </summary>
         /// <value>Calculated scale factor for uncertainty and step sizes Typically &#x3D; 1.0 outside of placement</value>
-        [DataMember(Name = "alpha", IsRequired = true, EmitDefaultValue = true)]
-        public double Alpha
-        {
-            get{ return _Alpha;}
-            set
-            {
-                _Alpha = value;
-                _flagAlpha = true;
-            }
-        }
-        private double _Alpha;
-        private bool _flagAlpha;
+        [DataMember(Name = "alpha", IsRequired = true, EmitDefaultValue = false)]
+        public double Alpha { get; set; }
 
-        /// <summary>
-        /// Returns false as Alpha should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeAlpha()
-        {
-            return _flagAlpha;
-        }
         /// <summary>
         /// Gets or Sets BotLevel
         /// </summary>
-        [DataMember(Name = "bot_level", IsRequired = true, EmitDefaultValue = true)]
-        public double BotLevel
-        {
-            get{ return _BotLevel;}
-            set
-            {
-                _BotLevel = value;
-                _flagBotLevel = true;
-            }
-        }
-        private double _BotLevel;
-        private bool _flagBotLevel;
+        [DataMember(Name = "bot_level", IsRequired = true, EmitDefaultValue = false)]
+        public double BotLevel { get; set; }
 
-        /// <summary>
-        /// Returns false as BotLevel should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeBotLevel()
-        {
-            return _flagBotLevel;
-        }
         /// <summary>
         /// Passthrough from request
         /// </summary>
         /// <value>Passthrough from request</value>
-        [DataMember(Name = "is_bot", IsRequired = true, EmitDefaultValue = true)]
-        public bool IsBot
-        {
-            get{ return _IsBot;}
-            set
-            {
-                _IsBot = value;
-                _flagIsBot = true;
-            }
-        }
-        private bool _IsBot;
-        private bool _flagIsBot;
+        [DataMember(Name = "is_bot", IsRequired = true, EmitDefaultValue = false)]
+        public bool IsBot { get; set; }
 
-        /// <summary>
-        /// Returns false as IsBot should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeIsBot()
-        {
-            return _flagIsBot;
-        }
         /// <summary>
         /// Was this the last match of placement
         /// </summary>
         /// <value>Was this the last match of placement</value>
-        [DataMember(Name = "is_final_placement", IsRequired = true, EmitDefaultValue = true)]
-        public bool IsFinalPlacement
-        {
-            get{ return _IsFinalPlacement;}
-            set
-            {
-                _IsFinalPlacement = value;
-                _flagIsFinalPlacement = true;
-            }
-        }
-        private bool _IsFinalPlacement;
-        private bool _flagIsFinalPlacement;
+        [DataMember(Name = "is_final_placement", IsRequired = true, EmitDefaultValue = false)]
+        public bool IsFinalPlacement { get; set; }
 
-        /// <summary>
-        /// Returns false as IsFinalPlacement should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeIsFinalPlacement()
-        {
-            return _flagIsFinalPlacement;
-        }
         /// <summary>
         /// Expected change in MMR if match ends as predicted
         /// </summary>
         /// <value>Expected change in MMR if match ends as predicted</value>
-        [DataMember(Name = "mmr_delta", IsRequired = true, EmitDefaultValue = true)]
-        public double MmrDelta
-        {
-            get{ return _MmrDelta;}
-            set
-            {
-                _MmrDelta = value;
-                _flagMmrDelta = true;
-            }
-        }
-        private double _MmrDelta;
-        private bool _flagMmrDelta;
+        [DataMember(Name = "mmr_delta", IsRequired = true, EmitDefaultValue = false)]
+        public double MmrDelta { get; set; }
 
-        /// <summary>
-        /// Returns false as MmrDelta should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeMmrDelta()
-        {
-            return _flagMmrDelta;
-        }
         /// <summary>
         /// Fraction of placement completed (max of 1.0, but can be negative)
         /// </summary>
         /// <value>Fraction of placement completed (max of 1.0, but can be negative)</value>
-        [DataMember(Name = "placement_frac", IsRequired = true, EmitDefaultValue = true)]
-        public double PlacementFrac
-        {
-            get{ return _PlacementFrac;}
-            set
-            {
-                _PlacementFrac = value;
-                _flagPlacementFrac = true;
-            }
-        }
-        private double _PlacementFrac;
-        private bool _flagPlacementFrac;
+        [DataMember(Name = "placement_frac", IsRequired = true, EmitDefaultValue = false)]
+        public double PlacementFrac { get; set; }
 
-        /// <summary>
-        /// Returns false as PlacementFrac should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePlacementFrac()
-        {
-            return _flagPlacementFrac;
-        }
         /// <summary>
         /// Expected individual outcome for the player (0-1) Potentially clamped to a maximum value (typically 0.8) to guarantee minimum payoffs
         /// </summary>
         /// <value>Expected individual outcome for the player (0-1) Potentially clamped to a maximum value (typically 0.8) to guarantee minimum payoffs</value>
-        [DataMember(Name = "player_expected", IsRequired = true, EmitDefaultValue = true)]
-        public double PlayerExpected
-        {
-            get{ return _PlayerExpected;}
-            set
-            {
-                _PlayerExpected = value;
-                _flagPlayerExpected = true;
-            }
-        }
-        private double _PlayerExpected;
-        private bool _flagPlayerExpected;
+        [DataMember(Name = "player_expected", IsRequired = true, EmitDefaultValue = false)]
+        public double PlayerExpected { get; set; }
 
-        /// <summary>
-        /// Returns false as PlayerExpected should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePlayerExpected()
-        {
-            return _flagPlayerExpected;
-        }
         /// <summary>
         /// How much weight individual outcome is expected to influence MMR
         /// </summary>
         /// <value>How much weight individual outcome is expected to influence MMR</value>
-        [DataMember(Name = "player_weight", IsRequired = true, EmitDefaultValue = true)]
-        public double PlayerWeight
-        {
-            get{ return _PlayerWeight;}
-            set
-            {
-                _PlayerWeight = value;
-                _flagPlayerWeight = true;
-            }
-        }
-        private double _PlayerWeight;
-        private bool _flagPlayerWeight;
+        [DataMember(Name = "player_weight", IsRequired = true, EmitDefaultValue = false)]
+        public double PlayerWeight { get; set; }
 
-        /// <summary>
-        /// Returns false as PlayerWeight should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePlayerWeight()
-        {
-            return _flagPlayerWeight;
-        }
         /// <summary>
         /// Expected weighted average of outcomes for all teams this player is a member of
         /// </summary>
         /// <value>Expected weighted average of outcomes for all teams this player is a member of</value>
-        [DataMember(Name = "team_expected", IsRequired = true, EmitDefaultValue = true)]
-        public double TeamExpected
-        {
-            get{ return _TeamExpected;}
-            set
-            {
-                _TeamExpected = value;
-                _flagTeamExpected = true;
-            }
-        }
-        private double _TeamExpected;
-        private bool _flagTeamExpected;
+        [DataMember(Name = "team_expected", IsRequired = true, EmitDefaultValue = false)]
+        public double TeamExpected { get; set; }
 
-        /// <summary>
-        /// Returns false as TeamExpected should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeTeamExpected()
-        {
-            return _flagTeamExpected;
-        }
         /// <summary>
         /// How much weight team outcome is expected to influence MMR
         /// </summary>
         /// <value>How much weight team outcome is expected to influence MMR</value>
-        [DataMember(Name = "team_weight", IsRequired = true, EmitDefaultValue = true)]
-        public double TeamWeight
-        {
-            get{ return _TeamWeight;}
-            set
-            {
-                _TeamWeight = value;
-                _flagTeamWeight = true;
-            }
-        }
-        private double _TeamWeight;
-        private bool _flagTeamWeight;
+        [DataMember(Name = "team_weight", IsRequired = true, EmitDefaultValue = false)]
+        public double TeamWeight { get; set; }
 
-        /// <summary>
-        /// Returns false as TeamWeight should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeTeamWeight()
-        {
-            return _flagTeamWeight;
-        }
         /// <summary>
         /// Combined team and individual expected outcomes
         /// </summary>
         /// <value>Combined team and individual expected outcomes</value>
-        [DataMember(Name = "unified_expected", IsRequired = true, EmitDefaultValue = true)]
-        public double UnifiedExpected
-        {
-            get{ return _UnifiedExpected;}
-            set
-            {
-                _UnifiedExpected = value;
-                _flagUnifiedExpected = true;
-            }
-        }
-        private double _UnifiedExpected;
-        private bool _flagUnifiedExpected;
+        [DataMember(Name = "unified_expected", IsRequired = true, EmitDefaultValue = false)]
+        public double UnifiedExpected { get; set; }
 
-        /// <summary>
-        /// Returns false as UnifiedExpected should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeUnifiedExpected()
-        {
-            return _flagUnifiedExpected;
-        }
         /// <summary>
         /// The Beta distribution of expected outcomes Encodes how much certainty we have about the unified expected outcome
         /// </summary>
         /// <value>The Beta distribution of expected outcomes Encodes how much certainty we have about the unified expected outcome</value>
-        [DataMember(Name = "unified_expected_dist", IsRequired = true, EmitDefaultValue = true)]
-        public BetaDistribution UnifiedExpectedDist
-        {
-            get{ return _UnifiedExpectedDist;}
-            set
-            {
-                _UnifiedExpectedDist = value;
-                _flagUnifiedExpectedDist = true;
-            }
-        }
-        private BetaDistribution _UnifiedExpectedDist;
-        private bool _flagUnifiedExpectedDist;
+        [DataMember(Name = "unified_expected_dist", IsRequired = true, EmitDefaultValue = false)]
+        public BetaDistribution UnifiedExpectedDist { get; set; }
 
-        /// <summary>
-        /// Returns false as UnifiedExpectedDist should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeUnifiedExpectedDist()
-        {
-            return _flagUnifiedExpectedDist;
-        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

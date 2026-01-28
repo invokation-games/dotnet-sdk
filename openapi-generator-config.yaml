@@ -7,7 +7,7 @@ additionalProperties:
   nullableReferenceTypes: true
   useDateTimeOffset: true
   optionalEmitDefaultValues: false
-  conditionalSerialization: true
+  conditionalSerialization: false
   optionalMethodArgument: true
   generateApiDocumentation: true
   generateModelDocumentation: true

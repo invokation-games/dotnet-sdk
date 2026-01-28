@@ -45,60 +45,24 @@ namespace Invokation.Skill.Sdk.Model
         /// <param name="b">Beta parameter of the Beta distribution (required).</param>
         public BetaDistribution(double a = default(double), double b = default(double))
         {
-            this._A = a;
-            this._B = b;
+            this.A = a;
+            this.B = b;
         }
 
         /// <summary>
         /// Alpha parameter of the Beta distribution
         /// </summary>
         /// <value>Alpha parameter of the Beta distribution</value>
-        [DataMember(Name = "a", IsRequired = true, EmitDefaultValue = true)]
-        public double A
-        {
-            get{ return _A;}
-            set
-            {
-                _A = value;
-                _flagA = true;
-            }
-        }
-        private double _A;
-        private bool _flagA;
+        [DataMember(Name = "a", IsRequired = true, EmitDefaultValue = false)]
+        public double A { get; set; }
 
-        /// <summary>
-        /// Returns false as A should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeA()
-        {
-            return _flagA;
-        }
         /// <summary>
         /// Beta parameter of the Beta distribution
         /// </summary>
         /// <value>Beta parameter of the Beta distribution</value>
-        [DataMember(Name = "b", IsRequired = true, EmitDefaultValue = true)]
-        public double B
-        {
-            get{ return _B;}
-            set
-            {
-                _B = value;
-                _flagB = true;
-            }
-        }
-        private double _B;
-        private bool _flagB;
+        [DataMember(Name = "b", IsRequired = true, EmitDefaultValue = false)]
+        public double B { get; set; }
 
-        /// <summary>
-        /// Returns false as B should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeB()
-        {
-            return _flagB;
-        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

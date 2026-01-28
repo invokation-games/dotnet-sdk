@@ -52,246 +52,80 @@ namespace Invokation.Skill.Sdk.Model
         /// <param name="teamCount">Total teams that were part of this match (required).</param>
         public MatchInfo(double duration = default(double), string matchId = default(string), double maxTs = default(double), double meanMmr = default(double), double minTs = default(double), double mmrDeviation = default(double), int partyCount = default(int), int playerCount = default(int), int teamCount = default(int))
         {
-            this._Duration = duration;
-            this._MaxTs = maxTs;
-            this._MeanMmr = meanMmr;
-            this._MinTs = minTs;
-            this._MmrDeviation = mmrDeviation;
-            this._PartyCount = partyCount;
-            this._PlayerCount = playerCount;
-            this._TeamCount = teamCount;
-            this._MatchId = matchId;
-            if (this.MatchId != null)
-            {
-                this._flagMatchId = true;
-            }
+            this.Duration = duration;
+            this.MaxTs = maxTs;
+            this.MeanMmr = meanMmr;
+            this.MinTs = minTs;
+            this.MmrDeviation = mmrDeviation;
+            this.PartyCount = partyCount;
+            this.PlayerCount = playerCount;
+            this.TeamCount = teamCount;
+            this.MatchId = matchId;
         }
 
         /// <summary>
         /// Total duration of the match
         /// </summary>
         /// <value>Total duration of the match</value>
-        [DataMember(Name = "duration", IsRequired = true, EmitDefaultValue = true)]
-        public double Duration
-        {
-            get{ return _Duration;}
-            set
-            {
-                _Duration = value;
-                _flagDuration = true;
-            }
-        }
-        private double _Duration;
-        private bool _flagDuration;
+        [DataMember(Name = "duration", IsRequired = true, EmitDefaultValue = false)]
+        public double Duration { get; set; }
 
-        /// <summary>
-        /// Returns false as Duration should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeDuration()
-        {
-            return _flagDuration;
-        }
         /// <summary>
         /// Passthrough match_id if provided
         /// </summary>
         /// <value>Passthrough match_id if provided</value>
-        [DataMember(Name = "match_id", EmitDefaultValue = true)]
-        public string MatchId
-        {
-            get{ return _MatchId;}
-            set
-            {
-                _MatchId = value;
-                _flagMatchId = true;
-            }
-        }
-        private string _MatchId;
-        private bool _flagMatchId;
+        [DataMember(Name = "match_id", EmitDefaultValue = false)]
+        public string MatchId { get; set; }
 
-        /// <summary>
-        /// Returns false as MatchId should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeMatchId()
-        {
-            return _flagMatchId;
-        }
         /// <summary>
         /// The maximum timestamp for the match
         /// </summary>
         /// <value>The maximum timestamp for the match</value>
-        [DataMember(Name = "max_ts", IsRequired = true, EmitDefaultValue = true)]
-        public double MaxTs
-        {
-            get{ return _MaxTs;}
-            set
-            {
-                _MaxTs = value;
-                _flagMaxTs = true;
-            }
-        }
-        private double _MaxTs;
-        private bool _flagMaxTs;
+        [DataMember(Name = "max_ts", IsRequired = true, EmitDefaultValue = false)]
+        public double MaxTs { get; set; }
 
-        /// <summary>
-        /// Returns false as MaxTs should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeMaxTs()
-        {
-            return _flagMaxTs;
-        }
         /// <summary>
         /// The mean MMR of all players in the match
         /// </summary>
         /// <value>The mean MMR of all players in the match</value>
-        [DataMember(Name = "mean_mmr", IsRequired = true, EmitDefaultValue = true)]
-        public double MeanMmr
-        {
-            get{ return _MeanMmr;}
-            set
-            {
-                _MeanMmr = value;
-                _flagMeanMmr = true;
-            }
-        }
-        private double _MeanMmr;
-        private bool _flagMeanMmr;
+        [DataMember(Name = "mean_mmr", IsRequired = true, EmitDefaultValue = false)]
+        public double MeanMmr { get; set; }
 
-        /// <summary>
-        /// Returns false as MeanMmr should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeMeanMmr()
-        {
-            return _flagMeanMmr;
-        }
         /// <summary>
         /// The minimum timestamp for the match
         /// </summary>
         /// <value>The minimum timestamp for the match</value>
-        [DataMember(Name = "min_ts", IsRequired = true, EmitDefaultValue = true)]
-        public double MinTs
-        {
-            get{ return _MinTs;}
-            set
-            {
-                _MinTs = value;
-                _flagMinTs = true;
-            }
-        }
-        private double _MinTs;
-        private bool _flagMinTs;
+        [DataMember(Name = "min_ts", IsRequired = true, EmitDefaultValue = false)]
+        public double MinTs { get; set; }
 
-        /// <summary>
-        /// Returns false as MinTs should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeMinTs()
-        {
-            return _flagMinTs;
-        }
         /// <summary>
         /// MMR deviation for this match (useful to determine match quality)
         /// </summary>
         /// <value>MMR deviation for this match (useful to determine match quality)</value>
-        [DataMember(Name = "mmr_deviation", IsRequired = true, EmitDefaultValue = true)]
-        public double MmrDeviation
-        {
-            get{ return _MmrDeviation;}
-            set
-            {
-                _MmrDeviation = value;
-                _flagMmrDeviation = true;
-            }
-        }
-        private double _MmrDeviation;
-        private bool _flagMmrDeviation;
+        [DataMember(Name = "mmr_deviation", IsRequired = true, EmitDefaultValue = false)]
+        public double MmrDeviation { get; set; }
 
-        /// <summary>
-        /// Returns false as MmrDeviation should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeMmrDeviation()
-        {
-            return _flagMmrDeviation;
-        }
         /// <summary>
         /// Total parties that were part of this match
         /// </summary>
         /// <value>Total parties that were part of this match</value>
-        [DataMember(Name = "party_count", IsRequired = true, EmitDefaultValue = true)]
-        public int PartyCount
-        {
-            get{ return _PartyCount;}
-            set
-            {
-                _PartyCount = value;
-                _flagPartyCount = true;
-            }
-        }
-        private int _PartyCount;
-        private bool _flagPartyCount;
+        [DataMember(Name = "party_count", IsRequired = true, EmitDefaultValue = false)]
+        public int PartyCount { get; set; }
 
-        /// <summary>
-        /// Returns false as PartyCount should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePartyCount()
-        {
-            return _flagPartyCount;
-        }
         /// <summary>
         /// Total amount of unique players in this match
         /// </summary>
         /// <value>Total amount of unique players in this match</value>
-        [DataMember(Name = "player_count", IsRequired = true, EmitDefaultValue = true)]
-        public int PlayerCount
-        {
-            get{ return _PlayerCount;}
-            set
-            {
-                _PlayerCount = value;
-                _flagPlayerCount = true;
-            }
-        }
-        private int _PlayerCount;
-        private bool _flagPlayerCount;
+        [DataMember(Name = "player_count", IsRequired = true, EmitDefaultValue = false)]
+        public int PlayerCount { get; set; }
 
-        /// <summary>
-        /// Returns false as PlayerCount should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePlayerCount()
-        {
-            return _flagPlayerCount;
-        }
         /// <summary>
         /// Total teams that were part of this match
         /// </summary>
         /// <value>Total teams that were part of this match</value>
-        [DataMember(Name = "team_count", IsRequired = true, EmitDefaultValue = true)]
-        public int TeamCount
-        {
-            get{ return _TeamCount;}
-            set
-            {
-                _TeamCount = value;
-                _flagTeamCount = true;
-            }
-        }
-        private int _TeamCount;
-        private bool _flagTeamCount;
+        [DataMember(Name = "team_count", IsRequired = true, EmitDefaultValue = false)]
+        public int TeamCount { get; set; }
 
-        /// <summary>
-        /// Returns false as TeamCount should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeTeamCount()
-        {
-            return _flagTeamCount;
-        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

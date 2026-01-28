@@ -4,9 +4,13 @@
 default: build
 
 # Generate SDK from OpenAPI spec
-generate-sdk:
+generate-sdk: _generate-sdk-raw _fix-emit-default-values
+
+# Internal: Run OpenAPI generator
+_generate-sdk-raw:
     rm -rf src/Invokation.Skill.Sdk/Api src/Invokation.Skill.Sdk/Client src/Invokation.Skill.Sdk/Model
     docker run --rm \
+        -u "$(id -u):$(id -g)" \
         -v "{{justfile_directory()}}:/local" \
         openapitools/openapi-generator-cli:v7.12.0 generate \
         -i /local/ivk-skill-openapi.json \
@@ -16,6 +20,17 @@ generate-sdk:
     cp -r generated/src/Invokation.Skill.Sdk/Client src/Invokation.Skill.Sdk/
     cp -r generated/src/Invokation.Skill.Sdk/Model src/Invokation.Skill.Sdk/
     rm -rf generated
+
+# Fix EmitDefaultValue attributes in generated models
+# The OpenAPI generator's optionalEmitDefaultValues option doesn't work correctly,
+# so we post-process the files to set EmitDefaultValue = false for optional fields
+_fix-emit-default-values:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "Fixing EmitDefaultValue attributes in Model files..."
+    find src/Invokation.Skill.Sdk/Model -name "*.cs" -exec sed -i '' \
+        's/EmitDefaultValue = true/EmitDefaultValue = false/g' {} \;
+    echo "Done. Changed $(grep -r 'EmitDefaultValue = false' src/Invokation.Skill.Sdk/Model | wc -l | tr -d ' ') attributes to EmitDefaultValue = false"
 
 # Build the SDK (all target frameworks require .NET 6 and 8 SDKs installed)
 build:

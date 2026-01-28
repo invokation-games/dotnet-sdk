@@ -49,34 +49,16 @@ namespace Invokation.Skill.Sdk.Model
             {
                 throw new ArgumentNullException("teamId is a required property for PreMatchTeamInfo and cannot be null");
             }
-            this._TeamId = teamId;
+            this.TeamId = teamId;
         }
 
         /// <summary>
         /// Unique identifier for the team (within the context of this match)
         /// </summary>
         /// <value>Unique identifier for the team (within the context of this match)</value>
-        [DataMember(Name = "team_id", IsRequired = true, EmitDefaultValue = true)]
-        public string TeamId
-        {
-            get{ return _TeamId;}
-            set
-            {
-                _TeamId = value;
-                _flagTeamId = true;
-            }
-        }
-        private string _TeamId;
-        private bool _flagTeamId;
+        [DataMember(Name = "team_id", IsRequired = true, EmitDefaultValue = false)]
+        public string TeamId { get; set; }
 
-        /// <summary>
-        /// Returns false as TeamId should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeTeamId()
-        {
-            return _flagTeamId;
-        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

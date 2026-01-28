@@ -45,60 +45,24 @@ namespace Invokation.Skill.Sdk.Model
         /// <param name="start">A timestamp of when this playersession started. (required).</param>
         public PlayerSessionTimestamps(double end = default(double), double start = default(double))
         {
-            this._End = end;
-            this._Start = start;
+            this.End = end;
+            this.Start = start;
         }
 
         /// <summary>
         /// A timestamp of when this playersession ended.
         /// </summary>
         /// <value>A timestamp of when this playersession ended.</value>
-        [DataMember(Name = "end", IsRequired = true, EmitDefaultValue = true)]
-        public double End
-        {
-            get{ return _End;}
-            set
-            {
-                _End = value;
-                _flagEnd = true;
-            }
-        }
-        private double _End;
-        private bool _flagEnd;
+        [DataMember(Name = "end", IsRequired = true, EmitDefaultValue = false)]
+        public double End { get; set; }
 
-        /// <summary>
-        /// Returns false as End should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeEnd()
-        {
-            return _flagEnd;
-        }
         /// <summary>
         /// A timestamp of when this playersession started.
         /// </summary>
         /// <value>A timestamp of when this playersession started.</value>
-        [DataMember(Name = "start", IsRequired = true, EmitDefaultValue = true)]
-        public double Start
-        {
-            get{ return _Start;}
-            set
-            {
-                _Start = value;
-                _flagStart = true;
-            }
-        }
-        private double _Start;
-        private bool _flagStart;
+        [DataMember(Name = "start", IsRequired = true, EmitDefaultValue = false)]
+        public double Start { get; set; }
 
-        /// <summary>
-        /// Returns false as Start should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeStart()
-        {
-            return _flagStart;
-        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

@@ -51,94 +51,36 @@ namespace Invokation.Skill.Sdk.Model
             {
                 throw new ArgumentNullException("error is a required property for ErrorResponse and cannot be null");
             }
-            this._Error = error;
+            this.Error = error;
             // to ensure "message" is required (not null)
             if (message == null)
             {
                 throw new ArgumentNullException("message is a required property for ErrorResponse and cannot be null");
             }
-            this._Message = message;
-            this._Details = details;
-            if (this.Details != null)
-            {
-                this._flagDetails = true;
-            }
+            this.Message = message;
+            this.Details = details;
         }
 
         /// <summary>
         /// Gets or Sets Details
         /// </summary>
-        [DataMember(Name = "details", EmitDefaultValue = true)]
-        public Object Details
-        {
-            get{ return _Details;}
-            set
-            {
-                _Details = value;
-                _flagDetails = true;
-            }
-        }
-        private Object _Details;
-        private bool _flagDetails;
+        [DataMember(Name = "details", EmitDefaultValue = false)]
+        public Object Details { get; set; }
 
-        /// <summary>
-        /// Returns false as Details should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeDetails()
-        {
-            return _flagDetails;
-        }
         /// <summary>
         /// A machine-readable error code
         /// </summary>
         /// <value>A machine-readable error code</value>
-        [DataMember(Name = "error", IsRequired = true, EmitDefaultValue = true)]
-        public string Error
-        {
-            get{ return _Error;}
-            set
-            {
-                _Error = value;
-                _flagError = true;
-            }
-        }
-        private string _Error;
-        private bool _flagError;
+        [DataMember(Name = "error", IsRequired = true, EmitDefaultValue = false)]
+        public string Error { get; set; }
 
-        /// <summary>
-        /// Returns false as Error should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeError()
-        {
-            return _flagError;
-        }
         /// <summary>
         /// A human-readable error message
         /// </summary>
         /// <value>A human-readable error message</value>
-        [DataMember(Name = "message", IsRequired = true, EmitDefaultValue = true)]
-        public string Message
-        {
-            get{ return _Message;}
-            set
-            {
-                _Message = value;
-                _flagMessage = true;
-            }
-        }
-        private string _Message;
-        private bool _flagMessage;
+        [DataMember(Name = "message", IsRequired = true, EmitDefaultValue = false)]
+        public string Message { get; set; }
 
-        /// <summary>
-        /// Returns false as Message should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeMessage()
-        {
-            return _flagMessage;
-        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

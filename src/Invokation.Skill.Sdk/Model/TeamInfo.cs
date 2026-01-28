@@ -50,60 +50,24 @@ namespace Invokation.Skill.Sdk.Model
             {
                 throw new ArgumentNullException("teamId is a required property for TeamInfo and cannot be null");
             }
-            this._TeamId = teamId;
-            this._TeamScore = teamScore;
+            this.TeamId = teamId;
+            this.TeamScore = teamScore;
         }
 
         /// <summary>
         /// Unique identifier for the team (within the context of this match)
         /// </summary>
         /// <value>Unique identifier for the team (within the context of this match)</value>
-        [DataMember(Name = "team_id", IsRequired = true, EmitDefaultValue = true)]
-        public string TeamId
-        {
-            get{ return _TeamId;}
-            set
-            {
-                _TeamId = value;
-                _flagTeamId = true;
-            }
-        }
-        private string _TeamId;
-        private bool _flagTeamId;
+        [DataMember(Name = "team_id", IsRequired = true, EmitDefaultValue = false)]
+        public string TeamId { get; set; }
 
-        /// <summary>
-        /// Returns false as TeamId should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeTeamId()
-        {
-            return _flagTeamId;
-        }
         /// <summary>
         /// The team score
         /// </summary>
         /// <value>The team score</value>
-        [DataMember(Name = "team_score", IsRequired = true, EmitDefaultValue = true)]
-        public double TeamScore
-        {
-            get{ return _TeamScore;}
-            set
-            {
-                _TeamScore = value;
-                _flagTeamScore = true;
-            }
-        }
-        private double _TeamScore;
-        private bool _flagTeamScore;
+        [DataMember(Name = "team_score", IsRequired = true, EmitDefaultValue = false)]
+        public double TeamScore { get; set; }
 
-        /// <summary>
-        /// Returns false as TeamScore should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeTeamScore()
-        {
-            return _flagTeamScore;
-        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

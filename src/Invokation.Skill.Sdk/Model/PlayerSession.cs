@@ -61,389 +61,111 @@ namespace Invokation.Skill.Sdk.Model
             {
                 throw new ArgumentNullException("playerId is a required property for PlayerSession and cannot be null");
             }
-            this._PlayerId = playerId;
-            this._PlayerScore = playerScore;
-            this._AdjustedMmr = adjustedMmr;
-            if (this.AdjustedMmr != null)
-            {
-                this._flagAdjustedMmr = true;
-            }
-            this._BotLevel = botLevel;
-            if (this.BotLevel != null)
-            {
-                this._flagBotLevel = true;
-            }
-            this._IsBot = isBot;
-            if (this.IsBot != null)
-            {
-                this._flagIsBot = true;
-            }
-            this._PartyId = partyId;
-            if (this.PartyId != null)
-            {
-                this._flagPartyId = true;
-            }
-            this._PerfBeta = perfBeta;
-            if (this.PerfBeta != null)
-            {
-                this._flagPerfBeta = true;
-            }
-            this._PlayerScoreStart = playerScoreStart;
-            if (this.PlayerScoreStart != null)
-            {
-                this._flagPlayerScoreStart = true;
-            }
-            this._PriorGamesPlayed = priorGamesPlayed;
-            if (this.PriorGamesPlayed != null)
-            {
-                this._flagPriorGamesPlayed = true;
-            }
-            this._PriorMmr = priorMmr;
-            if (this.PriorMmr != null)
-            {
-                this._flagPriorMmr = true;
-            }
-            this._PriorMomentum = priorMomentum;
-            if (this.PriorMomentum != null)
-            {
-                this._flagPriorMomentum = true;
-            }
-            this._SessionTimestamps = sessionTimestamps;
-            if (this.SessionTimestamps != null)
-            {
-                this._flagSessionTimestamps = true;
-            }
-            this._TeamId = teamId;
-            if (this.TeamId != null)
-            {
-                this._flagTeamId = true;
-            }
+            this.PlayerId = playerId;
+            this.PlayerScore = playerScore;
+            this.AdjustedMmr = adjustedMmr;
+            this.BotLevel = botLevel;
+            this.IsBot = isBot;
+            this.PartyId = partyId;
+            this.PerfBeta = perfBeta;
+            this.PlayerScoreStart = playerScoreStart;
+            this.PriorGamesPlayed = priorGamesPlayed;
+            this.PriorMmr = priorMmr;
+            this.PriorMomentum = priorMomentum;
+            this.SessionTimestamps = sessionTimestamps;
+            this.TeamId = teamId;
         }
 
         /// <summary>
         /// Adjusted MMR that was used for matchmaking / team-balancing. For example; players who are in a party will often perform better than their individual MMR would suggest A matchmaker or teambalancer might take this into account by calculating a bonus to the MMR However, such a bonus could cause a party to gain more or lose less MMR than they would otherwise By providing this value, we can compensate for this effect.
         /// </summary>
         /// <value>Adjusted MMR that was used for matchmaking / team-balancing. For example; players who are in a party will often perform better than their individual MMR would suggest A matchmaker or teambalancer might take this into account by calculating a bonus to the MMR However, such a bonus could cause a party to gain more or lose less MMR than they would otherwise By providing this value, we can compensate for this effect.</value>
-        [DataMember(Name = "adjusted_mmr", EmitDefaultValue = true)]
-        public double? AdjustedMmr
-        {
-            get{ return _AdjustedMmr;}
-            set
-            {
-                _AdjustedMmr = value;
-                _flagAdjustedMmr = true;
-            }
-        }
-        private double? _AdjustedMmr;
-        private bool _flagAdjustedMmr;
+        [DataMember(Name = "adjusted_mmr", EmitDefaultValue = false)]
+        public double? AdjustedMmr { get; set; }
 
-        /// <summary>
-        /// Returns false as AdjustedMmr should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeAdjustedMmr()
-        {
-            return _flagAdjustedMmr;
-        }
         /// <summary>
         /// If this is a bot, an optional bot skill level for analytics purposes Default: null
         /// </summary>
         /// <value>If this is a bot, an optional bot skill level for analytics purposes Default: null</value>
-        [DataMember(Name = "bot_level", EmitDefaultValue = true)]
-        public double? BotLevel
-        {
-            get{ return _BotLevel;}
-            set
-            {
-                _BotLevel = value;
-                _flagBotLevel = true;
-            }
-        }
-        private double? _BotLevel;
-        private bool _flagBotLevel;
+        [DataMember(Name = "bot_level", EmitDefaultValue = false)]
+        public double? BotLevel { get; set; }
 
-        /// <summary>
-        /// Returns false as BotLevel should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeBotLevel()
-        {
-            return _flagBotLevel;
-        }
         /// <summary>
         /// Used to flag this session as a Bot session
         /// </summary>
         /// <value>Used to flag this session as a Bot session</value>
-        [DataMember(Name = "is_bot", EmitDefaultValue = true)]
-        public bool? IsBot
-        {
-            get{ return _IsBot;}
-            set
-            {
-                _IsBot = value;
-                _flagIsBot = true;
-            }
-        }
-        private bool? _IsBot;
-        private bool _flagIsBot;
+        [DataMember(Name = "is_bot", EmitDefaultValue = false)]
+        public bool? IsBot { get; set; }
 
-        /// <summary>
-        /// Returns false as IsBot should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeIsBot()
-        {
-            return _flagIsBot;
-        }
         /// <summary>
         /// Local identifier of the player&#39;s party. If set, should be unique per party per match. Default behavior is to treat each player as their own party, so party_id can be omitted for games that don&#39;t support parties.
         /// </summary>
         /// <value>Local identifier of the player&#39;s party. If set, should be unique per party per match. Default behavior is to treat each player as their own party, so party_id can be omitted for games that don&#39;t support parties.</value>
-        [DataMember(Name = "party_id", EmitDefaultValue = true)]
-        public string PartyId
-        {
-            get{ return _PartyId;}
-            set
-            {
-                _PartyId = value;
-                _flagPartyId = true;
-            }
-        }
-        private string _PartyId;
-        private bool _flagPartyId;
+        [DataMember(Name = "party_id", EmitDefaultValue = false)]
+        public string PartyId { get; set; }
 
-        /// <summary>
-        /// Returns false as PartyId should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePartyId()
-        {
-            return _flagPartyId;
-        }
         /// <summary>
         /// Override for rating uncertainty (advanced option) Default behavior is to use values generated by model
         /// </summary>
         /// <value>Override for rating uncertainty (advanced option) Default behavior is to use values generated by model</value>
-        [DataMember(Name = "perf_beta", EmitDefaultValue = true)]
-        public double? PerfBeta
-        {
-            get{ return _PerfBeta;}
-            set
-            {
-                _PerfBeta = value;
-                _flagPerfBeta = true;
-            }
-        }
-        private double? _PerfBeta;
-        private bool _flagPerfBeta;
+        [DataMember(Name = "perf_beta", EmitDefaultValue = false)]
+        public double? PerfBeta { get; set; }
 
-        /// <summary>
-        /// Returns false as PerfBeta should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePerfBeta()
-        {
-            return _flagPerfBeta;
-        }
         /// <summary>
         /// The unique identifier of the player
         /// </summary>
         /// <value>The unique identifier of the player</value>
-        [DataMember(Name = "player_id", IsRequired = true, EmitDefaultValue = true)]
-        public string PlayerId
-        {
-            get{ return _PlayerId;}
-            set
-            {
-                _PlayerId = value;
-                _flagPlayerId = true;
-            }
-        }
-        private string _PlayerId;
-        private bool _flagPlayerId;
+        [DataMember(Name = "player_id", IsRequired = true, EmitDefaultValue = false)]
+        public string PlayerId { get; set; }
 
-        /// <summary>
-        /// Returns false as PlayerId should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePlayerId()
-        {
-            return _flagPlayerId;
-        }
         /// <summary>
         /// The player score in this match Default: 0 It&#39;s up to the game to determine this value. The only requirement is that a higher score is better than a lower score. This value only matters if player performance is configured to have non-zero weight.
         /// </summary>
         /// <value>The player score in this match Default: 0 It&#39;s up to the game to determine this value. The only requirement is that a higher score is better than a lower score. This value only matters if player performance is configured to have non-zero weight.</value>
-        [DataMember(Name = "player_score", IsRequired = true, EmitDefaultValue = true)]
-        public double PlayerScore
-        {
-            get{ return _PlayerScore;}
-            set
-            {
-                _PlayerScore = value;
-                _flagPlayerScore = true;
-            }
-        }
-        private double _PlayerScore;
-        private bool _flagPlayerScore;
+        [DataMember(Name = "player_score", IsRequired = true, EmitDefaultValue = false)]
+        public double PlayerScore { get; set; }
 
-        /// <summary>
-        /// Returns false as PlayerScore should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePlayerScore()
-        {
-            return _flagPlayerScore;
-        }
         /// <summary>
         /// The player&#39;s score at the start of this session (advanced option) Default behavior is to inherit player_score from the end of the previous session (recommended) Used for score-per-minute normalization in cases where players can rejoin matches e.g. set this to 0 if player scores are reset on rejoin
         /// </summary>
         /// <value>The player&#39;s score at the start of this session (advanced option) Default behavior is to inherit player_score from the end of the previous session (recommended) Used for score-per-minute normalization in cases where players can rejoin matches e.g. set this to 0 if player scores are reset on rejoin</value>
-        [DataMember(Name = "player_score_start", EmitDefaultValue = true)]
-        public double? PlayerScoreStart
-        {
-            get{ return _PlayerScoreStart;}
-            set
-            {
-                _PlayerScoreStart = value;
-                _flagPlayerScoreStart = true;
-            }
-        }
-        private double? _PlayerScoreStart;
-        private bool _flagPlayerScoreStart;
+        [DataMember(Name = "player_score_start", EmitDefaultValue = false)]
+        public double? PlayerScoreStart { get; set; }
 
-        /// <summary>
-        /// Returns false as PlayerScoreStart should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePlayerScoreStart()
-        {
-            return _flagPlayerScoreStart;
-        }
         /// <summary>
         /// The previous number of games the player has played (ever, or just this season).
         /// </summary>
         /// <value>The previous number of games the player has played (ever, or just this season).</value>
         [DataMember(Name = "prior_games_played", EmitDefaultValue = false)]
-        public long PriorGamesPlayed
-        {
-            get{ return _PriorGamesPlayed;}
-            set
-            {
-                _PriorGamesPlayed = value;
-                _flagPriorGamesPlayed = true;
-            }
-        }
-        private long _PriorGamesPlayed;
-        private bool _flagPriorGamesPlayed;
+        public long PriorGamesPlayed { get; set; }
 
-        /// <summary>
-        /// Returns false as PriorGamesPlayed should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePriorGamesPlayed()
-        {
-            return _flagPriorGamesPlayed;
-        }
         /// <summary>
         /// The MMR of the player at the start of the match. A number between 0 and 1 Default: default_mmr specified in the MMR configuration
         /// </summary>
         /// <value>The MMR of the player at the start of the match. A number between 0 and 1 Default: default_mmr specified in the MMR configuration</value>
-        [DataMember(Name = "prior_mmr", EmitDefaultValue = true)]
-        public double? PriorMmr
-        {
-            get{ return _PriorMmr;}
-            set
-            {
-                _PriorMmr = value;
-                _flagPriorMmr = true;
-            }
-        }
-        private double? _PriorMmr;
-        private bool _flagPriorMmr;
+        [DataMember(Name = "prior_mmr", EmitDefaultValue = false)]
+        public double? PriorMmr { get; set; }
 
-        /// <summary>
-        /// Returns false as PriorMmr should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePriorMmr()
-        {
-            return _flagPriorMmr;
-        }
         /// <summary>
         /// Incoming momentum (**not used in most models**) For models with experimental anti-smurfing features or rating acceleration Essentially rolling-average win rate
         /// </summary>
         /// <value>Incoming momentum (**not used in most models**) For models with experimental anti-smurfing features or rating acceleration Essentially rolling-average win rate</value>
-        [DataMember(Name = "prior_momentum", EmitDefaultValue = true)]
-        public double? PriorMomentum
-        {
-            get{ return _PriorMomentum;}
-            set
-            {
-                _PriorMomentum = value;
-                _flagPriorMomentum = true;
-            }
-        }
-        private double? _PriorMomentum;
-        private bool _flagPriorMomentum;
+        [DataMember(Name = "prior_momentum", EmitDefaultValue = false)]
+        public double? PriorMomentum { get; set; }
 
-        /// <summary>
-        /// Returns false as PriorMomentum should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializePriorMomentum()
-        {
-            return _flagPriorMomentum;
-        }
         /// <summary>
         /// Gets or Sets SessionTimestamps
         /// </summary>
         [DataMember(Name = "session_timestamps", EmitDefaultValue = false)]
-        public PlayerSessionTimestamps SessionTimestamps
-        {
-            get{ return _SessionTimestamps;}
-            set
-            {
-                _SessionTimestamps = value;
-                _flagSessionTimestamps = true;
-            }
-        }
-        private PlayerSessionTimestamps _SessionTimestamps;
-        private bool _flagSessionTimestamps;
+        public PlayerSessionTimestamps SessionTimestamps { get; set; }
 
-        /// <summary>
-        /// Returns false as SessionTimestamps should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeSessionTimestamps()
-        {
-            return _flagSessionTimestamps;
-        }
         /// <summary>
         /// Local identifier of the player&#39;s team. If set must match one of the teams provided in the MatchResult. Default behavior is to treat each player as their own team, so team_id can be omitted for 1v1 or free-for-all modes.
         /// </summary>
         /// <value>Local identifier of the player&#39;s team. If set must match one of the teams provided in the MatchResult. Default behavior is to treat each player as their own team, so team_id can be omitted for 1v1 or free-for-all modes.</value>
-        [DataMember(Name = "team_id", EmitDefaultValue = true)]
-        public string TeamId
-        {
-            get{ return _TeamId;}
-            set
-            {
-                _TeamId = value;
-                _flagTeamId = true;
-            }
-        }
-        private string _TeamId;
-        private bool _flagTeamId;
+        [DataMember(Name = "team_id", EmitDefaultValue = false)]
+        public string TeamId { get; set; }
 
-        /// <summary>
-        /// Returns false as TeamId should not be serialized given that it's read-only.
-        /// </summary>
-        /// <returns>false (boolean)</returns>
-        public bool ShouldSerializeTeamId()
-        {
-            return _flagTeamId;
-        }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
