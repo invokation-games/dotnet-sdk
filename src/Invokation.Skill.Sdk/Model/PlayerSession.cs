@@ -115,14 +115,14 @@ namespace Invokation.Skill.Sdk.Model
         /// The unique identifier of the player
         /// </summary>
         /// <value>The unique identifier of the player</value>
-        [DataMember(Name = "player_id", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "player_id", IsRequired = true, EmitDefaultValue = true)]
         public string PlayerId { get; set; }
 
         /// <summary>
         /// The player score in this match Default: 0 It&#39;s up to the game to determine this value. The only requirement is that a higher score is better than a lower score. This value only matters if player performance is configured to have non-zero weight.
         /// </summary>
         /// <value>The player score in this match Default: 0 It&#39;s up to the game to determine this value. The only requirement is that a higher score is better than a lower score. This value only matters if player performance is configured to have non-zero weight.</value>
-        [DataMember(Name = "player_score", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "player_score", IsRequired = true, EmitDefaultValue = true)]
         public double PlayerScore { get; set; }
 
         /// <summary>

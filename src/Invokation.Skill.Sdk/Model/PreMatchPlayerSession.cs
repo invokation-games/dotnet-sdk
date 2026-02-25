@@ -109,7 +109,7 @@ namespace Invokation.Skill.Sdk.Model
         /// The unique identifier of the player
         /// </summary>
         /// <value>The unique identifier of the player</value>
-        [DataMember(Name = "player_id", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "player_id", IsRequired = true, EmitDefaultValue = true)]
         public string PlayerId { get; set; }
 
         /// <summary>

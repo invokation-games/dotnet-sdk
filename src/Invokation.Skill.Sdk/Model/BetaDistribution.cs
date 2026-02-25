@@ -53,14 +53,14 @@ namespace Invokation.Skill.Sdk.Model
         /// Alpha parameter of the Beta distribution
         /// </summary>
         /// <value>Alpha parameter of the Beta distribution</value>
-        [DataMember(Name = "a", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "a", IsRequired = true, EmitDefaultValue = true)]
         public double A { get; set; }
 
         /// <summary>
         /// Beta parameter of the Beta distribution
         /// </summary>
         /// <value>Beta parameter of the Beta distribution</value>
-        [DataMember(Name = "b", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "b", IsRequired = true, EmitDefaultValue = true)]
         public double B { get; set; }
 
         /// <summary>

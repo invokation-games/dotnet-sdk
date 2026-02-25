@@ -81,14 +81,14 @@ namespace Invokation.Skill.Sdk.Model
         /// A list of all player sessions for one single match. There can be multiple sessions for a single player.
         /// </summary>
         /// <value>A list of all player sessions for one single match. There can be multiple sessions for a single player.</value>
-        [DataMember(Name = "player_sessions", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "player_sessions", IsRequired = true, EmitDefaultValue = true)]
         public Collection<PreMatchPlayerSession> PlayerSessions { get; set; }
 
         /// <summary>
         /// A list of teams and their metadata
         /// </summary>
         /// <value>A list of teams and their metadata</value>
-        [DataMember(Name = "teams", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "teams", IsRequired = true, EmitDefaultValue = true)]
         public Collection<PreMatchTeamInfo> Teams { get; set; }
 
         /// <summary>

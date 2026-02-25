@@ -71,14 +71,14 @@ namespace Invokation.Skill.Sdk.Model
         /// A machine-readable error code
         /// </summary>
         /// <value>A machine-readable error code</value>
-        [DataMember(Name = "error", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "error", IsRequired = true, EmitDefaultValue = true)]
         public string Error { get; set; }
 
         /// <summary>
         /// A human-readable error message
         /// </summary>
         /// <value>A human-readable error message</value>
-        [DataMember(Name = "message", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "message", IsRequired = true, EmitDefaultValue = true)]
         public string Message { get; set; }
 
         /// <summary>

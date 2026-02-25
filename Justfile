@@ -21,16 +21,19 @@ _generate-sdk-raw:
     cp -r generated/src/Invokation.Skill.Sdk/Model src/Invokation.Skill.Sdk/
     rm -rf generated
 
-# Fix EmitDefaultValue attributes in generated models
-# The OpenAPI generator's optionalEmitDefaultValues option doesn't work correctly,
-# so we post-process the files to set EmitDefaultValue = false for optional fields
+# Fix EmitDefaultValue on optional properties in generated models.
+# The generator sets EmitDefaultValue = true everywhere, which causes
+# optional null/default fields to be serialized unnecessarily.
+# We set it to false only on optional properties (those without IsRequired = true),
+# leaving required properties with EmitDefaultValue = true so that valid
+# default values like 0 are always serialized.
 _fix-emit-default-values:
     #!/usr/bin/env bash
     set -euo pipefail
-    echo "Fixing EmitDefaultValue attributes in Model files..."
-    find src/Invokation.Skill.Sdk/Model -name "*.cs" -exec sed -i '' \
-        's/EmitDefaultValue = true/EmitDefaultValue = false/g' {} \;
-    echo "Done. Changed $(grep -r 'EmitDefaultValue = false' src/Invokation.Skill.Sdk/Model | wc -l | tr -d ' ') attributes to EmitDefaultValue = false"
+    echo "Fixing EmitDefaultValue on optional properties in Model files..."
+    find src/Invokation.Skill.Sdk/Model -name "*.cs" -exec sed -i \
+        '/IsRequired = true/!s/EmitDefaultValue = true/EmitDefaultValue = false/g' {} \;
+    echo "Done."
 
 # Build the SDK (all target frameworks require .NET 6 and 8 SDKs installed)
 build:

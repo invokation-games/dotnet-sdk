@@ -68,35 +68,35 @@ namespace Invokation.Skill.Sdk.Model
         /// The mean MMR of all players in the match
         /// </summary>
         /// <value>The mean MMR of all players in the match</value>
-        [DataMember(Name = "mean_mmr", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "mean_mmr", IsRequired = true, EmitDefaultValue = true)]
         public double MeanMmr { get; set; }
 
         /// <summary>
         /// MMR deviation for this match (useful to determine match quality)
         /// </summary>
         /// <value>MMR deviation for this match (useful to determine match quality)</value>
-        [DataMember(Name = "mmr_deviation", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "mmr_deviation", IsRequired = true, EmitDefaultValue = true)]
         public double MmrDeviation { get; set; }
 
         /// <summary>
         /// Total parties that were part of this match
         /// </summary>
         /// <value>Total parties that were part of this match</value>
-        [DataMember(Name = "party_count", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "party_count", IsRequired = true, EmitDefaultValue = true)]
         public int PartyCount { get; set; }
 
         /// <summary>
         /// Total amount of unique players in this match
         /// </summary>
         /// <value>Total amount of unique players in this match</value>
-        [DataMember(Name = "player_count", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "player_count", IsRequired = true, EmitDefaultValue = true)]
         public int PlayerCount { get; set; }
 
         /// <summary>
         /// Total teams that were part of this match
         /// </summary>
         /// <value>Total teams that were part of this match</value>
-        [DataMember(Name = "team_count", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "team_count", IsRequired = true, EmitDefaultValue = true)]
         public int TeamCount { get; set; }
 
         /// <summary>

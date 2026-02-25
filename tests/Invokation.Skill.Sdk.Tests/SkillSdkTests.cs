@@ -1,10 +1,26 @@
 using System.Collections.ObjectModel;
 using Invokation.Skill.Sdk.Model;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Invokation.Skill.Sdk.Tests;
 
 public class SkillSdkTests
 {
+    /// <summary>
+    /// Matches the JsonSerializerSettings used by ApiClient.CustomJsonCodec.
+    /// </summary>
+    private static readonly JsonSerializerSettings SerializerSettings = new()
+    {
+        ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
+        ContractResolver = new DefaultContractResolver
+        {
+            NamingStrategy = new CamelCaseNamingStrategy
+            {
+                OverrideSpecifiedNames = false
+            }
+        }
+    };
     [Fact]
     public void PostMatchResult_NullModelId_ThrowsArgumentException()
     {
@@ -129,6 +145,42 @@ public class SkillSdkTests
 
         await sdk.DisposeAsync();
         await sdk.DisposeAsync(); // Should not throw
+    }
+
+    [Fact]
+    public void Serialize_TeamScoreZero_IsIncluded()
+    {
+        var team = new TeamInfo(teamId: "blue", teamScore: 0);
+        var json = JsonConvert.SerializeObject(team, SerializerSettings);
+
+        Assert.Contains("\"team_score\":0", json.Replace(" ", ""));
+    }
+
+    [Fact]
+    public void Serialize_PlayerScoreZero_IsIncluded()
+    {
+        var session = new PlayerSession(playerId: "p1", playerScore: 0);
+        var json = JsonConvert.SerializeObject(session, SerializerSettings);
+
+        Assert.Contains("\"player_score\":0", json.Replace(" ", ""));
+    }
+
+    [Fact]
+    public void Serialize_OptionalNullableDouble_ZeroIsIncluded()
+    {
+        var session = new PlayerSession(playerId: "p1", playerScore: 0, adjustedMmr: 0.0);
+        var json = JsonConvert.SerializeObject(session, SerializerSettings);
+
+        Assert.Contains("\"adjusted_mmr\":0", json.Replace(" ", ""));
+    }
+
+    [Fact]
+    public void Serialize_OptionalNullableDouble_NullIsOmitted()
+    {
+        var session = new PlayerSession(playerId: "p1", playerScore: 0, adjustedMmr: null);
+        var json = JsonConvert.SerializeObject(session, SerializerSettings);
+
+        Assert.DoesNotContain("adjusted_mmr", json);
     }
 
     private static SkillSdk CreateSdk()
