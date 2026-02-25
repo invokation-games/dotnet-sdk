@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/invokation-games/dotnet-sdk/compare/v1.2.0...v1.2.1) (2026-02-25)
+
+
+### Bug Fixes
+
+* skip EmitDefaultValue patch for required values ([14c9b58](https://github.com/invokation-games/dotnet-sdk/commit/14c9b5816ae99281d5e61fe2b4d44fb7480da77f))
+
 ## [1.2.0](https://github.com/invokation-games/dotnet-sdk/compare/v1.1.7...v1.2.0) (2026-01-28)
 
 
