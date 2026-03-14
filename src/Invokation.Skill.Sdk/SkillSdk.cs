@@ -46,6 +46,30 @@ internal static class Log
     }
 }
 
+public interface ISkillSdk {
+
+    Task<MatchResultResponse> PostMatchResultAsync(
+        string modelId,
+        MatchResultRequest request,
+        CancellationToken cancellationToken = default);
+
+    Task<PreMatchResponse> PostPreMatchAsync(
+        string modelId,
+        PreMatchRequest request,
+        CancellationToken cancellationToken = default);
+
+    Task<ConfigurationResponse> GetConfigurationAsync(
+        string modelId,
+        CancellationToken cancellationToken = default);
+
+    MatchResultResponse PostMatchResult(string modelId, MatchResultRequest request);
+
+    PreMatchResponse PostPreMatch(string modelId, PreMatchRequest request);
+
+    ConfigurationResponse GetConfiguration(string modelId);
+
+}
+
 /// <summary>
 /// SDK wrapper for the IVK Skill API with built-in retry mechanism and API key authentication.
 ///
@@ -61,7 +85,7 @@ internal static class Log
 /// var result = await sdk.PostMatchResultAsync("model-id", matchResultRequest);
 /// </code>
 /// </summary>
-public sealed class SkillSdk : IDisposable, IAsyncDisposable
+public sealed class SkillSdk : ISkillSdk, IDisposable, IAsyncDisposable
 {
     private readonly SkillApi _skillApi;
     private readonly string _environment;
