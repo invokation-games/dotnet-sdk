@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/invokation-games/dotnet-sdk/compare/v1.2.1...v1.3.0) (2026-03-16)
+
+
+### Features
+
+* add interface for SkillSdk ([#24](https://github.com/invokation-games/dotnet-sdk/issues/24)) ([f228ce5](https://github.com/invokation-games/dotnet-sdk/commit/f228ce5d36520be7724b74cdc96f741e80f9c647))
+
 ## [1.2.1](https://github.com/invokation-games/dotnet-sdk/compare/v1.2.0...v1.2.1) (2026-02-25)
 
 
