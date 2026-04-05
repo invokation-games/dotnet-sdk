@@ -107,6 +107,7 @@ public sealed class SkillSdk : ISkillSdk, IDisposable, IAsyncDisposable
         _logger = logger ?? NullLogger<SkillSdk>.Instance;
         _ownsHttpClient = ownsHttpClient;
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+        RetryConfigValidator.Validate(retryConfig);
 
         // Configure the API client with the API key
         var configuration = new Configuration
@@ -346,7 +347,8 @@ public sealed class SkillSdk : ISkillSdk, IDisposable, IAsyncDisposable
         /// <returns>This builder instance for chaining.</returns>
         public Builder WithRetryConfig(RetryConfig config)
         {
-            _retryConfig = config ?? throw new ArgumentNullException(nameof(config));
+            RetryConfigValidator.Validate(config);
+            _retryConfig = config;
             return this;
         }
 

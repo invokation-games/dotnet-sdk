@@ -97,11 +97,19 @@ var retryConfig = new RetryConfig
 };
 ```
 
+Validation rules:
+
+- `MaxRetries` must be greater than or equal to `1`
+- `InitialDelayMs` must be greater than or equal to `0`
+- `MaxDelayMs` must be greater than or equal to `0`
+
 To disable retries:
 
 ```csharp
 .WithRetryConfig(RetryConfig.NoRetry)
 ```
+
+`RetryConfig.NoRetry` performs a single total attempt with no retries.
 
 ## API Reference
 
@@ -249,6 +257,8 @@ just pack
 # Clean artifacts
 just clean
 ```
+
+The generation workflow uses a local OpenAPI template override at [`openapi-templates/csharp/libraries/httpclient/ApiClient.mustache`](openapi-templates/csharp/libraries/httpclient/ApiClient.mustache) to keep retry behavior correct across regenerations. When bumping OpenAPI Generator, diff that template against the new upstream `ApiClient.mustache` before regenerating.
 
 ## Support
 

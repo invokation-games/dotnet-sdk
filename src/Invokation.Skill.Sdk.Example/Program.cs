@@ -25,7 +25,7 @@ using var sdk = SkillSdk.CreateBuilder()
     .WithEnvironment("production")
     .WithRetryConfig(new RetryConfig
     {
-        MaxRetries = 3,
+        MaxRetries = 3,    // Total attempts, including the first request
         InitialDelayMs = 500,
         MaxDelayMs = 5000
     })
