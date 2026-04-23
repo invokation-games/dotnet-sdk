@@ -15,6 +15,7 @@ _generate-sdk-raw:
         openapitools/openapi-generator-cli:v7.12.0 generate \
         -i /local/ivk-skill-openapi.json \
         -c /local/openapi-generator-config.yaml \
+        -t /local/openapi-templates/csharp \
         -o /local/generated
     cp -r generated/src/Invokation.Skill.Sdk/Api src/Invokation.Skill.Sdk/
     cp -r generated/src/Invokation.Skill.Sdk/Client src/Invokation.Skill.Sdk/
