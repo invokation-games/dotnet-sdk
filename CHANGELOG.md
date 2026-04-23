@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/invokation-games/dotnet-sdk/compare/v1.3.0...v1.3.1) (2026-04-23)
+
+
+### Bug Fixes
+
+* improve error handling & retry mechanism ([#26](https://github.com/invokation-games/dotnet-sdk/issues/26)) ([f0212ce](https://github.com/invokation-games/dotnet-sdk/commit/f0212ce5e5c76e66f7839ef24edc6bdd1f555e22))
+
 ## [1.3.0](https://github.com/invokation-games/dotnet-sdk/compare/v1.2.1...v1.3.0) (2026-03-16)
 
 
